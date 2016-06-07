@@ -1,0 +1,105 @@
+/* the base.css file is for things that are less commonly changed */
+/* however, it is not unlikely you will want to change #index nav rules */
+
+/* example rules for styling via section */
+body.section-1 { /* background-color: yellow; */ }
+body.section-2 {  }
+/* style via particular exhibit */
+body.exhibit-12 {  }
+/* styling via exhibit format */
+body.visual_index { /* background: green; */ }
+
+/* general styles - not recommended for change */
+strong, b { font-weight: bold; }
+em, i { font-style: italic; }
+object { display: block; }
+.once { clear: left; }
+.clL { clear: left; }
+
+/* this is to prevent some background colors on links in exhibits */
+/* do not change these */
+#img-container span.backgrounded a,
+#img-container a.thickbox, 
+#img-container a.thumb-img, 
+#img-container #d-col1 a { background: transparent; }
+
+/* not recommended for change */
+#index {
+    overflow: auto;
+    top: 0;
+    bottom: 0;
+	left: 0;
+    position: fixed;
+    height: 100%;
+	z-index: 1;
+}
+#exhibit { height: 100%; top: 0; }
+
+/* INDEX NAVIGATION/LINKS RULES */
+/* the following rules for index are not required */
+/* they are mostly for complex customization */
+
+/* styles for the section titles */
+#index ul.section span.section_title, 
+#index ul.section span.section_title a 
+{ cursor: pointer; font-weight: bold; /* font-size: 18px; */ }
+
+/* styles for hovering section titles */
+#index ul.section span.section_title:hover, 
+#index ul.section span.section_title a:hover 
+{  }
+
+/* active section titles */
+#index ul.active_section span.active,
+#index ul.active_section span.active a 
+{  }
+
+/* sub-section titles */
+#index ul.section span.subsection_title, 
+#index ul.section span.subsection_title a 
+{ cursor: pointer; /* font-weight: bold; */ }
+
+/* sub-section titles hover */
+#index ul.section span.subsection_title:hover, 
+#index ul.section span.subsection_title a:hover 
+{  }
+
+/* exhibit titles */
+#index ul.section li.exhibit_title {  }
+#index ul.section li.exhibit_title a:link {  }
+#index ul.section li.exhibit_title a:hover {  }
+#index ul.section li.exhibit_title a:active {  }
+#index ul.section li.exhibit_title a:visited {  }
+
+/* index links */
+#index ul.section li.exhibit_link {  }
+#index ul.section li.exhibit_link a:link {  }
+#index ul.section li.exhibit_link a:hover {  }
+#index ul.section li.exhibit_link a:active {  }
+#index ul.section li.exhibit_link a:visted {  }
+
+/* active subsection title */
+#index span.active_subsection_title,
+#index span.active_subsection_title a {  }
+
+/* targeted examples */
+/* specific section */
+#index ul#section_1 {  }
+/* links within the specific section */
+#index ul#section_1 li.exhibit_title a {  }
+/* specific exhibit title */
+#index li#exhibit_150 a {  }
+/* affect subsections container */
+#index ul.subsection { /* padding-left: 18px; */  }
+
+/* top/bot divs - not really used but do exist */
+#index .top { /* height: 36px; */ }
+#exhibit .top { display: none; }
+#index .bot {  }
+
+/* generic #img-container - but remember that exhibit formats can override these */
+#img-container {  }
+#img-container p {  }
+#img-container .captioning {  }
+#img-container .captioning .title { /* font-size: 13px; */ }
+#img-container .captioning .caption { /* font-size: 13px; */ text-align: left; }

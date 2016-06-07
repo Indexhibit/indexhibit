@@ -1,0 +1,47 @@
+/* the overlay */
+/* edit with caution */
+/* dark theme for overlay */
+.dark-overlay { background-color: #000; /* opacity: 0.9; */ }
+.dark-dialog { color: #fff; }
+.dark-dialog #dialog-close a { background: transparent url(../img/close-black.gif) no-repeat; }
+.dark-dialog #position { color: #fff; }
+.dark-dialog #dialog-title { color: #fff; }
+.dark-dialog #dialog-box-text { color: #fff; }
+.dark-dialog #dialog-toggle { background: #000; }
+.dark-dialog #dialog-toggle a { /* color: red; */ }
+
+/* light theme for overlay */
+.light-overlay { background-color: #fff; /* opacity: 0.9; */ }
+.light-dialog { color: #000; }
+.light-dialog #dialog-close a { background: transparent url(../img/close.gif) no-repeat; }
+.light-dialog #position { color: #000; }
+.light-dialog #dialog-title { color: #000; }
+.light-dialog #dialog-box-text { color: #000; }
+.light-dialog #dialog-toggle { background: #fff; }
+.light-dialog #dialog-toggle a { /* color: red; */ }
+
+/* you won't really need to change these except for maybe margins/paddings */
+#overlay { position: fixed; top: 0; left: 0; width: 100%; display: none; z-index: 3; }
+#dialog { position: fixed; top: 0; left: 0; text-align: left; width: 100%; padding: 0; margin: 0; }
+#dialog-close { position: absolute; right: 24px; top: 24px; cursor: pointer; height: 16px; width: 16px; text-indent: -9999px; z-index: 8888; }
+#dialog-close a { display: block; width: 16px; height: 16px; }
+#dialog-close a:hover { opacity: 0.5; }
+.dialog-content { padding: 0; top: 0; left: 0; position: absolute; width: 100%; }
+.dialog-content .container { margin: 0; padding: 0; }
+#dialog-box-text { width: 250px; }
+#dialog-toggle { display: none; padding: 3px 6px 6px 0; }
+#dialog .the-content { display: block; z-index: 14; position: relative; width: 100%; }
+#dialog #loading-dock { position: absolute; z-index: 25; }
+#dialog #dialog-close-layer { background: red; width: 100%; height: 100%; position: absolute; top: 1; left: 0; z-index: 2; }
+#dialog #dialog-close-layer a { display: block; width: 100%; height: 100%; background: green; }
+#inner-content { position: relative; }
+#inner-top { position: absolute; top: 0; left: 0; width: 100%; height: 60px; z-index: 15; }
+#inner-bot { position: absolute; bottom: 0; left: 0; width: 100%; z-index: 16; text-align: right; }
+a.next:hover { background: transparent url(../img/next.gif) no-repeat 90% 50%; opacity: 0.25; top: 0; bottom: 0; display: absolute; z-index: 3; }
+a.previous:hover { background: transparent url(../img/previous.gif) no-repeat 10% 50%; opacity: 0.25; top: 0; bottom: 0; display: absolute; z-index: 4; }
+#box-text { text-align: left; }
+#position { padding: 0 27px 27px 0; }
+#loading-dock { display: none; position: absolute; width: 35px; height: 35px; z-index: 9999; }
+.loading { position: absolute; top: 18px; left: 0; z-index: 1; 
+text-align: center; width: 24px; height: 24px;  
+background-position: center top; background-repeat: no-repeat; }

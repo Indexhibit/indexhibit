@@ -1,0 +1,174 @@
+.s-toggle { width: 35px; float: left; }
+
+a.t-on { padding: 3px 5px; background: #0c0; color: #fff; text-decoration: none; }
+a.t-off { padding: 3px 5px; background: #f00; color: #fff; text-decoration: none; }
+
+/* -- Form Styles ------------------------------- */
+form {	
+	margin: 0;
+	padding: 0;
+}
+
+
+/* for swfupload */
+fieldset {
+	border: none;
+	margin: 5px 0;
+	padding: 20px 0;
+}
+
+/* IE6 FIX */
+html fieldset { 
+	position: relative; 
+	margin-top: 1em;  
+}
+/* IE6 FIX */
+html legend { 
+	position:absolute; 
+	top: -0.5em; 
+	left: 0; 
+}
+
+fieldset.flash {
+	width: 375px;
+	margin: 10px 0;
+	border-color: #D9E4FF;
+}
+
+legend {
+	font: 700 11px Arial, Helvetica, sans-serif;
+	padding: 0;
+	margin: 0;
+	color: #000;
+}
+
+#divStatus { font-weight: normal; margin-left: 6px; }
+
+button,
+input,
+select,
+textarea { 
+	border-width: 1px; 
+	margin-bottom: 10px;
+	padding: 2px 3px;
+}
+
+
+
+input[disabled]{ border: 1px solid #ccc } /* FF 2 Fix */
+
+
+label { 
+	display:block;
+	margin-right: 5px;
+}
+
+#btnSubmit { margin: 0 0 0 155px ; }
+
+/* -- Table Styles ------------------------------- */
+td {
+	font: 10pt Helvetica, Arial, sans-serif;
+	vertical-align: top;
+}
+
+.progressWrapper {
+	width: 357px;
+	overflow: hidden;
+}
+
+/* individual containers */
+.progressContainer {
+	margin: 1px 0;
+	padding: 0;
+	border: none;
+	/* background-color: #F7F7F7; */
+	overflow: hidden;
+	color: #ccc;
+}
+/* Message */
+.message {
+	margin: 1em 0;
+	padding: 10px 20px;
+	border: none;
+	background-color: #FFFFCC;
+	overflow: hidden;
+}
+/* Error */
+.red {
+	border: none;
+	/* background-color: #f00; */
+	color: #f00;
+}
+
+/* Current */
+.green {
+	border: none;
+	/* background-color: #f00; */
+	color: #0c0;
+}
+
+/* Complete */
+.blue {
+	border: none;
+	/* background-color: #f00; */
+	color: #0c0;
+}
+
+.progressName {
+	font-size: 10px;
+	/* font-weight: 700; */
+	/* color: #0c0; */
+	/* width: 323px; */
+	height: 12px;
+	text-align: left;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+.progressBarInProgress,
+.progressBarComplete,
+.progressBarError {
+	font-size: 0;
+	width: 0%;
+	height: 2px;
+	background-color: red;
+	margin-top: 2px;
+}
+
+.progressBarComplete {
+	width: 100%;
+	background-color: green;
+	visibility: hidden;
+}
+
+.progressBarError {
+	width: 100%;
+	background-color: red;
+	visibility: hidden;
+}
+
+/* the message that changes */
+.progressBarStatus {
+	margin-top: 2px;
+	width: 337px;
+	font-size: 7pt;
+	font-family: Arial;
+	text-align: left;
+	white-space: nowrap;
+	display: none;
+}
+
+a.progressCancel {
+	font-size: 0;
+	display: block;
+	height: 14px;
+	width: 14px;
+	background-image: url(../images/cancelbutton.gif);
+	background-repeat: no-repeat;
+	background-position: -14px 0px;
+	float: right;
+}
+
+a.progressCancel:hover {
+	background-position: 0px 0px;
+}

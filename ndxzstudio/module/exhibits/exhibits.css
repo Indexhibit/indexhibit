@@ -1,0 +1,4 @@
+h3 input[type=text]
+{
+	display: inline-block; margin: 0; padding: 0; width: 150px; font-size: 1em;
+}

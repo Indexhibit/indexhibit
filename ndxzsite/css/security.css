@@ -1,0 +1,6 @@
+/* password protection parts */
+/* parts can be changed via plugin as well */
+form#ndxz-protect {  }
+form#ndxz-protect p { margin-bottom: 3px; }
+form#ndxz-protect div#ndxz_pwd input { border: 1px solid #666; font-size: 11px; padding: 4px; margin-bottom: 9px; }
+form#ndxz-protect div#ndxz_pwd_sbmt input {  }
