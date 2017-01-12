@@ -27,7 +27,7 @@ class Index
 	var $counter = 0;
 	var $current;
 
-	function Index()
+	function __construct()
 	{
 		$OBJ =& get_instance();
 		global $default;
@@ -37,6 +37,11 @@ class Index
 		$this->active_section = $OBJ->vars->exhibit['section_id'];
 		$this->active_exhibit = $OBJ->vars->exhibit['id'];
 	}
+	
+	public function Index()
+    {
+        self::__construct();
+    }
 	
 	// returns array
 	function get_sections()
@@ -176,7 +181,7 @@ class Index
 
 		//$password = ($this->exhibit['pwd'] == true) ? " password" : '';
 		//$active = ($OBJ->vars->exhibit['id'] == $this->exhibit['id']) ? " active$password" : $password;
-		$new = ($this->exhibit['new'] == 1) ? "&nbsp;<sup>new</sup>": '';
+		$new = ($this->exhibit['new'] == 1) ? "&nbsp;<sup class='new_exhibit'></sup>": '';
 		
 		$class = ($this->li_class == '') ? 'exhibit_title' : $this->li_class;
 

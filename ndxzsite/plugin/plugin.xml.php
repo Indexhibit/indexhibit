@@ -8,6 +8,16 @@ class xml
 	var $output;
 	var $xml;
 	
+	public function __construct()
+	{
+		
+	}
+	
+	public function xml()
+	{
+		self::__construct();
+	}
+	
 	// /xml/
 	function rss()
 	{

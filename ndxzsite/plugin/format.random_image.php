@@ -14,9 +14,14 @@ Objects: exhibits
 
 class Exhibit
 {
-	function Exhibit()
+	public function __construct()
 	{
 
+	}
+	
+	public function Exhibit()
+	{
+		self::__construct();
 	}
 	
 	

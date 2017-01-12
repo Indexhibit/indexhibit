@@ -25,22 +25,26 @@ class indexhibit_style
 		
 		if (isset($OBJ)) 
 		{
-		$OBJ->page->exhibit['dyn_css'][] = "a:link { color: #" . $OBJ->hook->options['indexhibit_style']['bgcolor'] . "; }";
-		$OBJ->page->exhibit['dyn_css'][] = "a:visited { color: #" . $OBJ->hook->options['indexhibit_style']['bgcolor3'] . "; }";
-		$OBJ->page->exhibit['dyn_css'][] = "a:hover { color: #" . $OBJ->hook->options['indexhibit_style']['bgcolor2'] . "; }";
+			// we can't use these with mobile
+			if ($OBJ->vars->default['isMobile'] == false) 
+			{
+				$OBJ->page->exhibit['dyn_css'][] = "#index { width: " . $OBJ->hook->options['indexhibit_style']['menu_width'] . "px; }";
+				$OBJ->page->exhibit['dyn_css'][] = "#exhibit { margin-left: " . $OBJ->hook->options['indexhibit_style']['menu_width'] . "px; }";
+				
+				$OBJ->page->exhibit['dyn_css'][] = "#index, #exhibit { font-size: " . $OBJ->hook->options['indexhibit_style']['font_size'] . "px; }";
+				$OBJ->page->exhibit['dyn_css'][] = "#index, #exhibit { line-height: " . $OBJ->hook->options['indexhibit_style']['line_height'] . "px; }";
+
+				$OBJ->page->exhibit['dyn_css'][] = ".container { padding-top: " . $OBJ->hook->options['indexhibit_style']['padding_top'] . "px; }";
+				$OBJ->page->exhibit['dyn_css'][] = ".container { padding-left: " . $OBJ->hook->options['indexhibit_style']['padding_left'] . "px; }";
+			}
+			
+			$OBJ->page->exhibit['dyn_css'][] = "a:link { color: #" . $OBJ->hook->options['indexhibit_style']['bgcolor'] . "; }";
+			$OBJ->page->exhibit['dyn_css'][] = "a:visited { color: #" . $OBJ->hook->options['indexhibit_style']['bgcolor3'] . "; }";
+			$OBJ->page->exhibit['dyn_css'][] = "a:hover { color: #" . $OBJ->hook->options['indexhibit_style']['bgcolor2'] . "; }";
 		
+			$OBJ->page->exhibit['dyn_css'][] = "#index, #exhibit { color: #" . $OBJ->hook->options['indexhibit_style']['text_color'] . "; }";
 		
-		$OBJ->page->exhibit['dyn_css'][] = "#index { width: " . $OBJ->hook->options['indexhibit_style']['menu_width'] . "px; }";
-		$OBJ->page->exhibit['dyn_css'][] = "#exhibit { margin-left: " . $OBJ->hook->options['indexhibit_style']['menu_width'] . "px; }";
-		$OBJ->page->exhibit['dyn_css'][] = "#index, #exhibit { font-size: " . $OBJ->hook->options['indexhibit_style']['font_size'] . "px; }";
-		$OBJ->page->exhibit['dyn_css'][] = "#index, #exhibit { line-height: " . $OBJ->hook->options['indexhibit_style']['line_height'] . "px; }";
-		
-		$OBJ->page->exhibit['dyn_css'][] = ".container { padding-top: " . $OBJ->hook->options['indexhibit_style']['padding_top'] . "px; }";
-		$OBJ->page->exhibit['dyn_css'][] = ".container { padding-left: " . $OBJ->hook->options['indexhibit_style']['padding_left'] . "px; }";
-		
-		$OBJ->page->exhibit['dyn_css'][] = "#index, #exhibit { color: #" . $OBJ->hook->options['indexhibit_style']['text_color'] . "; }";
-		
-		$OBJ->page->exhibit['dyn_css'][] = "#index, #exhibit { font-family: " . $OBJ->hook->options['indexhibit_style']['fonts'] . "; }";
+			$OBJ->page->exhibit['dyn_css'][] = "#index, #exhibit { font-family: " . $OBJ->hook->options['indexhibit_style']['fonts'] . "; }";
 		
 		if (($OBJ->hook->options['indexhibit_style']['astyle'] == 'bold') || ($OBJ->hook->options['indexhibit_style']['astyle'] == 'italic'))
 		{

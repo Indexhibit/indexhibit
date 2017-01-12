@@ -3,8 +3,6 @@
 
 function jxs_box()
 {
-	sleep(1);
-	
 	$OBJ =& get_instance();
 	global $default;
 	

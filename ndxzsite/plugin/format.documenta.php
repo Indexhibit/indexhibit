@@ -33,6 +33,16 @@ class Exhibit
 	var $settings = array();
 	var $bottom_margin;
 	
+	public function __construct()
+	{
+		
+	}
+	
+	public function Exhibit()
+	{
+		self::__construct();
+	}
+	
 	function default_settings()
 	{
 		$OBJ =& get_instance();

@@ -51,6 +51,16 @@ class Exhibit
 	///////////////
 	var $x;
 	
+	public function __construct()
+	{
+		
+	}
+	
+	public function Exhibit()
+	{
+		self::__construct();
+	}
+	
 		function default_settings()
 		{
 			$OBJ =& get_instance();
@@ -127,7 +137,7 @@ class Exhibit
 		}
 	
 
-	function Exhibit()
+	function __construct()
 	{
 		$OBJ =& get_instance(); 
 
@@ -159,6 +169,12 @@ class Exhibit
 			
 		$this->collapse = (isset($OBJ->hook->options['tag_display_settings']['collapse'])) ? 
 			$OBJ->hook->options['tag_display_settings']['collapse'] : 1;
+	}
+	
+	
+	public function Exhibit()
+	{
+		self::__construct();
 	}
 	
 	

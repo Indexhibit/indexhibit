@@ -26,7 +26,7 @@ class Exhibit
 {
 	// PADDING AND TEXT WIDTH ADJUSTMENTS UP HERE!!!
 	var $picture_block_padding_right = 0;
-	var $text_width = 250;
+	var $text_width = 400;
 	var $text_padding_right = 35;
 	var $final_img_container = 0; // do not adjust this one
 	var $imgs = array();
@@ -107,7 +107,7 @@ slide: function(event, ui) { $('label#padding_left_value span').html(ui.value) }
 		return ($var == $check) ? " selected='selected'" : '';
 	}
 
-	function Exhibit()
+	function __construct()
 	{
 		$OBJ =& get_instance();
 
@@ -118,7 +118,7 @@ slide: function(event, ui) { $('label#padding_left_value span').html(ui.value) }
 			$OBJ->hook->options['horizontal_settings']['bottom_margin'] : 200;
 		$this->text_block_height = (isset($OBJ->hook->options['horizontal_settings']['text_box_height'])) ? 
 			$OBJ->hook->options['horizontal_settings']['text_box_height'] : 18;
-		$this->text_width = 250;
+		//$this->text_width = 250;
 		$this->text_padding_right = 35;
 		$this->final_img_container = 0; // do not adjust this one
 		$this->padding_left = (isset($OBJ->hook->options['horizontal_settings']['padding_left'])) ? 
@@ -138,6 +138,11 @@ slide: function(event, ui) { $('label#padding_left_value span').html(ui.value) }
 		
 		$this->title_placement = (isset($OBJ->abstracts->abstract['title-placement'])) ? 
 			$OBJ->abstracts->abstract['title-placement'] : 0;
+	}
+	
+	public function Exhibit()
+	{
+		self::__construct();
 	}
 	
 	
@@ -219,7 +224,7 @@ slide: function(event, ui) { $('label#padding_left_value span').html(ui.value) }
 				$text_block = $this->text_block_height;
 				$textw = $this->bottom_margin;
 				$separator = $this->picture_block_padding_right;
-				$this->text_width = $textw - (2 * $margin);
+				$this->text_width = $this->text_width - (2 * $margin);
 
 				// height and width of thumbnail
 				//$size = getimagesize(DIRNAME . '/files/gimgs/' . $go['media_ref_id'] . '_' . $go['media_file']);

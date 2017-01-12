@@ -7,7 +7,7 @@ a#slide-next {
 }
 
 a#slide-next:hover { 
-	background: url(../img/next.gif) no-repeat right center;
+
 }
 
 a#slide-previous {
@@ -20,18 +20,45 @@ a#slide-previous {
 }
 
 a#slide-previous:hover { 
-	background: url(../img/previous.gif) no-repeat left center;
+	/* background: url(../img/previous.gif) no-repeat left center; */
 }
 
 #img-container { position: relative; }
+.picture { line-height: 0; }
 #exhibit #slideshow { margin-bottom: 0; }
-#exhibit .captioning { margin: 0.5em 0 2em 0; padding: 0; }
+#exhibit .captioning { margin: 0.5em 0 1em 0; padding: 0; line-height: 1.3em; }
 #exhibit .captioning .caption p { margin-bottom: 0; }
 #exhibit #slideshow .captioning .title { margin-bottom: 0; }
 #exhibit #slideshow .captioning .caption {  }
-#exhibit #textspace { margin-top: 0.5em; }
+
+#exhibit .placement-top { margin: 0 0; }
+#exhibit .placement-bottom { margin: 6px 0 0 0; }
+#exhibit .placement-right { margin: 0; }
+#exhibit .placement-left { margin: 0; }
+
+#slideshow-wrapper { padding-bottom: 5px; }
 
 /* #slideshow-nav { position: absolute; bottom: 0; left: 0; z-index: 1; margin: 25px; background: white; } */
 #slideshow-nav { margin-bottom: 9px; }
 /* #slideshow-nav { font-weight: bold; } */
-#slideshow-nav span#total strong { font-weight: normal }
+#slideshow-nav span#total em { font-style: normal; }
+
+#textspace p, #textspace blockquote, #textspace code {  }
+
+#loading { color: #000; position: absolute; z-index: 2000; top: 20px; left: 9px; }
+#loading span { background: #fff; padding: 3px; }
+
+#thumbnails {  }
+#thumbnails a { margin-right: 2px; margin-bottom: 0; }
+
+.nav-above { margin-bottom: 6px; }
+.nav-below { margin-top: 12px; }
+
+.thumbnails-above { margin-bottom: 6px; }
+.thumbnails-below { margin-top: 0px; margin-bottom: 30px; }
+
+.videoslide a { display: block; width: 75px; height: 50px; z-index: 100; right: 0; top: 0; position: absolute; }
+
+/* this is for videos, flash, etc */
+/* change it to your language or whatever you want */
+.videoslide a span.nextlink:before { display: block; text-align: right; padding: 25px 15px 0 0; content: "Next >"; }

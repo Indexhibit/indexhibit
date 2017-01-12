@@ -10,7 +10,7 @@ class Jxs_ndxzbox
 	var $y;
 	var $description;
 
-	function __construct()
+	public function __construct()
 	{
 		$OBJ =& get_instance();
 		global $default;
@@ -21,12 +21,17 @@ class Jxs_ndxzbox
 			WHERE media_id = '$_POST[i]' 
 			AND media_ref_id = id");
 			
-		sleep(1);
+		//sleep(1);
 
 		$this->centered();
 	}
 	
-	function output()
+	public function Jxs_ndxzbox()
+	{
+		self::__construct();
+	}
+	
+	public function output()
 	{
 		$x['output'] = $this->html;
 		$x['width'] = $this->x;
@@ -36,7 +41,7 @@ class Jxs_ndxzbox
 		exit;
 	}
 	
-	function centered()
+	public function centered()
 	{
 		$OBJ =& get_instance();
 		global $default;
@@ -66,8 +71,8 @@ class Jxs_ndxzbox
 			
 			$a = "<div id='o" . $this->rs['media_id'] . "' class='dialog-content' style='display: none; z-index: 12;'>\n";
 			
-			$a .= "<a href='#' class='link next' id='a$this->rs[media_id]' $next_style onclick=\"next(); return false;\"><!-- --></a>";
-			$a .= "<a href='#' class='link previous' id='a$this->rs[media_id]' $prev_style onclick=\"previous(); return false;\"></a>";
+			$a .= "<a href='#' class='link next' id='a" . $this->rs['media_id'] . "' $next_style onclick=\"next(); return false;\"><!-- --></a>";
+			$a .= "<a href='#' class='link previous' id='a" . $this->rs['media_id'] . "' $prev_style onclick=\"previous(); return false;\"></a>";
 			
 			$a .= "<div id='innerd' style='text-align: center; margin: 0; position: relative;'>";
 			
@@ -114,8 +119,8 @@ class Jxs_ndxzbox
 			
 			$a = "<div id='o" . $this->rs['media_id'] . "' class='dialog-content' style='display: none; z-index: 12;'>\n";
 			
-			$a .= "<a href='#' class='link next' id='a$this->rs[media_id]' $next_style onclick=\"next(); return false;\"><!-- --></a>";
-			$a .= "<a href='#' class='link previous' id='a$this->rs[media_id]' $prev_style onclick=\"previous(); return false;\"></a>";
+			$a .= "<a href='#' class='link next' id='a" . $this->rs['media_id'] . "' $next_style onclick=\"next(); return false;\"><!-- --></a>";
+			$a .= "<a href='#' class='link previous' id='a" . $this->rs['media_id'] . "' $prev_style onclick=\"previous(); return false;\"></a>";
 			
 			$a .= "<div id='innerd' style='text-align: center; margin: 0; position: relative;'>";
 			

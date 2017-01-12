@@ -1,41 +1,40 @@
-<?php
+<?php if (!defined('SITE')) exit('No direct script access allowed');
 
-/**
-* Statistics class
-*
-* Frontend statistics
-* 
-* @version 1.0
-* @author Vaska 
+/*
+Plugin Name: New Statistics
+Plugin URI: http://www.indexhibit.org/plugin/new_statistics/
+Description: Statistics
+Version: 1.0
+Author: Indexhibit
+Author URI: http://indexhibit.org/
+Type: front
+Hook: enable_statistics
+Function: new_statistics:counter
+Order: 22
+End
 */
-class Jxs_statistics
+
+class New_statistics
 {
 	var $uri;
 	var $refer;
 	var $last;
-
-	/**
-	* Returns null
-	*
-	* @param void
-	* @return null
-	*/
-	function Jxs_statistics()
+	
+	public function __construct()
 	{
-		$this->uri = $_POST['url'];
-		$this->refer = ($_POST['referrer'] == 'none') ? '' : $_POST['referrer'];
-		$this->last = ((int) $_POST['last_visit'] == 1) ? 1 : 0;
+		$this->uri = $_SERVER['REQUEST_URI'];
+		$this->refer = $_SERVER['REFERRER'];
 	}
 	
-	
-	function output()
+	public function New_statistics()
 	{
-		$OBJ =& get_instance();
-		
+		self::__construct();
+	}
+	
+	public function counter()
+	{
 		$this->stat_insertHit();
-		return null;
 	}
-
 
 	/**
 	* Returns boolean
@@ -43,7 +42,7 @@ class Jxs_statistics
 	* @param string $ip
 	* @return boolean
 	*/
-	function stat_ignore_hit($ip='')
+	public function stat_ignore_hit($ip='')
 	{
 		global $default;
 		
@@ -64,7 +63,7 @@ class Jxs_statistics
 	* @param void
 	* @return array
 	*/
-	function stat_doStats()
+	public function stat_doStats()
 	{
 		$stat['ref']		= $this->refer;
 		$stat['ip']		 	= $_SERVER['REMOTE_ADDR'];
@@ -84,7 +83,7 @@ class Jxs_statistics
 	* @param string $input
 	* @return string
 	*/
-	function stat_reduceURL($input='')
+	public function stat_reduceURL($input='')
 	{
 		if (!$input) return NULL;
 	
@@ -99,7 +98,7 @@ class Jxs_statistics
 	* @param string $lang
 	* @return string
 	*/
-	function stat_getLanguage($lang='')
+	public function stat_getLanguage($lang='')
 	{
 		return (!preg_match("/([^,;]*)/", $lang, $langs)) ? 'n/a' : $langs[0];
 	}
@@ -111,16 +110,16 @@ class Jxs_statistics
 	* @param string $url
 	* @return variable
 	*/
-	function stat_getKeywords($url='')
+	public function stat_getKeywords($url='')
 	{
 		$searchterms = '';
 		
 		if (!isset($url['host'])) return '';
 	
 		// this should probably be updated
+		// add duckduckgo
 		$searches = array(
 			array("/google\./i", 'q'),
-			array("/bing\./i", 'q'),
 			array("/alltheweb\./i", 'q'),
 			array("/yahoo\./i", 'p'),
 			array("/search\.aol\./i", 'query'),
@@ -138,7 +137,67 @@ class Jxs_statistics
 	
 		return $searchterms;
 	}
+
+
+	/**
+	* Returns completed stat hit
+	*
+	* @param void
+	* @return null
+	*/
+	public function stat_insertHit()
+	{
+		$OBJ =& get_instance();
+		
+		if (!$OBJ)
+		{
+			$OBJ =& load_class('core', true, 'lib');
+		}
 	
+		$stat = $this->stat_doStats();
+		
+		// ignore ip's listed in the config file
+		if ($this->stat_ignore_hit($stat['ip']) == true) return;
+		
+		// it needs to end with a '/' for it to be a stat
+		if ((substr($stat['uri'], -1) != '/')) return;
+
+		// we don't refer to ourselves
+		$found = strpos($this->stat_reduceURL($stat['ref']), $this->stat_reduceURL(BASEURL));
+		$stat['ref'] = ($found === false) ? $stat['ref'] : '';
+		
+		// get country if the database exists
+		if ($stat['ip'] != '')
+		{
+			$ip = sprintf("%u", ip2long($stat['ip']));
+		
+			$rs = $OBJ->db->fetchRecord("SELECT country_name FROM iptocountry 
+				WHERE ip_from <= " . $OBJ->db->escape($ip) . " AND ip_to >= " . $OBJ->db->escape($ip) . "");
+	
+			if ($rs) 
+			{
+				$c = trim(ucwords(preg_replace("/([A-Z\xC0-\xDF])/e",
+					"chr(ord('\\1')+32)", $rs['country_name'])));
+				
+				$clean['hit_country'] = $c;
+			}
+		}
+			
+		$clean['hit_addr']		= $stat['ip'];
+		$clean['hit_referrer']	= $stat['ref'];
+		$clean['hit_page']		= $stat['uri'];
+		$clean['hit_keyword']	= $stat['keywords'];
+		
+		$clean['hit_time']		= getNow();
+		$clean['hit_month']		= substr($clean['hit_time'], 0, 7);
+		$clean['hit_day']		= substr($clean['hit_time'], 0, 10);
+			
+		$OBJ->db->insertArray(PX."stats", $clean);
+		
+		$this->add_page_count($clean['hit_page']);
+	
+		return;
+	}
 	
 	// perhaps we add a way to turn this on and off?
 	function add_page_count($url='')
@@ -163,108 +222,4 @@ class Jxs_statistics
 		
 		return;
 	}
-	
-	
-	function archive_stats()
-	{
-		$OBJ =& get_instance();
-
-		// anything older than the past 30 days
-		$today = convertToStamp(getNow());
-		$day = substr($today,6,2);
-		$mn = substr($today,4,2);
-		$yr = substr($today,0,4);
-
-		$start_month = date('Y-m-d', mktime('00', '00', '00', $mn-2, $day, $yr));
-
-		$months = $OBJ->db->fetchArray("SELECT hit_month FROM ".PX."stats WHERE hit_month <= '$start_month' GROUP BY hit_month");
-
-		if ($months)
-		{
-			foreach ($months as $m)
-			{
-				$clean['stor_date'] = "$m[hit_month]";
-
-				$clean['stor_hits'] = $OBJ->db->getCount("SELECT count(*) FROM ".PX."stats WHERE hit_month LIKE '$m[hit_month]%'");
-				$clean['stor_unique'] = $OBJ->db->getCount("SELECT count(DISTINCT hit_addr) FROM ".PX."stats WHERE hit_month LIKE '$m[hit_month]%'");
-				$clean['stor_referrer'] = $OBJ->db->getCount("SELECT count(DISTINCT hit_referrer) FROM ".PX."stats WHERE hit_month LIKE '$m[hit_month]%' AND hit_referrer != ''");
-				
-				// delete the record if it exists already
-				$OBJ->db->deleteArray(PX.'stats_storage', "stor_date = '$m[hit_month]'");
-
-				// let's insert them now
-				$OBJ->db->insertArray(PX.'stats_storage', $clean);
-			}
-
-			// delete the archived
-			$OBJ->db->deleteArray(PX.'stats', "hit_month <= '$start_month'");
-		}
-	}
-
-
-	/**
-	* Returns completed stat hit
-	*
-	* @param void
-	* @return null
-	*/
-	function stat_insertHit()
-	{
-		$OBJ =& get_instance();
-		
-		if (!$OBJ)
-		{
-			$OBJ =& load_class('core', true, 'lib');
-		}
-	
-		$stat = $this->stat_doStats();
-		
-		// ignore ip's listed in the config file
-		//if ($this->stat_ignore_hit($stat['ip']) == true) return;
-		
-		// it needs to end with a '/' for it to be a stat
-		//if ((substr($stat['uri'], -1) != '/')) return;
-
-		// we don't refer to ourselves
-		$found = strpos($this->stat_reduceURL($stat['ref']), $this->stat_reduceURL(BASEURL));
-		$stat['ref'] = ($found === false) ? $stat['ref'] : '';
-		
-		// get country if the database exists
-		/*
-		if ($stat['ip'] != '')
-		{
-			$ip = sprintf("%u", ip2long($stat['ip']));
-		
-			$rs = $OBJ->db->fetchRecord("SELECT country_name FROM iptocountry 
-				WHERE ip_from <= " . $OBJ->db->escape($ip) . " AND ip_to >= " . $OBJ->db->escape($ip) . "");
-	
-			if ($rs) 
-			{
-				$c = trim(ucwords(preg_replace("/([A-Z\xC0-\xDF])/e",
-					"chr(ord('\\1')+32)", $rs['country_name'])));
-				
-				$clean['hit_country'] = $c;
-			}
-		}
-		*/
-			
-		$clean['hit_addr']		= $stat['ip'];
-		//$clean['hit_lang']		= $stat['lang'];
-		$clean['hit_referrer']	= $stat['ref'];
-		$clean['hit_page']		= $stat['uri'];
-		$clean['hit_keyword']	= $stat['keywords'];
-		$clean['hit_time']		= getNow();
-		$clean['hit_month']		= substr($clean['hit_time'], 0, 7);
-		$clean['hit_day']		= substr($clean['hit_time'], 0, 10);
-		
-		$OBJ->db->insertArray(PX."stats", $clean);
-		
-		$this->add_page_count($clean['hit_page']);
-		
-		// what about archiving stats_absolute_deviation
-		$this->archive_stats();
-	
-		return;
-	}
-
 }

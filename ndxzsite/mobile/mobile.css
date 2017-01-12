@@ -1,0 +1,175 @@
+/* rules for mobile */
+
+/* work this in properly */
+.index-toggle { display: none; }
+
+@media only screen and (min-width: 320px) and (max-width: 736px) 
+{
+	body 
+	{
+		-webkit-text-size-adjust: 100%;
+	}
+	
+    #index 
+    {  
+    	left: -100vw;
+    	width: 100vw;
+		height: 100vh;
+    	overflow: scroll;
+		overflow-y: scroll;
+		-webkit-overflow-scrolling: touch;
+    	z-index: 9997;
+    }
+    
+    #exhibit 
+    { 	
+    	margin-left: 0; 
+    	overflow-y: scroll;
+		-webkit-overflow-scrolling: touch;
+		padding-bottom: 30px;
+    }
+
+    #exhibit img, #exhibit object 
+    {
+		max-width: vw;
+		width: 100%;
+		height: auto;
+    }
+
+    #exhibit .container #img-container
+    {
+		margin-top: 0px;
+    }
+
+    #exhibit .container #img-container div
+    {
+		width: 100%;
+    }
+
+    #index .container, 
+	#exhibit .container
+    {
+		padding: 15px;
+    }
+    
+    .index-toggle 
+    { 
+    	display: block; 
+    	height: 35px; 
+    	width: 35px; 
+    	background-color: white; 
+    	position: fixed; 
+    	bottom: 12px; 
+    	right: 12px; 
+    	z-index: 5000000; 
+    	text-indent: -9999px; 
+    }
+    
+    #exhibit span.manifesto 
+	{ 
+		font-size: 33px; 
+		line-height: 39px; 
+		padding-right: 12px; 
+		white-space: nowrap; 
+		letter-spacing: 0px; 
+		display: block; 
+	}
+}
+
+
+/* move #index */
+#index { -webkit-transition: all 150ms ease-in-out; transition: all 150ms ease-in-out; width: 100vw; left: -100vw; }
+
+/* REVIEW */
+#closing_layer 
+{
+	display: none;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: fixed;
+    right: 0;
+    top: 0;
+	bottom: 0;
+    width: 100%;
+    z-index: 3;
+    min-height: 1062px;
+    background: rgba(0,0,0,0.5);
+}
+
+#nav-toggle { position: absolute; left: 5px; top: 6px; }
+#nav-toggle { cursor: pointer; padding: 10px 25px 16px 0px; }
+#nav-toggle span, #nav-toggle span:before, #nav-toggle span:after 
+{
+	cursor: pointer;
+	border-radius: 1px;
+	height: 3px;
+	width: 25px;
+	background: black;
+	position: absolute;
+	display: block;
+	content: '';
+}
+
+#nav-toggle span:before {
+	top: -7px; 
+}
+#nav-toggle span:after {
+	bottom: -7px;
+}
+
+#nav-toggle span, #nav-toggle span:before, #nav-toggle span:after {
+  -webkit-transition: all 250ms ease-in-out;
+  transition: all 250ms ease-in-out;
+}
+#nav-toggle.active span {
+  background-color: transparent;
+}
+#nav-toggle.active span:before, #nav-toggle.active span:after {
+  top: 0;
+}
+#nav-toggle.active span:before {
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+#nav-toggle.active span:after {
+  -webkit-transform: translateY(-7px) rotate(-45deg);
+  -ms-transform: translateY(-7px) rotate(-45deg);
+  transform: translateY(-7px) rotate(-45deg);
+  top: 7px;
+}
+/* having some issues with extra space under images */
+.asset { line-height: 0; }
+.asset a { margin-bottom: 0; padding-bottom: 0; line-height: 0; }
+
+/* make videos display properly */
+.video-container {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  padding-bottom: 75%;
+}
+ 
+.video-container .asset iframe {
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* overrides */
+.spacer { padding-top: 15px; }
+#exhibit .container .captioning { padding-top: 3px; font-size: 0.8em; text-align: left; font-style: italic; line-height: 1.2em; }
+#exhibit .container .captioning .title {  }
+
+/* typographic and related changers */
+#index .container p, #exhibit .container p { width: auto; }
+#exhibit .container p
+{
+	width: auto;
+	margin: 0;
+	margin-bottom: 9px;
+}
+body, p, h1, h2, h3, h4 { font-size: 18px; line-height: 24px; }

@@ -50,8 +50,8 @@ class Exhibit
 	
 	///////////////
 	var $x;
-	
-	function default_settings()
+
+	public function default_settings()
 	{
 		$OBJ =& get_instance();
 
@@ -126,7 +126,7 @@ slide: function(event, ui) { $('label#text_box_height_value span').html(ui.value
 		return ($var == $check) ? " selected='selected'" : '';
 	}	
 
-	function Exhibit()
+	public function __construct()
 	{
 		$OBJ =& get_instance();
 
@@ -153,6 +153,11 @@ slide: function(event, ui) { $('label#text_box_height_value span').html(ui.value
 		$this->collapse = (isset($OBJ->hook->options['visual_index_settings']['collapse'])) ? 
 			$OBJ->hook->options['visual_index_settings']['collapse'] : 1;
 	}
+	
+	public function Exhibit()
+    {
+        self::__construct();
+    }
 	
 	
 	// rough example of how to do the resets
@@ -744,6 +749,6 @@ background-position: center top; background-repeat: no-repeat; }";
 #img-container .picture { {$picture_width}{$picture_height} }
 #img-container .picture_holder { padding: 0 0 0 0; }
 #img-container .captioning { height: {$title_block}px; text-align: center;{$caption_width} }
-#img-container .captioning .title { margin-top: 3px; text-align: {$talign}; }";
+#img-container .captioning .title { text-align: {$talign}; }";
 	}
 }

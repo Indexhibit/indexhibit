@@ -8,11 +8,11 @@
 */
 
 body {
-	font-size: 16px;
+	font-size: 13px;
 	font-family: 'Helvetica Neue', Arial, Helvetica, Verdana, sans-serif;
 	background: #fff;
 	color: #000;
-	line-height: 1.4em;
+	line-height: 1.3em;
 	/* font-weight: 300; */
 }
 
@@ -30,14 +30,14 @@ code { font-family: monospace; }
 blockquote { padding-left: 9px; }
 
 /* headings */
-h1 { font-size: 16px; margin-bottom: 1em; font-weight: bold; }
-h2 { font-size: 16px; margin-bottom: 1em; font-weight: bold; }
-h3 { font-size: 16px; margin-bottom: 1em; }
-h4 { font-size: 16px; margin-bottom: 1em; }
+h1 { font-size: 13px; margin-bottom: 1em; font-weight: bold; }
+h2 { font-size: 13px; margin-bottom: 1em; font-weight: bold; }
+h3 { font-size: 13px; margin-bottom: 1em; }
+h4 { font-size: 13px; margin-bottom: 1em; }
 
 /* paragraph width */
 #index p { margin-bottom: 1em; }
-#exhibit p, code, blockquote { width: 600px; margin-bottom: 1em; /* line-height: 1.3em; */ }
+#exhibit p, code, blockquote { width: 450px; margin-bottom: 1em; /* line-height: 1.3em; */ }
 
 /* highlighter style - maybe you want to change colors? */
 .highlight { background: #ccff00; color: #000; }
@@ -62,7 +62,7 @@ h4 { font-size: 16px; margin-bottom: 1em; }
 /* styles for the section titles */
 #index ul.section span.section_title, 
 #index ul.section span.section_title a 
-{ color: black; }
+{ color: black; font-weight: normal; }
 
 /* active section title */
 #index span.active_section_title,
@@ -103,8 +103,3 @@ li.active a:visited, li a.active, li span.active, #index ul.section li.active a:
 /* this is where you pad them separately */
 #index .container {  }
 #exhibit .container {  }
-
-/* size and style of titles and captions (not mobile though) */
-.captioning { margin-top: 2px; }
-.title { font-size: 0.7em; font-style: italic; line-height: 1.2em; }
-.caption { font-size: 0.7em; font-style: italic; line-height: 1.2em; }

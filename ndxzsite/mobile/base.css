@@ -42,7 +42,7 @@ object { display: block; }
 /* styles for the section titles */
 #index ul.section span.section_title, 
 #index ul.section span.section_title a 
-{ cursor: pointer; font-weight: normal; /* font-size: 18px; */ }
+{ cursor: pointer; font-weight: bold; /* font-size: 18px; */ }
 
 /* styles for hovering section titles */
 #index ul.section span.section_title:hover, 
@@ -67,19 +67,16 @@ object { display: block; }
 /* exhibit titles */
 #index ul.section li.exhibit_title {  }
 #index ul.section li.exhibit_title a:link {  }
-#index ul.section li.exhibit_title a:hover { text-decoration: none; }
+#index ul.section li.exhibit_title a:hover {  }
 #index ul.section li.exhibit_title a:active {  }
 #index ul.section li.exhibit_title a:visited {  }
-
-/* this is how it indents - delete if you don't like */
-#index ul.section li.exhibit_title:hover { text-indent: 2px; }
 
 /* index links */
 #index ul.section li.exhibit_link {  }
 #index ul.section li.exhibit_link a:link {  }
 #index ul.section li.exhibit_link a:hover {  }
 #index ul.section li.exhibit_link a:active {  }
-#index ul.section li.exhibit_link a:visted {  }
+#index ul.section li.exhibit_link a:visited {  }
 
 /* active subsection title */
 #index span.active_subsection_title,

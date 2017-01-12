@@ -1,11 +1,22 @@
 var active = 0;
-var preloadFrame = 1;
-var preloadActive = false;
-var preloadAnimTimer;
+var zindex = 999;
+var disable_click = false;
+
+// this is the init function
+$(document).ready(function()
+{
+	// height of image plus height of title/caption
+	// reset the height of the
+	var tmp = $('#slideshow div#slide1000').height();
+	var txt = $('#slideshow div#slide1000 .captioning').height();
+
+	txt = (txt == null) ? 0 : txt;
+	$('#slideshow').height(tmp);
+});
 
 function next()
 {
-	var tmp = img.length;	
+	var tmp = img.length;
 	active = active + 1;
 	if ((active + 1) > tmp) active = 0;
 	getNode(img[active]);
@@ -19,17 +30,25 @@ function previous()
 	getNode(img[active]);
 }
 
+function show(id, order)
+{
+	// we need to set the active position differently
+	active = order;
+	getNode(id);
+}
+
 function getNode(id) 
 {
-	// display loading graphic
+	// display loading
 	loading();
 
 	// get the grow content via ajax
-	$.post(baseurl + '/ndxzsite/plugin/ajax.php', { jxs : 'slideshow', i : id }, 
+	$.post(baseurl + '/ndxzsite/plugin/ajax.php', { jxs : 'slideshow', i : id, z : zindex }, 
 		function(html) 
 		{
-			fillShow(html.output);
-			updatePosition(active);
+			fillShow(html.output, html.height, html.mime);
+			disable_click = false;
+			$('span#total em').html(active + 1);
 	//});
 	}, 'json');
 		
@@ -38,69 +57,83 @@ function getNode(id)
 
 function loading()
 {
-	// get height of current #slideshow
-	var h = $('#slideshow').height();
-	
-	// replacement div
-	//var html = "<div id='slideshow' style='height:" + h + "px;'>";
-	//html += "<div id='loading'><img id='loadimage' src='" + baseurl + "/ndxzsite/img/loading/loading-1.png' /></div>";
-	//html += "</div>";
-	
-	//var html = "<div id='slideshow' style='height:" + h + "px;'>";
-	var html = "<div id='loading' style='color: white; position: absolute; z-index: 100; top: 5px; left: 5px;'>Loading " + (active + 1) + " of " + total + "</div>";
-	//html += "</div>";
-	
-	//$('#slideshow').replaceWith(html);
-	$('.picture').prepend(html);
-	
-	preloadActive = true;
-	preloadAnimStart();
+	// remove previous and next slides
+	$('a#slide-previous').remove();
+	return;
 }
 
-// adapted from Cabel/Panic Fancyzoom - credited totally goes to him
-// http://www.panic.com
-function preloadAnimStart() 
+
+function adjust_height(next)
 {
-	preloadTime = new Date();
-	preloadFrame = 1; preloadActive = true;
-	document.getElementById("loading").src = baseurl+'/ndxzsite/img/loading/loading-'+preloadFrame+'.png';  
-	preloadAnimTimer = setInterval("preloadAnim()", 100);
+	var adjust = 0;
+	var current_height = $('#slideshow div#slide' + zindex).height();
+	
+	$('#slideshow').height(next);
+
+	return;
 }
 
-function preloadAnim(from) 
-{
-	if (preloadActive != false) {
-		document.getElementById("loadimage").src = baseurl+'/ndxzsite/img/loading/loading-'+preloadFrame+'.png';
-		preloadFrame++;
-		if (preloadFrame > 12) preloadFrame = 1;
-	} else {  
-		clearInterval(preloadAnimTimer);
-		preloadAnimTimer = 0;
-		preloadActive = false;
+function fillShow(content, next_height, mime)
+{	
+	// animate
+	if ((fade == true))
+	{
+		$('#slideshow').append(content);
+		
+		var adj_height = $('#slideshow div#slide' + zindex).height();
+		
+		//$('#example').animate({height:200}, {duration: 1000, easing: method1}).animate({height:100}, {duration: 1000, easing: method2}); });
+			
+		//$('#slideshow div#slide' + (zindex + 1)).animate({duration: 1000, easing: 'easeOutQuad'});
+		//$('#slideshow div#slide' + (zindex)).animate({duration: 1000, easing: 'easeInQuad'});
+
+		$('#slideshow div#slide' + (zindex + 1)).fadeOut('1000').queue(function(next){$(this).remove();});
+		//$('#slideshow div#slide' + (zindex + 1)).remove();
+		$('#slideshow div#slide' + zindex).fadeIn('1000');
+		
+		var tmp = $('#slideshow div#slide' + zindex + ' .captioning').height();
+		tmp = (tmp == null) ? 0 : tmp;
+
+		adjust_height(adj_height);
 	}
-}
+	else
+	{
+		$('#slideshow').append(content);
+		
+		var adj_height = $('#slideshow div#slide' + zindex).height();
 
-function fillShow(content)
-{
-	$('#slideshow').replaceWith(content);
+		$('#slideshow div#slide' + (zindex + 1)).remove();
+		$('#slideshow div#slide' + zindex).show();
+		
+		var tmp = $('#slideshow div#slide' + zindex + ' .captioning').height();
+		tmp = (tmp == null) ? 0 : tmp;
+		
+		adjust_height(adj_height);
+	}
 	
-	preloadActive = false;
+	// count down
+	zindex--;
 }
 
-function updatePosition()
+$.fn.preload = function() 
 {
-	$('#slideshow-nav span#total strong').html((active + 1));
+    this.each(function()
+	{
+        $('<img/>')[0].src = baseurl + '/files/dimgs/' + this;
+    });
 }
 
 $(document).keydown(function(e)
 {
 	if (e.keyCode == 37) { 
+		if (disable_click == true) return false;
+		disable_click = true;
 		previous();
-		return false;
 	}
 
 	if (e.keyCode == 39) { 
+		if (disable_click == true) return false;
+		disable_click = true;
 		next();
-		return false;
 	}
 });

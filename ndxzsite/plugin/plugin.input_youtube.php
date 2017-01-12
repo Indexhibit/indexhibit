@@ -21,12 +21,22 @@ End
 
 class input_youtube
 {
+	public function __construct()
+	{
+		
+	}
+	
+	public function input_youtube()
+	{
+		self::__construct();
+	}
+	
 	function input_link()
 	{
 		$OBJ =& get_instance();
 		global $go;
 		
-		return " <a href='?a=system&q=extend&x=youtube&id=$go[id]' rel=\"facebox;height=300;width=400;modal=true\"><img src='asset/img/youtube.gif' title='Youtube' /></a>";
+		return " <a href='?a=system&q=extend&x=youtube&id=$go[id]' rel=\"facebox;height=300;width=400;modal=true\"><img src='asset/img/yt.gif' title='Youtube' /></a>";
 	}
 
 	function input_interface()

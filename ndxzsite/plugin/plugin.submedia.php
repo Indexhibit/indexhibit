@@ -2,6 +2,16 @@
 
 class Submedia
 {
+	public function __construct()
+	{
+		
+	}
+	
+	public function Submedia()
+	{
+		self::__construct();
+	}
+	
 	function display()
 	{
 		$OBJ =& get_instance();
@@ -57,7 +67,7 @@ class Submedia
 			
 			$file = ($page['media_dir'] == '') ? $page['media_file'] : $page['media_dir'] . '/' . $page['media_file'];
 			
-			$s .= "<p>" . $mime($file, $page['media_x'], $page['media_y'], $page['media_thumb']) . "</p>";
+			$s .= "<div>" . $mime($file, $page['media_x'], $page['media_y'], $page['media_thumb']) . "</div>";
 
 		}
 		else
@@ -72,18 +82,22 @@ class Submedia
 
 			$s .= "<p>$return " . $this->array_neighbor($page['media_id'], $page['media_ref_id'], $page['media_file']) . "</p>\n";
 	
-			$s .= "<p><img src='" . BASEURL . $path . '/' . $page['media_ref_id'] . '_' . $page['media_file'] . "' width='$size[0]' height='$size[1]' /></p>\n";
+			$s .= "<div><img src='" . BASEURL . $path . '/' . $page['media_ref_id'] . '_' . $page['media_file'] . "' width='$size[0]' height='$size[1]' /></div>\n";
 		}
 		
 		// this should become an option
 		//$OBJ->page->exhibit['append_menu'][] = "<p id='append_nav'>$return " . $this->array_neighbor($page['media_id'], $page['media_ref_id'], $page['media_file']) . "</p>\n";
 		
-		
+		// this part could be styled better
 		$s .= "<div id='media_info'>\n";
-		if ($page['media_title'] !=  '') $s .= "<h2>" . $page['media_title'] . "</h2>";
-		$s .= $page['media_caption'];
+		
+		$s .= (($page['media_title'] !=  '') && ($page['media_caption'] !=  '')) ? "<p>" : '';
+		$s .= ($page['media_title'] !=  '') ? $page['media_title'] : '';
+		$s .= ($page['media_title'] !=  '') ? ": " : '';
+		$s .= ($page['media_caption'] !=  '') ? strip_tags($page['media_caption'], "a,i,b") : '';
+		$s .= (($page['media_title'] !=  '') && ($page['media_caption'] !=  '')) ? "</p>" : '';
+		
 		$s .= "</div>\n";
-		//$s .= "<p>$page[media_caption]</p>\n";
 		$s .= "\n";
 		//$s .= $this->show_tags($page['media_id']);
 		$s .= "\n";

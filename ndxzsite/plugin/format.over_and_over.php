@@ -41,6 +41,15 @@ class Exhibit
 	var $center = false;
 	var $settings = array();
 
+	public function __construct()
+	{
+		
+	}
+	
+	public function Exhibit()
+	{
+		self::__construct();
+	}
 
 	function default_settings()
 	{

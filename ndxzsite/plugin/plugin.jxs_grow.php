@@ -2,10 +2,18 @@
 
 class Jxs_grow
 {
+	public function __construct()
+	{
+		
+	}
+	
+	public function Jxs_grow()
+	{
+		self::__construct();
+	}
+	
 	function output()
 	{
-		sleep(1);
-	
 		$OBJ =& get_instance();
 		global $default;
 	
@@ -16,8 +24,6 @@ class Jxs_grow
 		$rs = $OBJ->db->fetchRecord("SELECT * FROM ".PX."objects, ".PX."media 
 			WHERE media_id = '$_POST[i]' 
 			AND media_ref_id = id");	
-			
-		sleep(2);
 	
 		$caption = ($rs['media_title'] == '') ? '' : "<div class='title'>" . $rs['media_title'] . "</div>";
 		$caption .= ($rs['media_caption'] == '') ? '' : "<div class='caption'>" . $rs['media_caption'] . "</div>";

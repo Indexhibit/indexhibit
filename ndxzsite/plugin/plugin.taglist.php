@@ -3,6 +3,16 @@
 class Taglist
 {
 	var $counter = 0;
+	
+	public function __construct()
+	{
+		
+	}
+	
+	public function Taglist()
+	{
+		self::__construct();
+	}
 
 	function load()
 	{
