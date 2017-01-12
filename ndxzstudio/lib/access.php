@@ -129,7 +129,7 @@ class Access
 		{
 			sleep(3); // obscure prevention of absuse
 			
-			$clean['userid'] 	= getPOST('uid', null, 'password', 12);
+			$clean['userid'] 	= getPOST('uid', null, 'password', 100);
 			$clean['password'] 	= md5(getPOST('pwd', null, 'password', 12));
 			$clean['user_active'] = 1;
 
