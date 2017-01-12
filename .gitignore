@@ -1,0 +1,13 @@
+# Ignore htaccess
+/.htaccess
+
+# Ignore user uploaded images and files
+files
+
+# Ignore user config, templates, themes, exhibit formats, etc
+ndxzsite
+
+ndxzstudio/license.txt
+ndxzstudio/readme.txt
+
+*.DS_Store
