@@ -4,8 +4,9 @@
 # Ignore user uploaded images and files
 files
 
-# Ignore user config, templates, themes, exhibit formats, etc
-ndxzsite
+# Ignore user config, cache
+ndxzsite/cache
+ndxzsite/config/config.php
 
 ndxzstudio/license.txt
 ndxzstudio/readme.txt
