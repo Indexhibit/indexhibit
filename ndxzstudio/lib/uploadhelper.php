@@ -10,6 +10,11 @@ class Uploadhelper
 		
 	}
 	
+	public function UploadHelper()
+	{
+		self::__construct();
+	}
+	
 	public function coverart()
 	{
 		

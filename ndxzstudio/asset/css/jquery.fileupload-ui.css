@@ -22,13 +22,29 @@
   right: 0;
   margin: 0;
   border: solid transparent;
-  border-width: 0 0 100px 200px;
+  border-width: 0;
   opacity: 0;
   filter: alpha(opacity=0);
   -moz-transform: translate(-300px, 0) scale(4);
   direction: ltr;
   cursor: pointer;
 }
+
+
+.fileinput-button input {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 0;
+      border: solid transparent;
+    /*  border-width: 0 0 100px 200px; */
+      opacity: 0;
+      filter: alpha(opacity=0);
+    /* -moz-transform: translate(-300px, 0) scale(4); */
+      direction: ltr;
+      cursor: pointer;
+    }
+
 .fileupload-buttonbar .btn,
 .fileupload-buttonbar .toggle {
   margin-bottom: 5px;
@@ -139,3 +155,5 @@ table{max-width:100%;background-color:transparent;border-collapse:collapse;borde
 .hide{display:none;}
 .show{display:block;}
 .invisible{visibility:hidden;}
+
+.buttons button.start { margin-left: 500px; }

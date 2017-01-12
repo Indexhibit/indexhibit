@@ -14,7 +14,8 @@ class Upload
 {
     protected $options;
     
-    function __construct($options=null) {
+    function __construct($options=null) 
+    {
         $this->options = array(
             'script_url' => $_SERVER['PHP_SELF'],
 		    'upload_dir' => DIRNAME . '/files/gimgs/',
@@ -60,6 +61,11 @@ class Upload
             $this->options = array_replace_recursive($this->options, $options);
         }
     }
+    
+    public function Upload()
+	{
+		self::__construct();
+	}
 	
 	// new
     protected function getFullUrl() {

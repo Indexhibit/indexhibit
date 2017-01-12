@@ -458,7 +458,7 @@ function getTimeOffset($default='', $name, $attr='')
 	{
 		$hello = date('Y-m-d H:i:s', mktime($time[0]+$a, $time[1], $time[2], $time[4], $time[3], $time[5]));
 		
-		$newdate = strftime("%A, %R %p", strtotime($hello));
+		$newdate = date("G:i", strtotime($hello));
 		
 		($default == $a) ? $sl = "selected ": $sl = "";
 		$s .= option($a, $newdate, $default, $a);
@@ -859,7 +859,7 @@ function the_templates($path, $format='', $default)
  
 	sort($modules);
 		
-	$s = '';
+	$s = [];
 	foreach ($modules as $module)
 	{
 		//$search = array('.php');

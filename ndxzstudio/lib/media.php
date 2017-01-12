@@ -52,11 +52,16 @@ class Media
 	* @param void
 	* @return mixed
 	*/
-	public function Media()
+	public function __construct()
 	{
 		global $default;
 		$this->uploads = $default;
 		$this->upload_max_size();
+	}
+	
+	public function Media()
+	{
+		self::__construct();
 	}
 	
 	/**

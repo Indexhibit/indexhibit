@@ -27,18 +27,10 @@ function load_path($type)
 // can't return direct references (weird bug)
 function &get_instance()
 {
-	global $OBJ, $INDX;
+	global $OBJ;
 	
-	if (is_object($INDX))
-	{
-		$reference = $INDX;
-		return $reference;
-	}
-	else
-	{
-		$reference = $OBJ;
-		return $reference;
-	}
+	$reference = $OBJ;
+	return $reference;
 }
 
 
@@ -291,7 +283,7 @@ function front_error($message = '', $code = 404)
 	}
 
 	ob_start();
-	include_once DIRNAME . '/ndxzsite/error.php';
+	include_once DIRNAME . '/ndxzsite/errors.php';
 	$buffer = ob_get_contents();
 	ob_end_clean();
 	echo $buffer;
@@ -306,7 +298,7 @@ function show_error($message='')
 	
 	$message = $lang->word($message);
 	
-	$error =& load_class('error', TRUE, 'lib');
+	$error =& load_class('errors', TRUE, 'lib');
 	header('Status: 503 Service Unavailable'); // change to right error note
 	echo $error->show_error($message);
 	exit;
@@ -314,16 +306,26 @@ function show_error($message='')
 
 
 // could use refinement - rethink
-function show_login($message='')
+function show_login($message='', $showreset=true, $no_load_login=false)
 {
 	$tooMany = false;
 
 	// let's track failed login attempts
  	if (isset($_COOKIE['ndxz_accessed']))
 	{
+		// show reset form
 		if ((int) $_COOKIE['ndxz_accessed'] > 3)
 		{
 			$tooMany = true;
+
+			if ($showreset == false)
+			{
+				$tooMany = false;
+			}
+		}
+		else
+		{
+			$tooMany = false;
 		}
 	}
 
@@ -346,19 +348,30 @@ function show_login($message='')
 	}
 	else
 	{	
-		$login = "<form method='post' action=''>
-		<h1>Indexhibit</h1>
-		<br />
-		<p><strong>".$lang->word('login').":</strong> (".$lang->word('number chars').") 
-			<input name='uid' type='text' maxlength='12' /></p>
-		<p><strong>".$lang->word('password').":</strong> (".$lang->word('number chars').") 
-			<input name='pwd' type='password' maxlength='12' /></p>
-		<p><input name='submitLogin' type='submit' value='".$lang->word('login')."' class='login-button' /></p>
-		<p>".$lang->word($message)."&nbsp;</p>
-		</form>";
+		if ($no_load_login == false)
+		{
+			$login = "<form method='post' action=''>
+<h1>Indexhibit</h1>
+<br />
+<p><strong>".$lang->word('login').":</strong> 
+<input name='uid' type='text' maxlength='100' /></p>
+<p><strong>".$lang->word('password').":</strong> 
+<input name='pwd' type='password' maxlength='32' /></p>
+<p><input name='submitLogin' type='submit' value='".$lang->word('login')."' class='login-button' /></p>
+<p>".$lang->word($message)."&nbsp;</p>
+</form>";
+		}
+		else // do not show any login
+		{
+			$login = "<form>
+<h1>Indexhibit</h1>
+<br />
+<p>".$lang->word($message)."&nbsp;</p>
+</form>";
+		}
 	}
 	
-	$error =& load_class('error', TRUE, 'lib');
+	$error =& load_class('errors', TRUE, 'lib');
 	echo $error->show_login($login);
 	exit;
 }

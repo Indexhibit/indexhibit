@@ -16,7 +16,7 @@ class Exhibits extends Router
 	public $enable_linker = true;
 	public $enable_bg = false;
 	
-	public function Exhibits()
+	public function __construct()
 	{
 		parent::Router();
 		
@@ -32,7 +32,12 @@ class Exhibits extends Router
 			'upd_section', 'upd_cbox', 'upd_delete', 'unpublish_x',
 			'del_bg_img', 'bg_img_upload', 'upd_jxs', 'upd_img', 'upd_jxdelimg',
 			'upd_jxtext');
-	}	
+	}
+	
+	public function Exhibits()
+    {
+        self::__construct();
+    }
 	
 	public function _submit()
 	{

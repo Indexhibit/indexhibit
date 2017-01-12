@@ -7,7 +7,7 @@
 * Used for generating frontend template
 * (This really needs some work still - but it's functional for now)
 * 
-* @version 1.0
+* @version 1.1
 * @author Vaska 
 */
 class Page
@@ -17,7 +17,6 @@ class Page
 	public $lib_js_add;
 	public $exhibitz 		= array();
 	public $protected 		= false;
-	public $last_visit;
 	public $cached 		= true;
 	public $js_lib_table 	= array();
 	public $js_jquery_table 	= array();
@@ -33,7 +32,7 @@ class Page
 	* @param void
 	* @return mixed
 	*/
-	public function Page()
+	public function __construct()
 	{	
 		$OBJ =& get_instance();
 
@@ -52,6 +51,11 @@ class Page
 			//}
 		//}
 	}
+	
+	public function Page()
+    {
+        self::__construct();
+    }
 	
 	public function version()
 	{
@@ -76,21 +80,7 @@ class Page
 		return $F->getDisplayImages();
 		//////////////////
 	}
-	
-	
-	/**
-	* Returns void
-	*
-	* @param void
-	* @return void
-	*/
-	public function last_visit()
-	{
-		// TEMPORARY!
-		date_default_timezone_set('America/New_York');
-		
-		setcookie('ndxz_last', getNow(), time()+3600*24*365, '/');
-	}
+
 	
 	/**
 	* Returns exhibition format parameters
@@ -103,9 +93,6 @@ class Page
 		$exhibit = array();
 		
 		$OBJ =& get_instance();
-		
-		// let's keep track of visits
-		$this->last_visit();
 		
 		// what about section passwords?
 		if ($OBJ->vars->exhibit['sec_pwd'] != '')
@@ -494,9 +481,6 @@ class Page
 			$this->protected = false;
 			return;
 		}
-
-		// let's keep track of visits
-		$this->last_visit();
 		
 		// what about section passwords?
 		if ($OBJ->vars->exhibit['sec_pwd'] != '')

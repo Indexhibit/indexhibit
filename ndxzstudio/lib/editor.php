@@ -22,10 +22,16 @@ class Editor
 	* @param void
 	* @return array
 	*/
+	public function __construct()
+	{
+		
+	}
+	
 	public function Editor()
 	{
-
+		self::__construct();
 	}
+
 	
 	public function output()
 	{

@@ -6,8 +6,18 @@
 * @version 1.0
 * @author Vaska 
 */
-class Error
+class Errors
 {
+	public function __construct()
+	{
+		
+	}
+	
+	public function Errors()
+    {
+        self::__construct();
+    }
+	
 	/**
 	* Returns error page
 	*
@@ -44,7 +54,3 @@ class Error
 		return $buffer;
 	}
 }
-
-
-
-?>

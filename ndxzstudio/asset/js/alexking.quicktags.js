@@ -922,16 +922,20 @@ function edInsertContent(myField, myValue) {
 	}
 }
 
-function edInsertLink(myField, i, defaultValue) {
-	if (!edCheckOpenTags(i)) {
-		var URL = defaultValue;
-		edButtons[i].tagStart = '<a href="' + URL + '">';
-		edInsertTag(myField, i);
-	} else {
-		var URL = defaultValue;
-		edInsertTag(myField, i);
-	}
-	
+/* thanks to Tac Rapo for pointing out this bug */
+function edInsertLink(myField, i, defaultValue, target)
+{
+   var target = (target == '_blank') ? " target='_blank'" : '';
+
+   if (!edCheckOpenTags(i)) {
+       var URL = defaultValue;
+       edButtons[i].tagStart = '<a href="' + URL + '"' + target + '>';
+       edInsertTag(myField, i);
+   } else {
+       var URL = defaultValue;
+       edInsertTag(myField, i);
+   }
+
 	faceboxClose();
 }
 

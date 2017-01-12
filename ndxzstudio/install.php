@@ -36,7 +36,9 @@
 		
 		require_once '../ndxzsite/config/config.php';
 		
-		if (mysql_ver() <= 4)
+		$link = @mysqli_connect($indx['host'], $indx['user'], $indx['pass']);
+		$ver = mysqli_ver($link);
+		if (is_numeric($ver) && $ver <= 4)
 		{
 			$isam = 'TYPE=MyISAM';
 		}
@@ -46,8 +48,6 @@
 		}
 		
 		$sql = array();
-		
-		define('PX', $c['n_appnd']);
 
 		$sql[] = "CREATE TABLE IF NOT EXISTS `iptocountry` (
 		  `ip_from` double NOT NULL DEFAULT '0',
@@ -322,26 +322,27 @@
 		(3, 'tag', 'exhibits', 3, 1, 1, '', '2010-03-04 05:51:22', '/tag', 'Tags', 3, 0, 0);";
 
 		$sql[] = "INSERT INTO `".PX."settings` (`adm_id`, `site_name`, `installdate`, `version`, `curr_time`, `site_lang`, `time_format`, `tagging`, `help`, `hibernate`, `obj_name`, `obj_theme`, `obj_itop`, `obj_ibot`, `obj_org`, `obj_apikey`, `site_format`, `site_offset`, `site_vars`) VALUES
-		(1, '".addslashes($c['n_site'])."', '".getNow()."', '" . VERSION . "', 1, 'en-us', '%d %B %Y', 1, 0, '', '".addslashes($c['n_site'])."', 'default', \"<h1><a href='/' title='{{obj_name}}'>{{obj_name}}</a></h1>\", \"<p>Copyright 2007-2012<br />\n<a href='http:\/\/www\.indexhibit\.org\/'>Built with Indexhibit</a></p>\", 2, 'asdfsafasfadsfdfs', '%d %B %Y', 0, 'a:3:{s:9:\"passwords\";s:1:\"1\";s:9:\"templates\";s:1:\"0\";s:4:\"tags\";s:1:\"1\";}');";
+		(1, '".addslashes($c['n_site'])."', '".getNow()."', '" . VERSION . "', 1, 'en-us', '%d %B %Y', 1, 0, '', '".addslashes($c['n_site'])."', 'default', \"<h1><a href='/' title='{{obj_name}}'>{{obj_name}}</a></h1>\", \"<p><a href='http:\/\/www\.indexhibit\.org\/'>Built with Indexhibit</a></p>\", 2, 'asdfsafasfadsfdfs', '%d %B %Y', 0, 'a:3:{s:9:\"passwords\";s:1:\"1\";s:9:\"templates\";s:1:\"0\";s:4:\"tags\";s:1:\"1\";}');";
 
 		$sql[] = "INSERT INTO `".PX."users` (`ID`, `userid`, `password`, `email`, `threads`, `writing`, `user_offset`, `user_format`, `user_lang`, `user_hash`, `user_help`, `user_mode`, `user_name`, `user_surname`, `user_admin`, `user_active`, `user_client`) VALUES
 		(1, 'index1', '22645ed8b5f5fa4b597d0fe61bed6a96', '".addslashes($c['n_email'])."', 15, 0, 0, '%d %B %Y', '$picked', '5f8bfb51cc5c437a603abe3766d004d8', 0, 1, '".addslashes($c['n_fname'])."', '".addslashes($c['n_lname'])."', 1, 1, 0);";
 
-		
-		$link = @mysql_connect($indx['host'], $indx['user'], $indx['pass']);
-		if (@mysql_select_db($indx['db'], $link))
+		if (mysqli_select_db($link, $indx['db']))
 		{
 			foreach ($sql as $install)
 			{
-				@mysql_query($install);
+				$result = mysqli_query($link, $install);
+				if (!$result) {
+				    die(mysqli_error($link));
+                }
 			}
 		}
 	}
 
 
-	function mysql_ver()
+	function mysqli_ver($link)
 	{
-		$ver = mysql_get_client_info();
+		$ver = mysqli_get_client_info($link);
 		$num = explode('.', $ver);
 		return $num[0];
 	}
@@ -379,7 +380,7 @@
 \$indx['pass'] 		= '$c[n_pwd]';
 \$indx['host'] 		= '$c[n_host]';
 \$indx['sql']		= 'mysql';
-define('PX', '$c[n_appnd]');";
+if (!defined('PX')) { define('PX', '$c[n_appnd]'); }";
 
 		if (is_writable($path)) 
 		{
@@ -442,6 +443,8 @@ define('PX', '$c[n_appnd]');";
 		$c['n_pwd']		= getPOST('n_pwd', '', 'connect', 32);
 		$c['n_site']	= getPOST('n_site', '', 'none', 35);
 		$c['n_appnd']	= getPOST('n_appnd', '', 'none', 10);
+
+        define("PX", $c['n_appnd']);
 		
 		// these need to be inserted into the database...
 		$c['n_fname']	= getPOST('n_fname', '', 'none', 35);
@@ -450,14 +453,12 @@ define('PX', '$c[n_appnd]');";
 		
 		$GLOBALS['c'] = $c;
 		
-		//print_r($c); exit;
-		
 		// check connection - tables exist?
-		$link = @mysql_connect($c['n_host'], $c['n_user'], $c['n_pwd']);
+		$link = mysqli_connect($c['n_host'], $c['n_user'], $c['n_pwd']);
 	
-		if (@mysql_select_db($c['n_name'], $link) && (writeConfig() == TRUE))
+		if (mysqli_select_db($link, $c['n_name']) && (writeConfig() == TRUE))
 		{	
-			$result = @mysql_query("SELECT * FROM ".PX."settings WHERE adm_id = 1");
+			$result = mysqli_query($link, "SELECT * FROM ".PX."settings WHERE adm_id = 1");
 		
 			if ($result)
 			{
@@ -468,12 +469,12 @@ define('PX', '$c[n_appnd]');";
 				exit;
 			}
 			else
-			{
+			{	
 				// this is where we try to install
 				install_db();
 			
 				// let's check
-				$result = @mysql_query("SELECT * FROM ".PX."settings WHERE adm_id = 1");
+				$result = mysqli_query($link, "SELECT * FROM ".PX."settings WHERE adm_id = 1");
 			
 				if ($result)
 				{

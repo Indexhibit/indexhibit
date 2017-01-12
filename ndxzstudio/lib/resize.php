@@ -23,11 +23,16 @@ class Resize
 	public $media_ref_id;
 	public $media_file;
 	
-	public function Resize()
+	public function __construct()
 	{
 		$this->resize = load_class('media', TRUE, 'lib');
 		
 		$this->path = DIRNAME . '/files/dimgs/';
+	}
+	
+	public function Resize()
+	{
+		self::__construct();
 	}
 	
 	//$R->reformat($new_width, $this->force_height, $size, $go, $OBJ->vars->exhibit['id'], $name);

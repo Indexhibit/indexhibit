@@ -4,7 +4,7 @@
 ini_set("magic_quotes_runtime", 0);
 
 // version
-define('VERSION', '2.0');
+define('VERSION', '2.1');
 	
 // Paths/definitions of things (relative to index file)
 define('LIBPATH', 'lib');
@@ -59,7 +59,7 @@ $default['medias'] = array_merge($default['images'], $default['media'], $default
 $default['section_types'] = array(0 => 'default', 1 => 'chronological');
 
 // this drives the tabs in system/admin
-$default['system_admin'] = array('theme', 'formats', 'plugins', 'assets', 'spacer', 'settings', 'sections', 'tag', 'spacer', 'statistics', 'spacer', 'users');
+$default['system_admin'] = array('theme', 'formats', 'plugins', 'spacer', 'settings', 'sections', 'assets', 'tag', 'spacer', 'statistics', 'spacer', 'users');
 
 // files sources
 $default['filesource'] = array('exhibit', 'all', 'section', 'subsection', 'tag');

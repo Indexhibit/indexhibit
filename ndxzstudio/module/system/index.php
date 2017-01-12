@@ -7,7 +7,7 @@ class System extends Router
 	public $tabs		= array();
 	public $reset		= false;
 
-	public function System()
+	public function __construct()
 	{
 		parent::Router();
 		
@@ -22,6 +22,10 @@ class System extends Router
 		$this->tabs = $this->default['system_admin'];
 	}
 	
+	public function System()
+	{
+		self::__construct();
+	}
 	
 	public function _submit()
 	{
@@ -2915,6 +2919,7 @@ var baseurl = '" . BASEURL . "';";
 	
 	public function page_extensions_enable()
 	{
+		$OBJ =& get_instance();
 		global $go;
 
 		if ($this->access->is_admin() == false) { system_redirect("?a=$go[a]"); }
@@ -2955,8 +2960,7 @@ var baseurl = '" . BASEURL . "';";
 					$p['pl_file'] = $key;
 					
 					// we really need this?
-					$p = array_map('mysql_real_escape_string', $p);
-					
+					//$p = array_map('mysql_real_escape_string', $p);
 					$last = $this->db->insertArray(PX.'plugins', $p);
 					
 					// if primary has options
@@ -3046,9 +3050,9 @@ var baseurl = '" . BASEURL . "';";
 				$p['pl_options_build'] = $plugin['options'];
 					
 				// we really need this?
-				$p = array_map('mysql_real_escape_string', $p);
+				//$p = array_map('mysqli_real_escape_string', $p);
 					
-				$last = $this->db->insertArray(PX.'plugins', $p);
+				$last = $this->db->insertArray(PX.'plugins', $p); 
 			}
 		}
 
@@ -3114,15 +3118,15 @@ var baseurl = '" . BASEURL . "';";
 				$p['pl_desc'] = $plugin['description'];
 				$p['pl_options_build'] = $plugin['options'];
 					
-				// look into why this was put here...
-				$p = array_map('mysql_real_escape_string', $p);
+				// we really need this?
+				$p = array_map('mysqli_real_escape_string', $p);
 					
 				$last = $this->db->insertArray(PX.'plugins', $p);
-				}
 			}
+		}
 
-			system_redirect("?a=$go[a]&q=$go[q]&x=tagedit&id=$last");
-			exit;
+		system_redirect("?a=$go[a]&q=$go[q]&x=tagedit&id=$last");
+		exit;
 	}
 	
 	
@@ -4783,8 +4787,6 @@ var ide = '$go[id]';";
 			
 			// we need to clean up the path thing
 			$clean['sec_path'] = $folder_name->urlStrip($temp['sec_prepend'] . '/' . $clean['section']);
-			
-			//echo $clean['sec_path']; exit;
 			
 			$last = $this->db->insertArray(PX.'sections', $clean);
 			

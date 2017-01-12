@@ -23,10 +23,15 @@ class Hook
 	* @param void
 	* @return array
 	*/
-	public function Hook()
+	public function __construct()
 	{
 		
 	}
+	
+	public function Hook()
+    {
+        self::__construct();
+    }
 	
 	
 	public function register_hook($hook)

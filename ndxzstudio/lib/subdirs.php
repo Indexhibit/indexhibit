@@ -19,9 +19,14 @@ class Subdirs
 	public $singleSub = array();
 	public $id;
 	
-	public function Subdirs()
+	public function __construct()
 	{
 
+	}
+	
+	public function Subdirs()
+	{
+		self::__construct();
 	}
 	
 	public function get_section_info()

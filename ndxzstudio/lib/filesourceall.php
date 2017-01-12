@@ -338,6 +338,7 @@ class FilesourceAll
 					$out[$i][$key]['media_path'] = $OBJ->baseurl . $path . '/' . $do['media_ref_id'] . '_' . $do['media_file'];
 					$out[$i][$key]['media_thumb'] = $filename;
 					$out[$i][$key]['media_thumb_path'] = $OBJ->baseurl . $path . '/' . $filename;
+					$out[$i][$key]['media_thumb_source'] = $do['media_thumb'];
 					
 					//$out[$i][$key]['media_thumb'] = $filename;
 					//$out[$i][$key]['media_thumb_path'] = $OBJ->baseurl . GIMGS . '/' . $filename;
@@ -375,6 +376,7 @@ class FilesourceAll
 							$out[$i][$key]['media_path'] = $OBJ->baseurl . $path . '/' . $do['media_ref_id'] . '_' . $do['media_file'];
 							$out[$i][$key]['media_thumb'] = $filename;
 							$out[$i][$key]['media_thumb_path'] = $OBJ->baseurl . $path . '/' . $filename;
+							$out[$i][$key]['media_thumb_source'] = $do['media_thumb'];
 							
 							//$out[$i][$key]['media_thumb'] = 'th-' . $do['media_ref_id'] . '_' . $do['media_thumb'];
 							//$out[$i][$key]['media_thumb_path'] = $OBJ->baseurl . GIMGS . '/th-' . $do['media_ref_id'] . '_' . $do['media_thumb'];

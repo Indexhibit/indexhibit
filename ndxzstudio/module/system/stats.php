@@ -34,7 +34,7 @@ function recent_stats()
 		}
 
 		// delete the archived
-		//$OBJ->db->deleteArray(PX.'stats', "hit_month <= '$start_month'");
+		$OBJ->db->deleteArray(PX.'stats', "hit_month <= '$start_month'");
 	}
 }
 

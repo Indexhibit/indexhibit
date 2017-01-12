@@ -27,10 +27,15 @@ class Vars
 	// useful when you are in sections or things like that
 	public $results		= array();
 	
-	public function __contstruct()
+	public function __construct()
 	{
 		global $default;
 
 		$this->default = $default;
+	}
+	
+	public function Vars()
+	{
+		self::__construct();
 	}
 }

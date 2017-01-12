@@ -2,19 +2,20 @@
 
 /**
 * Database Class
-* 
+*
 * @version 1.0
+* @author Paul Schrieber
 * @author Vaska
 */
-	
+
 class Db
 {
-	public $theQuery;
-	public $link;
-	
+	var $theQuery;
+	var $link;
+
 
 	/**
-	* Construct 
+	* Construct
 	*
 	* @param void
 	* @return mixed
@@ -35,14 +36,14 @@ class Db
 	public function initialize()
 	{
 		global $indx;
-		
+
 		if (!$indx['host']) $this->db_out_of_order();
-	
-		$this->link = @mysql_connect($indx['host'], $indx['user'], $indx['pass']);
-			
+
+		$this->link = mysqli_connect($indx['host'], $indx['user'], $indx['pass']);
+
 		if (!$this->link) $this->db_out_of_order();
 
-		mysql_select_db($indx['db']);
+		mysqli_select_db($this->link, $indx['db']);
 		register_shutdown_function(array(&$this, 'close'));
 	}
 
@@ -56,13 +57,13 @@ class Db
 	public function query($query='')
 	{
 		$this->theQuery = $query;
-		if (!$this->theQuery) return false;	
-		return mysql_query($this->theQuery, $this->link);
+		if (!$this->theQuery) return false;
+		return mysqli_query($this->link, $this->theQuery);
 	}
-		
+
 
 	/**
-	* Sets the database to be utf-8 
+	* Sets the database to be utf-8
 	*
 	* @param void
 	* @return null
@@ -82,13 +83,13 @@ class Db
 	*/
 	public function getCount($query='')
 	{
-		if ($rs = $this->query($query)) 
+		if ($rs = $this->query($query))
 		{
-			$num = (mysql_num_rows($rs) != 0) ? mysql_result($rs,0) : '';
-			mysql_free_result($rs);
-			return $num;
+			$row = $rs->fetch_row();
+			mysqli_free_result($rs);
+			return $row[0];
 		}
-		
+
 		return 0;
 	}
 
@@ -102,19 +103,19 @@ class Db
 	public function fetchArray($query='')
 	{
 		$rs = $this->query($query);
-		
+
 		if ($rs) {
-			if (mysql_num_rows($rs) > 0) 
+			if (mysqli_num_rows($rs) > 0)
 			{
-				while ($arr = mysql_fetch_assoc($rs)) $out[] = $arr;
+				while ($arr = mysqli_fetch_assoc($rs)) $out[] = $arr;
 				return $out;
 			}
 		}
-		
+
 		return false;
 	}
 
-	
+
 	/**
 	* Returns array of record
 	*
@@ -122,19 +123,19 @@ class Db
 	* @return mixed
 	*/
 	public function fetchRecord($query='', $debug = false)
-	{	
+	{
 		if ($debug == true) { echo $query; exit; }
 
 		$rs = $this->query($query);
-		
+
 		if ($rs) {
-			if (mysql_num_rows($rs) > 0) 
+			if (mysqli_num_rows($rs) > 0)
 			{
-				$arr = mysql_fetch_assoc($rs);			
+				$arr = mysqli_fetch_assoc($rs);
 				return $arr;
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -149,14 +150,14 @@ class Db
 	{
 		if ($rs = $this->query($query))
 		{
-			$lastid = mysql_insert_id($this->link);
+			$lastid = mysqli_insert_id($this->link);
 			if ($lastid) return $lastid;
 		}
-		
+
 		return false;
 	}
-	
-	
+
+
 	/**
 	* Returns array of record(s)
 	*
@@ -169,7 +170,7 @@ class Db
 	public function selectArray($table, $array, $type='array', $cols='')
 	{
 		$cols = ($cols == '') ? '*' : $cols;
-		
+
 		if (is_array($array))
 		{
 			foreach ($array as $key => $value)
@@ -177,9 +178,9 @@ class Db
 				$select[] = "$key = " . $this->escape($value) . " ";
 			}
 
-			$query = "SELECT $cols FROM $table WHERE 
+			$query = "SELECT $cols FROM $table WHERE
 				" . implode(' AND ', $select) . "";
-				
+
 			if ($type == 'array')
 			{
 				return $this->fetchArray($query);
@@ -192,7 +193,7 @@ class Db
 
 		return false;
 	}
-	
+
 
 	/**
 	* Returns id of inserted record
@@ -208,14 +209,16 @@ class Db
 			foreach ($array as $key => $value)
 			{
 				$fields[] = $key;
-				$values[] = $this->escape($value); 
+				$values[] = $this->escape($value);
 			}
-			
-			$query = "INSERT INTO $table 
-				(" . implode(', ', $fields) . ") 
-				VALUES 
+
+			$query = "INSERT INTO $table
+				(" . implode(', ', $fields) . ")
+				VALUES
 				(" . implode(', ', $values) . ")";
 				
+			//echo $query; exit;
+
 			if ($debug == true) { echo $query; exit; }
 
 			return $this->insertRecord($query);
@@ -224,7 +227,7 @@ class Db
 		return false;
 	}
 
-	
+
 	/**
 	* Returns boolean
 	*
@@ -241,11 +244,11 @@ class Db
 			{
 				$updates[] = "$key = " . $this->escape($value) . " ";
 			}
-			
-			$query = "UPDATE $table SET 
-				" . implode(', ', $updates) . " 
+
+			$query = "UPDATE $table SET
+				" . implode(', ', $updates) . "
 				WHERE $id";
-				
+
 			if ($debug == true) { echo $query; exit; }
 
 			return $this->updateRecord($query);
@@ -253,8 +256,8 @@ class Db
 
 		return false;
 	}
-	
-	
+
+
 	/**
 	* Returns boolean
 	*
@@ -267,8 +270,8 @@ class Db
 		$query = "DELETE FROM $table WHERE $id";
 		return $this->deleteRecord($query);
 	}
-	
-	
+
+
 	/**
 	* Returns string
 	*
@@ -276,50 +279,46 @@ class Db
 	* @return string
 	*/
 	public function escape($str)
-	{	
+	{
 		switch (gettype($str))
 		{
 			case 'string'	:	$str = "'" . $this->escape_str($str) . "'";
 				break;
 			case 'boolean'	:	$str = ($str === FALSE) ? 0 : 1;
 				break;
-			
+
 			//review
 			default			:	$str = (($str == NULL) || ($str == ''))  ? "''" : "'" . $this->escape_str($str) . "'";
 				break;
-		}		
+		}
 
 		return $str;
 	}
-	
-	
+
+
 	/**
 	* Returns string
 	*
 	* @param string $str
 	* @return string
 	*/
-	public function escape_str($str)	
-	{	
+	public function escape_str($str)
+	{
 		if (function_exists('get_magic_quotes_gpc'))
 		{
 			if (get_magic_quotes_gpc()) $str = stripslashes($str);
 		}
 
-		if (function_exists('mysql_real_escape_string'))
+		if (function_exists('mysqli_real_escape_string'))
 		{
-			return mysql_real_escape_string($str, $this->link);
-		}
-		elseif (function_exists('mysql_escape_string'))
-		{
-			return mysql_escape_string($str);
+			return mysqli_real_escape_string($this->link, $str);
 		}
 		else
 		{
 			return addslashes($str);
 		}
 	}
-	
+
 
 	/**
 	* Returns boolean
@@ -333,7 +332,7 @@ class Db
 		{
 			return true;
 		}
-		
+
 		return false;
 	}
 
@@ -346,24 +345,24 @@ class Db
 	*/
 	public function updateRecord($query='')
 	{
-		if ($rs = $this->query($query)) 
+		if ($rs = $this->query($query))
 		{
 			return true;
 		}
-		
+
 		return false;
 	}
 
 
 	/**
-	* Returns object - closes conenction 
+	* Returns object - closes conenction
 	*
 	* @param void
 	* @return objet
 	*/
 	public function close()
 	{
-		mysql_close($this->link);
+		mysqli_close($this->link);
 	}
 
 
@@ -373,10 +372,10 @@ class Db
 	* @param void
 	* @return string
 	*/
-	public function db_out_of_order() 
+	public function db_out_of_order()
 	{
 		show_error('Database is unavailable');
 		exit;
 	}
-			
+
 }

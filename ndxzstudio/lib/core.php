@@ -27,7 +27,7 @@ class Core
 	* @param void
 	* @return array
 	*/
-	public function Core()
+	public function __construct()
 	{
 		global $default;
 		
@@ -35,6 +35,11 @@ class Core
 		
 		$this->load_db();
 	}
+	
+	public function Core()
+    {
+        self::__construct();
+    }
 	
 	/**
 	* Return language and core classes

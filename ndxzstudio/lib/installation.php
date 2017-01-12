@@ -9,11 +9,11 @@ class Installation
 {
 	public $indexhibit_version;
 	public $php_version;
-	public $mysql_version;
+	public $mysqli_version;
 	public $template;
 	public $ouptput;
 
-	public function Installation()
+	public function __construct()
 	{
 		require_once '../ndxzsite/config/options.php';
 		require_once 'common.php';
@@ -23,7 +23,12 @@ class Installation
 		require_once './lang/index.php';
 
 		// the basic things
-		$this->mysql_ver();
+		//$this->mysqli_ver();
+	}
+	
+	public function Installation()
+	{
+		self::__construct();
 	}
 	
 	public function test()
@@ -69,11 +74,11 @@ class Installation
 		
 	}
 	
-	public function mysql_ver()
+	public function mysqli_ver($link)
 	{
-		$ver = mysql_get_client_info();
+		$ver = mysqli_get_client_info($link);
 		$num = explode('.', $ver);
-		$this->mysql_version = $num[0];
+		$this->mysqli_version = $num[0];
 	}
 	
 	public function upgrade()

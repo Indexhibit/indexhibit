@@ -5,9 +5,7 @@
 // -----------------------------------------------------------
 
 // hide errors for the live site
-//error_reporting(0);
-
-ob_start('ob_gzhandler');
+error_reporting(0);
 
 // the basics
 if (file_exists('../ndxzsite/config/config.php')) require_once '../ndxzsite/config/config.php';
@@ -50,7 +48,7 @@ $OBJ->lang->setlang($OBJ->access->prefs['user_lang']);
 $OBJ->goto_module($OBJ->go['a']);
 
 // load collections add-on if it exists
-$OBJ->load_collector($OBJ->go['a'], $OBJ->go['oid']);
+//$OBJ->load_collector($OBJ->go['a'], $OBJ->go['oid']);
 
 // we load this before anything happens so we can override
 // you can only have one at a time...
@@ -59,7 +57,7 @@ if ($OBJ->hook->registered_hook('update_module')) $OBJ->extend_module($OBJ->hook
 // pretunnel hooks
 
 // goto the module method. submits happen here too.
-$OBJ->tunnel($OBJ->$go['a'], $OBJ->go['a'], $OBJ->go['q']);
+$OBJ->tunnel($OBJ->go['a'], $OBJ->go['a'], $OBJ->go['q']);
 
 // output
 header('Content-Type: text/html; charset=utf-8'); 
