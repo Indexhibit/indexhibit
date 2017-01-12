@@ -9,3 +9,5 @@ ndxzsite
 
 ndxzstudio/license.txt
 ndxzstudio/readme.txt
+
+*.DS_Store
