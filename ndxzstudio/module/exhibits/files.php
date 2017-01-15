@@ -148,7 +148,7 @@ function getThemes($path, $default)
 		{
 			while (($module = readdir($fp)) !== false) 
 			{
-				if ((!preg_match("/^_/i",$module)) && (!preg_match("/^CVS$/i",$module)) && (!preg_match("/.php$/i",$module)) && (!preg_match("/.html$/i",$module)) && (!preg_match("/.DS_Store/i",$module)) && (!preg_match("/\./i",$module)) && (!preg_match("/plugin/i", $module)) && (!preg_match("/css/i", $module)) && (!preg_match("/js/i", $module)) && (!preg_match("/img/i", $module)))
+				if ((!preg_match("/^_/i",$module)) && (!preg_match("/^CVS$/i",$module)) && (!preg_match("/.php$/i",$module)) && (!preg_match("/.html$/i",$module)) && (!preg_match("/.DS_Store/i",$module)) && (!preg_match("/\./i",$module)) && (!preg_match("/plugin/i", $module)) && (!preg_match("/css/i", $module)) && (!preg_match("/js/i", $module)) && (!preg_match("/img/i", $module))  && (!preg_match("/mobile/i", $module)))
 				{      
 					$modules[] = $module;
 				}
@@ -261,14 +261,18 @@ function getPresent($path, $default)
 	sort($modules);
 		
 	$s = '';
+	
 	foreach ($modules as $module)
 	{
-		$search = array('format.','.php');
-		$replace = array('','');
-		$module = str_replace($search, $replace, $module);
-		$name = str_replace('_', ' ', $module);
+		if ($module != "format.mobile.php")
+		{
+			$search = array('format.','.php');
+			$replace = array('','');
+			$module = str_replace($search, $replace, $module);
+			$name = str_replace('_', ' ', $module);
 
-		$s .= option($module, ucwords($name), $module, $default);
+			$s .= option($module, ucwords($name), $module, $default);
+		}
 	}
 	
 	return select('obj_present', "id='ajx-present' style='width: 150px;'", $s);

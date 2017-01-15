@@ -709,7 +709,7 @@ function getThemes($path, $default)
 		{
 			while (($module = readdir($fp)) !== false) 
 			{
-				if ((!preg_match("/^_/i",$module)) && (!preg_match("/^CVS$/i",$module)) && (!preg_match("/.php$/i",$module)) && (!preg_match("/.html$/i",$module)) && (!preg_match("/.DS_Store/i",$module)) && (!preg_match("/\./i",$module)) && (!preg_match("/plugin/i", $module)) && (!preg_match("/css/i", $module)) && (!preg_match("/js/i", $module)) && (!preg_match("/img/i", $module)) && (!preg_match("/cache/i", $module)) && (!preg_match("/config/i", $module)))
+				if ((!preg_match("/^_/i",$module)) && (!preg_match("/^CVS$/i",$module)) && (!preg_match("/.php$/i",$module)) && (!preg_match("/.html$/i",$module)) && (!preg_match("/.DS_Store/i",$module)) && (!preg_match("/\./i",$module)) && (!preg_match("/plugin/i", $module)) && (!preg_match("/css/i", $module)) && (!preg_match("/js/i", $module)) && (!preg_match("/img/i", $module)) && (!preg_match("/cache/i", $module)) && (!preg_match("/config/i", $module)) && (!preg_match("/mobile/i", $module)))
 				{      
 					$modules[] = $module;
 				}

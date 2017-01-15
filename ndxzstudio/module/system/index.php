@@ -404,7 +404,9 @@ class System extends Router
 		
 		// ++++++++++++++++++++++++++++++++++++++++++++++++++++
 		
-		if ($_GET['x'] != 'complete')
+		$x = (isset($_GET['x'])) ? $_GET['x'] : '';
+		
+		if ($x != 'complete')
 		{
 			$files = array();
 
@@ -423,6 +425,8 @@ class System extends Router
 
 				closedir($fp);
 			}
+			
+			array_multisort($files, SORT_DESC, SORT_STRING);
 		
 			if (!empty($files))
 			{
@@ -443,6 +447,8 @@ class System extends Router
 						}
 					}
 				}
+				
+				exit;
 			
 				// update settings with last version
 				$this->db->updateArray(PX.'settings', array('version' => $ver), "adm_id = '1'");
@@ -4753,6 +4759,7 @@ var ide = '$go[id]';";
 
 	public function sbmt_add_sec()
 	{
+		$OBJ =& get_instance();
 		$OBJ->template->errors = TRUE;
 		global $go;
 		

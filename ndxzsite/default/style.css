@@ -79,7 +79,8 @@ li.active a:visited, li a.active, li span.active, #index ul.section li.active a:
 #index ul li .password a { /* background: url(../img/locked.gif) right center no-repeat; padding-right: 18px; */ }
 
 /* the "new" indicator */
-#index ul li sup { color: #0c0; font-weight: bold; text-transform: uppercase; font-size: 8px; vertical-align: top; }
+#index ul li sup.new_exhibit { color: #0c0; font-weight: bold; text-transform: uppercase; font-size: 8px; vertical-align: top; }
+#index ul li sup.new_exhibit:before { color: #0c0; font-weight: bold; text-transform: uppercase; font-size: 8px; vertical-align: top; content: "New"; }
 /* end styling for index */
 
 /* links styles only for the #index region */

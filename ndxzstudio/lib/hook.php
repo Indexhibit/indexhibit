@@ -219,7 +219,7 @@ class Hook
 			ksort($OBJ->hook->action_table[$tag]);  
 		}
 		
-		$str = '';
+		$str = array();
 
 		foreach ($OBJ->hook->action_table[$tag] as $priority => $functions) 
 		{
