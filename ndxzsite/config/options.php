@@ -2,15 +2,15 @@
 
 // mod_rewrite is being used?
 // in case the server does not have mod_rewrite
-define('MODREWRITE', false);
+define('MODREWRITE', true);
 
 // image quality
-$default['img_quality'] = 90;
+$default['img_quality'] = 100;
 $default['systhumb'] = 150;
 
 // images max size kilobytes
 // be careful with shared hosting
-$default['maxsize'] = 200;
+$default['maxsize'] = 500;
 
 // things you don't want stats to track
 $default['ignore_ip'] = array();
@@ -38,8 +38,8 @@ $default['first_year'] = 2004;
 $default['encoding'] = 'UTF-8';
 
 // basic sizes for images and thumbnails uploading
-$default['thumbsize'] = array(150 => 150, 200 => 200, 225 => 225, 300 => 300);
-$default['imagesize'] = array(400 => 400, 600 => 600, 700 => 700, 'full' => 9999);
+$default['thumbsize'] = array(200 => 200, 250 => 250, 300 => 300, 350 => 350);
+$default['imagesize'] = array(700 => 700, 800 => 800, 900 => 900, 'full' => 9999);
 
 // max exhibit images upload
 $default['exhibit_imgs'] = 6;
