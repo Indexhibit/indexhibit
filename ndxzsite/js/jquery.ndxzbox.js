@@ -130,16 +130,16 @@ function updatePosition(id)
 	//alert( $('#pic-holder').height() );
 }
 
-function makeNodes()
-{
-	var count = 0;
-
-	$('.picture_holder a').each(function()
-	{	
-		var tmp = $(this).attr('id');
-		node[count] = tmp.replace('aaa', '');
-		count++;
-	});
+function makeNodes() {
+    var count = 0;
+    $('.picture_holder a').each(function()
+    {    
+        var tmp = $(this).attr('id');
+        if (tmp) {
+            node[count] = tmp.replace('aaa', '');
+            count++;
+        }
+    });
 }
 
 
