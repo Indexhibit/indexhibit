@@ -150,8 +150,15 @@ slide: function(event, ui) { $('label#caption_top_value span').html(ui.value) }
 					{
 						$txt = '';
 
-						if ($img['media_title'] != '') 		$txt .= "<span class='image-title'>$img[media_title]</span><br />\n";
-						if ($img['media_caption'] != '') 	$txt .= "<span class='image-caption'>" . strip_tags($img['media_caption'], 'a') . "</span>\n";
+						if ($OBJ->vars->exhibit['media_source'] == 0)
+						{
+							if ($img['media_title'] != '') 		$txt .= "<span class='image-title'>$img[media_title]</span><br />\n";
+							if ($img['media_caption'] != '') 	$txt .= "<span class='image-caption'>" . strip_tags($img['media_caption'], 'a');
+						}
+						else // it's an exhibit
+						{
+							if ($img['title'] != '') 		$txt .= "<span class='image-title'>$img[title]</span>\n";
+						}
 						
 						if ($txt != '') $a .= "<p class='captioning'>$txt</p>\n";
 						
@@ -187,8 +194,15 @@ slide: function(event, ui) { $('label#caption_top_value span').html(ui.value) }
 					{
 						$txt = '';
 						
-						if ($img['media_title'] != '') 		$txt .= "<span class='image-title'>$img[media_title]</span><br />\n";
-						if ($img['media_caption'] != '') 	$txt .= "<span class='image-caption'>" . strip_tags($img['media_caption'], 'a') . "</span>\n";
+						if ($OBJ->vars->exhibit['media_source'] == 0)
+						{
+							if ($img['media_title'] != '') 		$txt .= "<span class='image-title'>$img[media_title]</span><br />\n";
+							if ($img['media_caption'] != '') 	$txt .= "<span class='image-caption'>" . strip_tags($img['media_caption'], 'a');
+						}
+						else // it's an exhibit
+						{
+							if ($img['title'] != '') 		$txt .= "<span class='image-title'>$img[title]</span>\n";
+						}
 						
 						if ($txt != '') $a .= "<p class='captioning'>$txt</p>\n";
 						
