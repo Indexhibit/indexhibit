@@ -5686,8 +5686,10 @@ var ide = '$go[id]';";
 			$insert['media_src'] = 'flickr';
 			
 			$OBJ->db->insertArray(PX.'media', $insert);
-			
-			$IMG =& load_class('media', true, 'lib');
+
+            load_class('mediafactory', true, 'lib');
+            $factory = new MediaFactory();
+            $IMG = $factory->factory($default['mediaclass']);
 			$IMG->path = DIRNAME . GIMGS . '/';
 			// we'll query for all our defaults first...
 			$rs = $OBJ->db->fetchRecord("SELECT thumbs, images, thumbs_shape   

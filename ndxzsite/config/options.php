@@ -56,3 +56,4 @@ $default['autoplay'] = false;
 
 // default module
 $default['module'] = 'exhibits';
+$default['mediaclass'] = 'imagick'; // legacy or imagick
