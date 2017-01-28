@@ -158,7 +158,7 @@ class Exhibit
 			$new_width = round(($size[0] * $new_height) / $size[1]);
 
 			// force width
-			$R = load_class('resize', true, 'lib');
+			$R = $this->loadResize($default);
 
 			$name = 'rsz_h' . $new_height . '_' . $OBJ->vars->exhibit['id'] . '_' . $image['media_id'] . '.' . $image['media_mime'];
 
@@ -303,7 +303,7 @@ class Exhibit
 
 						$name = 'rsz_h' . $this->thumb_height . '_' . $OBJ->vars->exhibit['id'] . '_' . $thumb['media_id'] . '.' . $thumb['media_mime'];
 
-						$R = load_class('resize', true, 'lib');
+                        $R = $this->loadResize($default);
 
 						// we're going to resize and output
 						$R->reformat($new_width, $this->thumb_height, $size, $thumb, $OBJ->vars->exhibit['id'], $name, $thumb['media_dir']);
@@ -325,7 +325,7 @@ class Exhibit
 
 						$name = 'rsz_h' . $this->thumb_height . '_' . $OBJ->vars->exhibit['id'] . '_' . $thumb['media_id'] . '.' . $thumb['media_mime'];
 
-						$R = load_class('resize', true, 'lib');
+                        $R = $this->loadResize($default);
 
 						// we're going to resize and output
 						$R->reformat($new_width, $this->thumb_height, $size, $thumb, $OBJ->vars->exhibit['id'], $name, $thumb['media_dir']);
@@ -576,4 +576,13 @@ class Exhibit
 	
 		return;
 	}
+
+	private function loadResize($default)
+    {
+        load_class('resize', false, 'lib');
+        load_class('mediafactory', true, 'lib');
+        $factory = new MediaFactory();
+        $media = $factory->factory($default['mediaclass']);
+        return new Resize($media);
+    }
 }

@@ -1,5 +1,7 @@
 <?php if (!defined('SITE')) exit('No direct script access allowed');
 
+load_class('mediaabstract', false, 'lib');
+
 /**
  * Media class
  *
@@ -10,7 +12,7 @@
  * @author Martijn
  * @author Lukasz Mordawski <lukasz.mordawski@gmail.com>
  */
-class MediaImageMagick
+class MediaImageMagick extends MediaAbstract
 {
 
     # --- --- --- --- ---
@@ -154,50 +156,10 @@ class MediaImageMagick
             $this->image = $this->path . '/' . $this->filename;
             $this->uploader();
 
-            if (function_exists('chmod')) chmod($this->image, 0777);
+            if (function_exists('chmod') && file_exists($out)) chmod($this->image, 0777);
         }
 
         return $this->filename_override;
-    }
-
-    /**
-     * Returns server settings for max upload size
-     *
-     * @param void
-     * @return integer
-     */
-    public function upload_max_size()
-    {
-        $upload_max_filesize = ini_get('upload_max_filesize');
-        $upload_max_filesize = preg_replace('/M/', '000000', $upload_max_filesize);
-
-        $post_max_size = ini_get('post_max_size');
-        $post_max_size = preg_replace('/M/', '000000', $post_max_size);
-
-        $this->upload_max_size = ($post_max_size >= $upload_max_filesize) ? $upload_max_filesize : $post_max_size;
-    }
-
-    /**
-     * Returns filetype by file extension
-     *
-     * @param void
-     * @return string
-     */
-    public function getFileType()
-    {
-        $type = explode('.', $this->filename);
-        $this->filemime = array_pop($type);
-    }
-
-    /**
-     * Returns array of image filetypes
-     *
-     * @param void
-     * @return array
-     */
-    public function allowThumbs()
-    {
-        return $this->uploads['images'];
     }
 
     /**
@@ -298,20 +260,6 @@ class MediaImageMagick
         $this->orig_kb = str_replace('.', '', @filesize($this->image));
         $this->make_thumbnail_cinematic();
     }
-
-    /**
-     * Returns file size
-     *
-     * @param void
-     * @return integer
-     */
-    public function file_size()
-    {
-        // TODO: Work around the @.
-        $size = str_replace('.', '', @filesize($this->image));
-        $this->file_size = ($size == 0) ? 0 : $size;
-    }
-
     # --- --- --- --- ---
     # Video functions
     # --- --- --- --- --- --- --- --- --- ---
@@ -323,6 +271,7 @@ class MediaImageMagick
      * @param ???
      * @param ???
      * @return ???
+     * @todo Change it to Imagick!
      */
     public function make_video_image($source_name)
     {
@@ -351,6 +300,7 @@ class MediaImageMagick
      * @param ???
      * @param ???
      * @return ???
+     * @todo Change it to Imagick!
      */
     public function video_thumbnailer()
     {
@@ -418,11 +368,23 @@ class MediaImageMagick
     {
         $out = ($this->output_path == '') ? realpath($this->path) . '/' . $this->id . $this->filename : realpath($this->output_path) . '/' . $this->id . $this->filename;
         if ($this->maxsize != 9999) { // Why 9999 ?
-            exec($this->im . ' -resize ' . intval($this->maxsize) . 'x' . intval($this->maxsize) . '\> ' . $this->quality() . realpath($this->image) . ' ' . $out);
+            $command = $this->im . ' -resize ' . intval($this->maxsize) . 'x' . intval($this->maxsize) . '\> ' . $this->quality() . realpath($this->image) . ' ' . $out;
         } else {
-            exec($this->im . ' ' . $this->quality() . realpath($this->image) . ' ' . $out);
+            $command = $this->im . ' ' . $this->quality() . realpath($this->image) . ' ' . $out;
         }
-        if (function_exists('chmod')) chmod($out, 0777);
+        exec($command);
+        if (function_exists('chmod') && file_exists($out)) chmod($out, 0777);
+    }
+
+    public function makeCustomSize($width, $height, $sourceFilename, $destinationFilename)
+    {
+        if ($this->maxsize != 9999) { // Why 9999 ?
+            $command = $this->im . ' -resize ' . intval($width) . 'x' . intval($height) . '\> ' . $this->quality() . realpath($sourceFilename) . ' ' . $destinationFilename;
+        } else {
+            $command = $this->im . ' ' . $this->quality() . realpath($sourceFilename) . ' ' . $destinationFilename;
+        }
+        exec($command);
+        if (function_exists('chmod') && file_exists($destinationFilename)) chmod($destinationFilename, 0777);
     }
 
     # --- --- --- --- ---
@@ -435,22 +397,25 @@ class MediaImageMagick
         // TODO: Stop using global default;?
         global $default;
         $out = $this->output_path('systh-');
-        exec($this->im . ' -resize ' . intval($default['systhumb']) . 'x' . intval($default['systhumb']) . '\> ' . $this->quality() . realpath($this->image) . ' ' . $out);
-        if (function_exists('chmod')) chmod($out, 0777);
+        $cmd = $this->im . ' -resize ' . intval($default['systhumb']) . 'x' . intval($default['systhumb']) . '\> ' . $this->quality() . realpath($this->image) . ' ' . $out;
+        exec($cmd);
+        if (function_exists('chmod') && file_exists($out)) chmod($out, 0777);
     }
 
     public function make_system()
     {
         $out = $this->output_path('sys-');
-        exec($this->im . ' -resize ' . intval($this->sys_thumb) . 'x' . intval($this->sys_thumb) . '^ -gravity center -extent ' . intval($this->sys_thumb) . 'x' . intval($this->sys_thumb) . ' ' . $this->quality() . realpath($this->image) . ' ' . $out);
-        if (function_exists('chmod')) chmod($out, 0777);
+        $cmd = $this->im . ' -resize ' . intval($this->sys_thumb) . 'x' . intval($this->sys_thumb) . '^ -gravity center -extent ' . intval($this->sys_thumb) . 'x' . intval($this->sys_thumb) . ' ' . $this->quality() . realpath($this->image) . ' ' . $out;
+        exec($cmd);
+        if (function_exists('chmod') && file_exists($out)) chmod($out, 0777);
     }
 
     public function make_thumbnail_proportional()
     {
         $out = $this->output_path();
-        exec($this->im . ' -resize ' . intval($this->thumbsize) . 'x' . intval($this->thumbsize) . '\> ' . $this->quality() . realpath($this->image) . ' ' . $out);
-        if (function_exists('chmod')) chmod($out, 0777);
+        $cmd = $this->im . ' -resize ' . intval($this->thumbsize) . 'x' . intval($this->thumbsize) . '\> ' . $this->quality() . realpath($this->image) . ' ' . $out;
+        exec($cmd);
+        if (function_exists('chmod') && file_exists($out)) chmod($out, 0777);
     }
 
     public function make_thumbnail_cinematic()
@@ -458,8 +423,9 @@ class MediaImageMagick
         $out = $this->output_path();
         $width = $this->thumbsize;
         $height = round($this->thumbsize / 16 * 9);
-        exec($this->im . ' -resize ' . intval($width) . 'x' . intval($height) . '\^ -gravity center -extent ' . intval($width) . 'x' . intval($height) . ' ' . $this->quality() . realpath($this->image) . ' ' . $out);
-        if (function_exists('chmod')) chmod($out, 0777);
+        $cmd = $this->im . ' -resize ' . intval($width) . 'x' . intval($height) . '\^ -gravity center -extent ' . intval($width) . 'x' . intval($height) . ' ' . $this->quality() . realpath($this->image) . ' ' . $out;
+        exec($cmd);
+        if (function_exists('chmod') && file_exists($out)) chmod($out, 0777);
     }
 
     public function make_thumbnail_4x3()
@@ -467,8 +433,9 @@ class MediaImageMagick
         $out = $this->output_path();
         $width = $this->thumbsize;
         $height = round($this->thumbsize / 4 * 3);
-        exec($this->im . ' -resize ' . intval($width) . 'x' . intval($height) . '\^ -gravity center -extent ' . intval($width) . 'x' . intval($height) . ' ' . $this->quality() . realpath($this->image) . ' ' . $out);
-        if (function_exists('chmod')) chmod($out, 0777);
+        $cmd = $this->im . ' -resize ' . intval($width) . 'x' . intval($height) . '\^ -gravity center -extent ' . intval($width) . 'x' . intval($height) . ' ' . $this->quality() . realpath($this->image) . ' ' . $out;
+        exec($cmd);
+        if (function_exists('chmod') && file_exists($out)) chmod($out, 0777);
     }
 
     public function make_thumbnail_3x2()
@@ -476,8 +443,9 @@ class MediaImageMagick
         $out = $this->output_path();
         $width = $this->thumbsize;
         $height = round($this->thumbsize / 3 * 2);
-        exec($this->im . ' -resize ' . intval($width) . 'x' . intval($height) . '\^ -gravity center -extent ' . intval($width) . 'x' . intval($height) . ' ' . $this->quality() . realpath($this->image) . ' ' . $out);
-        if (function_exists('chmod')) chmod($out, 0777);
+        $cmd = $this->im . ' -resize ' . intval($width) . 'x' . intval($height) . '\^ -gravity center -extent ' . intval($width) . 'x' . intval($height) . ' ' . $this->quality() . realpath($this->image) . ' ' . $out;
+        exec($cmd);
+        if (function_exists('chmod') && file_exists($out)) chmod($out, 0777);
     }
 
     public function make_thumbnail_3x4()
@@ -485,24 +453,27 @@ class MediaImageMagick
         $out = $this->output_path();
         $width = $this->thumbsize;
         $height = round($this->thumbsize / 3 * 4);
-        exec($this->im . ' -resize ' . intval($width) . 'x' . intval($height) . '\^ -gravity center -extent ' . intval($width) . 'x' . intval($height) . ' ' . $this->quality() . realpath($this->image) . ' ' . $out);
-        if (function_exists('chmod')) chmod($out, 0777);
+        $cmd = $this->im . ' -resize ' . intval($width) . 'x' . intval($height) . '\^ -gravity center -extent ' . intval($width) . 'x' . intval($height) . ' ' . $this->quality() . realpath($this->image) . ' ' . $out;
+        exec($cmd);
+        if (function_exists('chmod') && file_exists($out)) chmod($out, 0777);
     }
 
     public function make_thumbnail_square()
     {
         $out = $this->output_path();
         $size = $this->thumbsize;
-        exec($this->im . ' -resize ' . intval($size) . 'x' . intval($size) . '^ -gravity center -extent ' . intval($size) . 'x' . intval($size) . ' ' . $this->quality() . realpath($this->image) . ' ' . $out);
-        if (function_exists('chmod')) chmod($out, 0777);
+        $cmd = $this->im . ' -resize ' . intval($size) . 'x' . intval($size) . '^ -gravity center -extent ' . intval($size) . 'x' . intval($size) . ' ' . $this->quality() . realpath($this->image) . ' ' . $out;
+        exec($cmd);
+        if (function_exists('chmod') && file_exists($out)) chmod($out, 0777);
     }
 
     public function make_user_thumbnail()
     {
         $out = realpath(DIRNAME . '/files/') . '/' . $this->filename;
         $size = $this->thumbsize;
-        exec($this->im . ' -resize ' . intval($size) . 'x' . intval($size) . '^ -gravity center -extent ' . intval($size) . 'x' . intval($size) . ' ' . $this->quality() . realpath($this->image) . ' ' . $out);
-        if (function_exists('chmod')) chmod($out, 0777);
+        $cmd = $this->im . ' -resize ' . intval($size) . 'x' . intval($size) . '^ -gravity center -extent ' . intval($size) . 'x' . intval($size) . ' ' . $this->quality() . realpath($this->image) . ' ' . $out;
+        exec($cmd);
+        if (function_exists('chmod') && file_exists($out)) chmod($out, 0777);
     }
 
     # --- --- --- --- ---

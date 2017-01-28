@@ -10,7 +10,7 @@ $default['systhumb'] = 150;
 
 // images max size kilobytes
 // be careful with shared hosting
-$default['maxsize'] = 500;
+$default['maxsize'] = 5000;
 
 // things you don't want stats to track
 $default['ignore_ip'] = array();

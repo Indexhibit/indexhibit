@@ -4208,7 +4208,13 @@ var ide = '$go[id]';";
 			
 			$body .= "<div style='height: 200px; overflow: auto;'>\n";
 			$theFiles = getTheFiles(DIRNAME . '/files/' . $_POST['h_media_info'] . '/', array(''));
-			$RSZ = load_class('resize', true, 'lib');
+
+            load_class('resize', false, 'lib');
+            load_class('mediafactory', true, 'lib');
+            $factory = new MediaFactory();
+            $media = $factory->factory($default['mediaclass']);
+            $RSZ = new Resize($media);
+
 			$RSZ->folder_load_images($theFiles, $go['id'], 9999, 'image', $_POST['h_media_info']);
 			
 			$body .= p('Files autoloaded.');
@@ -5484,7 +5490,11 @@ var ide = '$go[id]';";
 			}
 			else
 			{
-				$RSZ = load_class('resize', true, 'lib');
+                load_class('resize', false, 'lib');
+                load_class('mediafactory', true, 'lib');
+                $factory = new MediaFactory();
+                $media = $factory->factory($default['mediaclass']);
+                $RSZ = new Resize($media);
 				$RSZ->single_load_image($_POST['v'], $clean['id'], 9999, 'image', $_POST['f']);
 				echo 'yes';
 				exit;
@@ -5492,7 +5502,11 @@ var ide = '$go[id]';";
 			}
 			
 		case 'filesall':
-			$RSZ = load_class('resize', true, 'lib');
+            load_class('resize', false, 'lib');
+            load_class('mediafactory', true, 'lib');
+            $factory = new MediaFactory();
+            $media = $factory->factory($default['mediaclass']);
+            $RSZ = new Resize($media);
 			load_helper('files');
 			$theFiles = getTheFiles(DIRNAME . '/files/' . $_POST['f'] . '/', array(''));
 			$RSZ->folder_load_images($theFiles, $clean['id'], 9999, 'image', $_POST['f']);

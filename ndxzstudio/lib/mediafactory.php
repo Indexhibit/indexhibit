@@ -16,7 +16,7 @@ class MediaFactory
                 load_class('mediaimagemagick', false, 'lib');
                 return new MediaImageMagick('/usr/bin/convert');
             case self::MEDIA_LEGACY:
-                load_class('media', true, 'lib');
+                load_class('media', false, 'lib');
                 return new Media();
         }
     }
