@@ -2,7 +2,7 @@
 
 // mod_rewrite is being used?
 // in case the server does not have mod_rewrite
-define('MODREWRITE', true);
+define('MODREWRITE', false);
 
 // image quality
 $default['img_quality'] = 100;
