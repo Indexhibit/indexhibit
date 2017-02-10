@@ -73,7 +73,7 @@ class Installation
 		}
 		
 		// PHP version check here
-		if (version_compare(PHP_VERSION, '5.0.0', '>='))
+		if (version_compare(PHP_VERSION, '5.4.0', '>='))
 		{
 			if (file_exists(DIRNAME . '/ndxzsite/config/config.php'))
 			{
@@ -88,7 +88,7 @@ class Installation
 		}
 		else
 		{
-			$this->html = "<p>" . $this->lang->word('you need php 5 or greater') . "<p>\n";
+			$this->html = "<p>" . $this->lang->word('you need php 5.4 or greater') . "<p>\n";
 		}
 	}
 	
@@ -654,7 +654,7 @@ class Installation
 	}
 
 
-	function mysql_ver()
+	function mysqli_ver()
 	{
 		$ver = mysqli_get_client_info($this->link);
 		$num = explode('.', $ver);

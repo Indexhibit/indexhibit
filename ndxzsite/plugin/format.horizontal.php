@@ -26,7 +26,7 @@ class Exhibit
 {
 	// PADDING AND TEXT WIDTH ADJUSTMENTS UP HERE!!!
 	var $picture_block_padding_right = 0;
-	var $text_width = 400;
+	var $text_width = 300;
 	var $text_padding_right = 35;
 	var $final_img_container = 0; // do not adjust this one
 	var $imgs = array();
@@ -52,7 +52,7 @@ class Exhibit
 		$OBJ =& get_instance();
 
 		$margin = (isset($this->settings['margin'])) ? $this->settings['margin'] : 0;
-		$bottom_margin = (isset($this->settings['bottom_margin'])) ? $this->settings['bottom_margin'] : 0;
+		$text_width = (isset($this->settings['text_width'])) ? $this->settings['text_width'] : 200;
 		$text_box_height = (isset($this->settings['text_box_height'])) ? $this->settings['text_box_height'] : 0;
 		$padding_left = (isset($this->settings['padding_left'])) ? $this->settings['padding_left'] : 0;
 	
@@ -71,13 +71,13 @@ class Exhibit
 	slide: function(event, ui) { $('label#right_margin_value span').html(ui.value) }
 	});";
 	
-		$html .= "<label id='bottom_margin_value'>text width <span>$bottom_margin</span></label>\n";
-		$html .= "<input type='hidden' id='bottom_margin' name='option[bottom_margin]' value='$bottom_margin' />\n";
+		$html .= "<label id='text_width_value'>text width <span>$text_width</span></label>\n";
+		$html .= "<input type='hidden' id='text_width' name='option[text_width]' value='$text_width' />\n";
 		$html .= "<div id='slider2' style='margin: 10px 0;'></div>\n\n";
 	
-		$OBJ->template->onready[] = "$('#slider2').slider({ value: $bottom_margin, max: 600, step: 10, 
-	stop: function(event, ui) { $('#bottom_margin').val(ui.value); },
-	slide: function(event, ui) { $('label#bottom_margin_value span').html(ui.value) }
+		$OBJ->template->onready[] = "$('#slider2').slider({ value: $text_width, max: 600, step: 1, 
+	stop: function(event, ui) { $('#text_width').val(ui.value); },
+	slide: function(event, ui) { $('label#text_width_value span').html(ui.value) }
 	});";
 	
 		$html .= "<label id='padding_left_value'>text padding <span>$padding_left</span></label>\n";
@@ -87,8 +87,7 @@ class Exhibit
 		$OBJ->template->onready[] = "$('#slider4').slider({ value: $padding_left, max: 50, 
 stop: function(event, ui) { $('#padding_left').val(ui.value); },
 slide: function(event, ui) { $('label#padding_left_value span').html(ui.value) }
-});";
-	
+});";	
 	
 		$html .= "<label id='text_box_height_value'>text box height <span>$text_box_height</span></label>\n";
 		$html .= "<input type='hidden' id='text_box_height' name='option[text_box_height]' value='$text_box_height' />\n";
@@ -114,19 +113,16 @@ slide: function(event, ui) { $('label#padding_left_value span').html(ui.value) }
 		// PADDING AND TEXT WIDTH ADJUSTMENTS UP HERE!!!
 		$this->picture_block_padding_right = (isset($OBJ->hook->options['horizontal_settings']['margin'])) ? 
 			$OBJ->hook->options['horizontal_settings']['margin'] : 25;
-		$this->bottom_margin = (isset($OBJ->hook->options['horizontal_settings']['bottom_margin'])) ? 
-			$OBJ->hook->options['horizontal_settings']['bottom_margin'] : 200;
+		$this->text_width = (isset($OBJ->hook->options['horizontal_settings']['text_width'])) ? 
+			$OBJ->hook->options['horizontal_settings']['text_width'] : 200;
 		$this->text_block_height = (isset($OBJ->hook->options['horizontal_settings']['text_box_height'])) ? 
 			$OBJ->hook->options['horizontal_settings']['text_box_height'] : 18;
-		//$this->text_width = 250;
 		$this->text_padding_right = 35;
 		$this->final_img_container = 0; // do not adjust this one
 		$this->padding_left = (isset($OBJ->hook->options['horizontal_settings']['padding_left'])) ? 
-			$OBJ->hook->options['horizontal_settings']['padding_left'] : 10;
-		
+			$OBJ->hook->options['horizontal_settings']['padding_left'] : 10;		
 		$this->valign = (isset($OBJ->hook->options['horizontal_settings']['valign'])) ? 
-			$OBJ->hook->options['horizontal_settings']['valign'] : 0;
-		
+			$OBJ->hook->options['horizontal_settings']['valign'] : 0;		
 		$this->force_height = (isset($OBJ->abstracts->abstract['height'])) ? 
 			$OBJ->abstracts->abstract['height'] : 0;
 		
@@ -167,7 +163,6 @@ slide: function(event, ui) { $('label#padding_left_value span').html(ui.value) }
 		if (!$this->imgs) { $OBJ->page->exhibit['exhibit'] = $OBJ->vars->exhibit['content']; return; }
 	
 		$s = ''; $a = ''; $w = 0; $i = 0;
-		//$this->final_img_container = ($OBJ->vars->exhibit['content'] != '') ? ($this->text_padding_right + $this->text_width) : 0;
 		
 		///////////////////
 		$this->x = $OBJ->vars->exhibit['thumbs'];
@@ -190,12 +185,8 @@ slide: function(event, ui) { $('label#padding_left_value span').html(ui.value) }
 						// get dimensions and resize
 						// need to set this up for folder source as well - later
 						$path = ($go['media_dir'] != '') ? $go['media_dir'] : 'gimgs';
-						
 						$source = ($go['media_thumb_source'] == '') ? $go['media_file'] : $go['media_thumb_source'];
-						
 						$size = getimagesize(DIRNAME . "/files/$path/" . $source);
-						
-						//echo DIRNAME . "/files/$path/" . $go['media_file'] . ' / ';
 
 						// new dimensions based on the height
 						$new_width = (($size[0] * $this->force_height) / $size[1]);
@@ -222,14 +213,16 @@ slide: function(event, ui) { $('label#padding_left_value span').html(ui.value) }
 				// margin
 				$margin = $this->padding_left;
 				$text_block = $this->text_block_height;
-				$textw = $this->bottom_margin;
 				$separator = $this->picture_block_padding_right;
-				$this->text_width = $this->text_width - (2 * $margin);
-
-				// height and width of thumbnail
-				//$size = getimagesize(DIRNAME . '/files/gimgs/' . $go['media_ref_id'] . '_' . $go['media_file']);
 				
-				$text = $go['media_title'] . $go['media_caption'];
+				if ($OBJ->vars->exhibit['titling'] == 1)
+				{
+					$text = $go['media_title'] . $go['media_caption'];
+				}
+				else
+				{
+					$text = '';
+				}
 				
 				$b = '';
 				
@@ -247,8 +240,6 @@ slide: function(event, ui) { $('label#padding_left_value span').html(ui.value) }
 						// need to recalculate proportions if the force height feature is in use
 						if ($this->force_height != 0)
 						{
-							//$height_percentage = $maxwidth / $go['media_y'];
-							
 							$ratio = $this->force_height / $go['media_y'];
 							
 							$tmp_y = round($go['media_y'] * $ratio);
@@ -261,6 +252,7 @@ slide: function(event, ui) { $('label#padding_left_value span').html(ui.value) }
 							$tmp_y = $go['media_y'];
 							$tmp_x = $go['media_x'];
 						}
+						
 						
 						$txt = ($text != '') ? "\n<div class='captioning text2' style='width: {$width_adjust}px; height: {$text_block}px;'><div style='padding: 0 {$margin}px 0 0;'>$text</div></div>\n" :
 						"\n<div class='captioning text2' style='width: {$width_adjust}px; height: {$text_block}px;'><div style='padding: 0 {$margin}px 0 0;'>&nbsp;</div></div>\n";
@@ -301,10 +293,9 @@ slide: function(event, ui) { $('label#padding_left_value span').html(ui.value) }
 
 					$b .= "</div>\n";
 				
-					//$last = $separator;
 					$se = "<div class='separator' style='float: left; width: {$separator}px;'>&nbsp;</div>";
 				
-					$texty = (($OBJ->vars->exhibit['titling'] == 1) && ($txt != '')) ? $textw : 0;
+					$texty = (($OBJ->vars->exhibit['titling'] == 1) && ($txt != '')) ? $this->text_width : 0;
 				
 					$this->final_img_container = $this->final_img_container + ($size[0] + $separator);
 				
@@ -312,8 +303,8 @@ slide: function(event, ui) { $('label#padding_left_value span').html(ui.value) }
 				}
 				// titles are are right (1) and left (3)
 				else
-				{
-					$txt = ($text != '') ? "<div class='captioning text' style='width: {$textw}px;'><div style='padding: 0 {$margin}px;'>$text</div></div>\n" : '';
+				{					
+					$txt = ($text != '') ? "<div class='captioning text' style='width: {$this->text_width}px;'><div style='padding: 0 {$margin}px;'>$text</div></div>\n" : '';
 					
 					if (in_array($go['media_mime'], $default['video']))
 					{
@@ -326,8 +317,6 @@ slide: function(event, ui) { $('label#padding_left_value span').html(ui.value) }
 						// need to recalculate proportions if the force height feature is in use
 						if ($this->force_height != 0)
 						{
-							//$height_percentage = $maxwidth / $go['media_y'];
-							
 							$ratio = $this->force_height / $go['media_y'];
 							
 							$tmp_y = round($go['media_y'] * $ratio);
@@ -364,15 +353,13 @@ slide: function(event, ui) { $('label#padding_left_value span').html(ui.value) }
 						$b .= "</div>\n";
 					}
 					
-					//$b .= "<img src='" . BASEURL . "/files/gimgs/$go[media_ref_id]_$go[media_file]' width='$size[0]' height='$size[1]' alt='$go[media_thumb_path]' />";
-					
-					
 					$b .= "</div>\n";
-				
-					//$last = $separator;
+
 					$se = "<div class='separator' style='float: left; width: {$separator}px;'>&nbsp;</div>";
 				
-					$texty = (($OBJ->vars->exhibit['titling'] == 1) && ($txt != '')) ? $textw : 0;
+					$texty = (($OBJ->vars->exhibit['titling'] == 1) && ($txt != '')) ? $this->text_width : 0;
+					
+					//echo $texty . ' / ';
 				
 					$this->final_img_container = $this->final_img_container + ($size[0] + $texty + $separator);
 				
@@ -385,15 +372,15 @@ slide: function(event, ui) { $('label#padding_left_value span').html(ui.value) }
 			// we need to deal with the first paragraph...if any exists...
 			if ($OBJ->vars->exhibit['content'] != '')
 			{
-				$content = "<div class='textor' style='float: left; width: " . ($this->text_width + (2 * $margin)) . "px;'>\n";
-				//$content .= "<div style='padding: 0 {$margin}px;'>\n";
+				$content = "<div class='textor' style='float: left; width: " . $this->text_width . "px;'>\n";
+				$content .= "<div style='margin-right: {$margin}px;'>\n";
 				$content .= $OBJ->vars->exhibit['content'];
-				//$content .= "</div>\n";
+				$content .= "</div>\n";
 				$content .= "</div>\n";
 				$content .= "<div class='separator' style='float: left; width: {$separator}px;'>&nbsp;</div>\n";
 				
 				// add the content and separator to things...
-				$this->final_img_container = $this->final_img_container + (($this->text_width + (2 * $margin)) + $separator);
+				$this->final_img_container = ($this->final_img_container + $this->text_width + $separator);
 			}
 			
 			$i++;
@@ -442,13 +429,13 @@ slide: function(event, ui) { $('label#padding_left_value span').html(ui.value) }
 	{
 		$OBJ =& get_instance();
 		
-		$title_block = ($OBJ->vars->exhibit['titling'] == 1) ? $this->text_block_height : 0;
+		//$title_block = ($OBJ->vars->exhibit['titling'] == 1) ? $this->text_block_height : 0;
 		
-		$picture_height = ($OBJ->vars->exhibit['thumbs_shape'] == 0) ? "height: " . $this->x . "px;" : '';
+		//$picture_height = ($OBJ->vars->exhibit['thumbs_shape'] == 0) ? "height: " . $this->x . "px;" : '';
 		
 		return "#img-container { width: " . $this->final_img_container . "px; }
 #img-container .text { float: left; width: " . ($this->text_width + $this->text_padding_right) . "px; }
-#img-container .text p, #img-container .textor p { width: " . $this->text_width . "px; }
+#img-container .text p, #img-container .textor p { width: auto; }
 #img-container .text2 p { width: auto; }
 #img-container .picture { float: left; }
 #img-container .captioning { height: 50px; text-align: left; overflow: visible; }
