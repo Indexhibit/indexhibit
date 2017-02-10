@@ -285,7 +285,7 @@ class Installation
 			$this->charset_collate .= ' COLLATE ' . $this->collate;
 		}
 		
-		$ver = mysqli_ver($this->db->link);
+		$ver = $this->mysqli_ver($this->db->link);
 		
 		return ((is_numeric($ver) && $ver <= 4)) ? 'TYPE=MyISAM' : 'ENGINE=MyISAM DEFAULT CHARSET=utf8';
 	}
