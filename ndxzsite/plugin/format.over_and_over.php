@@ -192,8 +192,8 @@ slide: function(event, ui) { $('label#caption_top_value span').html(ui.value) }
 		$OBJ->page->exhibit['dyn_css'][] = $this->defaultCSS();
 		
 		$OBJ->page->exhibit['exhibit'] = ($OBJ->vars->exhibit['placement'] == 1) ? 
-			$s . $OBJ->vars->exhibit['content'] : 
-			$OBJ->vars->exhibit['content'] . $s;
+			$s . "<div class='textspace'>" . $OBJ->vars->exhibit['content'] . "</div>" : 
+			"<div class='textspace'>" . $OBJ->vars->exhibit['content'] . "</div>" . $s;
 
 		return $OBJ->page->exhibit['exhibit'];
 	}
