@@ -95,8 +95,8 @@ class Jxs_ndxzbox
 			$a .= "<div>\n";
 			
 			// information
-			$d = ($this->rs['media_title'] != '') ? "<div>" . $this->rs['media_title'] . "</div>\n" : "";
-			if ($this->rs['media_title'] != '') $d .= "<div style='width: 250px;'><a href='#' onclick=\"$('#toggle').toggle();\" style='display: block;'>[+]</a><div id='toggle' style='display: none; background: black; padding: 3px 6px 6px 0;'>" . $this->rs['media_caption'] . "\n";
+			$d = ($this->rs['media_title'] != '') ? "<div id='dialog-title'>" . $this->rs['media_title'] . "</div>\n" : "";
+			//if ($this->rs['media_caption'] != '') $d .= "<div style='width: 250px;'><div id='toggle' style='background: black; padding: 3px 6px 6px 0;'>" . $this->rs['media_caption'] . "\n";
 			$d .= "</div></div>\n";
 			
 			$this->description = "<div style='padding: 27px 0 0 27px;'>" . $d . "</div>";
@@ -134,7 +134,7 @@ class Jxs_ndxzbox
 			
 			// information
 			$d = ($this->rs['media_title'] != '') ? "<div id='dialog-title'>" . $this->rs['media_title'] . "</div>\n" : "";
-			if ($this->rs['media_title'] != '') $d .= "<div id='dialog-box-text'><a href='#' onclick=\"$('#dialog-toggle').toggle();\" style='display: block;'>[+]</a><div id='dialog-toggle'>" . $this->rs['media_caption'] . "\n";
+			if ($this->rs['media_caption'] != '') $d .= "<div id='dialog-box-text'><div id='dialog-toggle'>" . $this->rs['media_caption'] . "\n";
 			$d .= "</div></div>\n";
 			
 			$this->description = "<div style='padding: 27px 0 0 27px;'>" . $d . "</div>";

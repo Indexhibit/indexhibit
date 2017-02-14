@@ -23,16 +23,16 @@
 /* you won't really need to change these except for maybe margins/paddings */
 #overlay { position: fixed; top: 0; left: 0; width: 100%; display: none; z-index: 9500; }
 #dialog { position: fixed; top: 0; left: 0; text-align: left; width: 100%; padding: 0; margin: 0; z-index: 9503; }
-#dialog-close { position: absolute; right: 24px; top: 24px; cursor: pointer; height: 16px; width: 16px; text-indent: -9999px; z-index: 10000; }
+#dialog-close { position: absolute; right: 24px; top: 24px; cursor: pointer; height: 16px; width: 16px; text-indent: -9999px; z-index: 999999; }
 #dialog-close a { display: block; width: 16px; height: 16px; }
 #dialog-close a:hover { opacity: 0.5; }
 .dialog-content { padding: 0; top: 0; left: 0; position: absolute; width: 100%; }
 .dialog-content .container { margin: 0; padding: 0; }
 #dialog-box-text { width: 250px; }
-#dialog-toggle { display: none; padding: 3px 6px 6px 0; }
+#dialog-toggle { padding: 3px 6px 6px 0; }
 #dialog .the-content { display: block; z-index: 9514; position: relative; width: 100%; }
 #dialog #loading-dock { position: absolute; z-index: 9525; }
-#dialog #dialog-close-layer { background: red; width: 100%; height: 100%; position: absolute; top: 1; left: 0; z-index: 9501; }
+#dialog #dialog-close-layer { width: 100%; height: 100%; position: absolute; top: 1; left: 0; z-index: 9501; }
 #dialog #dialog-close-layer a { display: block; width: 100%; height: 100%; background: green; }
 #inner-content { position: relative; }
 #inner-top { position: absolute; top: 0; left: 0; width: 100%; height: 60px; z-index: 9514; }
