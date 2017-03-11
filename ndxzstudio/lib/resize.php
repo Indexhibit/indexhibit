@@ -141,7 +141,9 @@ class Resize
 			}
 			
 			//load_module_helper('files', $go['a']);
-			$IMG =& load_class('media', TRUE, 'lib');
+            load_class('mediafactory', true, 'lib');
+            $factory = new MediaFactory();
+            $IMG = $factory->factory($default['mediaclass']);
 			
 			if ($type == 'image')
 			{
@@ -284,7 +286,9 @@ class Resize
 			load_helper('files');
 			
 			//load_module_helper('files', $go['a']);
-			$IMG =& load_class('media', TRUE, 'lib');
+            load_class('mediafactory', true, 'lib');
+            $factory = new MediaFactory();
+            $IMG = $factory->factory($default['mediaclass']);
 			
 			$IMG->make_sys = true;
 			$IMG->makethumb = true;
@@ -425,7 +429,9 @@ class Resize
 			load_helper('files');
 			
 			//load_module_helper('files', $go['a']);
-			$IMG =& load_class('media', TRUE, 'lib');
+            load_class('mediafactory', true, 'lib');
+            $factory = new MediaFactory();
+            $IMG = $factory->factory($default['mediaclass']);
 			
 			$IMG->make_sys = true;
 			$IMG->makethumb = true;

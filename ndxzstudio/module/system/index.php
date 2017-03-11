@@ -265,7 +265,9 @@ class System extends Router
 		{
 			if ($_FILES['filename']['tmp_name'] != '')
 			{
-				$IMG =& load_class('media', TRUE, 'lib');
+                load_class('mediafactory', true, 'lib');
+                $factory = new MediaFactory();
+                $IMG = $factory->factory($default['mediaclass']);
 				
 				// we need to get these from some defaults someplace
 				$IMG->thumbsize = 75;
@@ -5174,7 +5176,9 @@ var ide = '$go[id]';";
 			}
 			
 			//load_module_helper('files', $go['a']);
-			$IMG =& load_class('media', TRUE, 'lib');
+            load_class('mediafactory', true, 'lib');
+            $factory = new MediaFactory();
+            $IMG = $factory->factory($default['mediaclass']);
 			
 			if ($type == 'image')
 			{
@@ -6886,7 +6890,9 @@ var ide = '$go[id]';";
 		$OBJ->template->errors = TRUE;
 		global $go, $default;
 
-		$IMG =& load_class('media', TRUE, 'lib');
+        load_class('mediafactory', true, 'lib');
+        $factory = new MediaFactory();
+        $IMG = $factory->factory($default['mediaclass']);
 			
 		// +++++++++++++++++++++++++++++++++++++++++++++++++++
 		

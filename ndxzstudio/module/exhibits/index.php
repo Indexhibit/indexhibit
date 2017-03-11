@@ -1677,8 +1677,10 @@ var ide = '$go[id]';";
 		global $go, $default;
 		$dir = DIRNAME . BASEFILES . '/';
 		$types = $default['images'];
-		
-		$IMG =& load_class('media', TRUE, 'lib');
+
+        load_class('mediafactory', true, 'lib');
+        $factory = new MediaFactory();
+        $IMG = $factory->factory($default['mediaclass']);
 		
 		$thetype = explode('.', strtolower($_FILES['jxbg']['name']));
 		$thetype = array_pop($thetype);
@@ -1753,7 +1755,9 @@ var ide = '$go[id]';";
 		$OBJ->template->errors = TRUE;
 		
 		load_module_helper('files', $go['a']);
-		$IMG =& load_class('media', TRUE, 'lib');
+        load_class('mediafactory', true, 'lib');
+        $factory = new MediaFactory();
+        $IMG = $factory->factory($default['mediaclass']);
 		
 		// we'll query for all our defaults first...
 		$rs = $this->db->fetchRecord("SELECT thumbs, images  

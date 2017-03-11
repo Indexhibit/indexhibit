@@ -27,7 +27,10 @@ class Uploadhelper
 		
 		load_module_helper('files', $go['a']);
 
-		$IMG =& load_class('media', TRUE, 'lib');
+        load_class('mediafactory', true, 'lib');
+        $factory = new MediaFactory();
+        $IMG = $factory->factory($default['mediaclass']);
+
 		$dir = DIRNAME . BASEFILES . '/';
 		$types = array_merge($default['images']);
 		$IMG->path = $dir;
