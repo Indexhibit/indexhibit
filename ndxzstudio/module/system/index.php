@@ -265,7 +265,9 @@ class System extends Router
 		{
 			if ($_FILES['filename']['tmp_name'] != '')
 			{
-				$IMG =& load_class('media', TRUE, 'lib');
+                load_class('mediafactory', true, 'lib');
+                $factory = new MediaFactory();
+                $IMG = $factory->factory($default['mediaclass']);
 				
 				// we need to get these from some defaults someplace
 				$IMG->thumbsize = 75;
@@ -4208,7 +4210,13 @@ var ide = '$go[id]';";
 			
 			$body .= "<div style='height: 200px; overflow: auto;'>\n";
 			$theFiles = getTheFiles(DIRNAME . '/files/' . $_POST['h_media_info'] . '/', array(''));
-			$RSZ = load_class('resize', true, 'lib');
+
+            load_class('resize', false, 'lib');
+            load_class('mediafactory', true, 'lib');
+            $factory = new MediaFactory();
+            $media = $factory->factory($default['mediaclass']);
+            $RSZ = new Resize($media);
+
 			$RSZ->folder_load_images($theFiles, $go['id'], 9999, 'image', $_POST['h_media_info']);
 			
 			$body .= p('Files autoloaded.');
@@ -5168,7 +5176,9 @@ var ide = '$go[id]';";
 			}
 			
 			//load_module_helper('files', $go['a']);
-			$IMG =& load_class('media', TRUE, 'lib');
+            load_class('mediafactory', true, 'lib');
+            $factory = new MediaFactory();
+            $IMG = $factory->factory($default['mediaclass']);
 			
 			if ($type == 'image')
 			{
@@ -5484,7 +5494,11 @@ var ide = '$go[id]';";
 			}
 			else
 			{
-				$RSZ = load_class('resize', true, 'lib');
+                load_class('resize', false, 'lib');
+                load_class('mediafactory', true, 'lib');
+                $factory = new MediaFactory();
+                $media = $factory->factory($default['mediaclass']);
+                $RSZ = new Resize($media);
 				$RSZ->single_load_image($_POST['v'], $clean['id'], 9999, 'image', $_POST['f']);
 				echo 'yes';
 				exit;
@@ -5492,7 +5506,11 @@ var ide = '$go[id]';";
 			}
 			
 		case 'filesall':
-			$RSZ = load_class('resize', true, 'lib');
+            load_class('resize', false, 'lib');
+            load_class('mediafactory', true, 'lib');
+            $factory = new MediaFactory();
+            $media = $factory->factory($default['mediaclass']);
+            $RSZ = new Resize($media);
 			load_helper('files');
 			$theFiles = getTheFiles(DIRNAME . '/files/' . $_POST['f'] . '/', array(''));
 			$RSZ->folder_load_images($theFiles, $clean['id'], 9999, 'image', $_POST['f']);
@@ -5686,8 +5704,10 @@ var ide = '$go[id]';";
 			$insert['media_src'] = 'flickr';
 			
 			$OBJ->db->insertArray(PX.'media', $insert);
-			
-			$IMG =& load_class('media', true, 'lib');
+
+            load_class('mediafactory', true, 'lib');
+            $factory = new MediaFactory();
+            $IMG = $factory->factory($default['mediaclass']);
 			$IMG->path = DIRNAME . GIMGS . '/';
 			// we'll query for all our defaults first...
 			$rs = $OBJ->db->fetchRecord("SELECT thumbs, images, thumbs_shape   
@@ -6870,7 +6890,9 @@ var ide = '$go[id]';";
 		$OBJ->template->errors = TRUE;
 		global $go, $default;
 
-		$IMG =& load_class('media', TRUE, 'lib');
+        load_class('mediafactory', true, 'lib');
+        $factory = new MediaFactory();
+        $IMG = $factory->factory($default['mediaclass']);
 			
 		// +++++++++++++++++++++++++++++++++++++++++++++++++++
 		

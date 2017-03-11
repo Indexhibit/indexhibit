@@ -147,7 +147,11 @@ class Jxs_slideshow
 			
 			if (!file_exists(DIRNAME . '/files/dimgs/' . $name))
 			{
-				$R = load_class('resize', true, 'lib');
+                load_class('resize', false, 'lib');
+                load_class('mediafactory', true, 'lib');
+                $factory = new MediaFactory();
+                $media = $factory->factory($default['mediaclass']);
+                $R = new Resize($media);
 			
 				// we're going to resize and output
 				$R->reformat($new_width, $new_height, $size, $rs, $rs['id'], $name, $rs['media_dir']);

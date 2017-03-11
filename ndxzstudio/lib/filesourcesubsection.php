@@ -82,7 +82,9 @@ class FilesourceSubSection
 					// it's not an image but a movie...
 					if (!file_exists(DIRNAME . $path . '/sys-' . $img['media_ref_id'] . '_' . $img['media_thumb']) && $img['media_thumb'] != '')
 					{
-						$IMG =& load_class('media', true, 'lib');
+                        load_class('mediafactory', true, 'lib');
+                        $factory = new MediaFactory();
+                        $IMG = $factory->factory($default['mediaclass']);
 						$IMG->regenerate($img['media_ref_id'], $img['media_thumb']);
 					}
 				}
@@ -91,7 +93,9 @@ class FilesourceSubSection
 					// final check for images...
 					if (!file_exists(DIRNAME . $path . '/sys-' . $img['media_ref_id'] . '_' . $img['media_file']))
 					{
-						$IMG =& load_class('media', true, 'lib');
+                        load_class('mediafactory', true, 'lib');
+                        $factory = new MediaFactory();
+                        $IMG = $factory->factory($default['mediaclass']);
 						$IMG->regenerate($img['media_ref_id'], $img['media_file']);
 					}
 				}
@@ -177,7 +181,9 @@ class FilesourceSubSection
 
 		if ($imgs)
 		{
-			$IMG =& load_class('media', true, 'lib');
+            load_class('mediafactory', true, 'lib');
+            $factory = new MediaFactory();
+            $IMG = $factory->factory($default['mediaclass']);
 	
 			foreach($imgs as $key => $do)
 			{

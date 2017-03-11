@@ -174,7 +174,11 @@ slide: function(event, ui) { $('label#text_box_height_value span').html(ui.value
 
 		// and reoutput thumbs and images as needed
 		// system module - resize_images($size=9999, $type='image') - need $go;
-		$R = load_class('resize', true, 'lib');
+        load_class('resize', false, 'lib');
+        load_class('mediafactory', true, 'lib');
+        $factory = new MediaFactory();
+        $media = $factory->factory($default['mediaclass']);
+        $R = new Resize($media);
 		$R->resize_images($OBJ->vars->exhibit['id'], 300, 'image');
 		$R->resize_images($OBJ->vars->exhibit['id'], 100, 'thumb');
 	}

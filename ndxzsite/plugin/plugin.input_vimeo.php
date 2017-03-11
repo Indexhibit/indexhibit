@@ -3,7 +3,7 @@
 /*
 Plugin Name: Vimeo Input
 Plugin URI: http://www.indexhibit.org/plugin/asset-edtior/
-Description: Adds ability to easily insert Youtubes.
+Description: Adds ability to easily insert Vimeo.
 Version: 1.0
 Author: Indexhibit
 Author URI: http://indexhibit.org/

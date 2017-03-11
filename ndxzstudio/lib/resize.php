@@ -23,16 +23,15 @@ class Resize
 	public $media_ref_id;
 	public $media_file;
 	
-	public function __construct()
+	public function __construct(MediaInterface $media)
 	{
-		$this->resize = load_class('media', TRUE, 'lib');
-		
+		$this->resize = $media;
 		$this->path = DIRNAME . '/files/dimgs/';
 	}
 	
-	public function Resize()
+	public function Resize(MediaInterface $media)
 	{
-		self::__construct();
+		self::__construct($media);
 	}
 	
 	//$R->reformat($new_width, $this->force_height, $size, $go, $OBJ->vars->exhibit['id'], $name);
@@ -65,52 +64,9 @@ class Resize
 		//$dir = GIMGS;
 		
 		$source_image = DIRNAME . $dir . '/' . $file;
+        $output_image_path = DIRNAME . '/files/dimgs/' . $name;
 		
-		///echo $source_image . '  //// ';
-		
-		// let's go
-		switch($mime)
-		{
-            case 'gif':
-				$image = imagecreatefromgif($source_image);
-                break;
-            case 'jpg':
-                $image = imagecreatefromjpeg($source_image);
-                break;
-			case 'jpeg':
-				$image = imagecreatefromjpeg($source_image);
-				break;
-            case 'png':
-                $image = imagecreatefrompng($source_image);
-                break;
-        }
-
-		$output_image = imagecreatetruecolor($width, $height);
-
-		// resizing
-		@imagecopyresampled($output_image,  $image, 0, 0, 0, 0,
-			$width, $height, $size[0], $size[1]);
-			
-		$output_image_path = DIRNAME . '/files/dimgs/' . $name;
-			
-		switch($mime) {
-			case 'gif':
-				imagegif($output_image, $output_image_path);
-				break;
-			case 'jpg':
-				imagejpeg($output_image, $output_image_path, 100);
-				break;
-			case 'jpeg':
-				imagejpeg($output_image, $output_image_path, 100);
-				break;
-			case 'png':
-				imagepng($output_image, $output_image_path);
-				break;
-		}
-
-		imagedestroy($image);
-		
-		//if (function_exists('chmod')) chmod($out, 0777);
+		$this->resize->makeCustomSize($size[0], $size[1], $source_image, $output_image_path);
 		
 		return;
 	}
@@ -185,7 +141,9 @@ class Resize
 			}
 			
 			//load_module_helper('files', $go['a']);
-			$IMG =& load_class('media', TRUE, 'lib');
+            load_class('mediafactory', true, 'lib');
+            $factory = new MediaFactory();
+            $IMG = $factory->factory($default['mediaclass']);
 			
 			if ($type == 'image')
 			{
@@ -328,7 +286,9 @@ class Resize
 			load_helper('files');
 			
 			//load_module_helper('files', $go['a']);
-			$IMG =& load_class('media', TRUE, 'lib');
+            load_class('mediafactory', true, 'lib');
+            $factory = new MediaFactory();
+            $IMG = $factory->factory($default['mediaclass']);
 			
 			$IMG->make_sys = true;
 			$IMG->makethumb = true;
@@ -469,7 +429,9 @@ class Resize
 			load_helper('files');
 			
 			//load_module_helper('files', $go['a']);
-			$IMG =& load_class('media', TRUE, 'lib');
+            load_class('mediafactory', true, 'lib');
+            $factory = new MediaFactory();
+            $IMG = $factory->factory($default['mediaclass']);
 			
 			$IMG->make_sys = true;
 			$IMG->makethumb = true;

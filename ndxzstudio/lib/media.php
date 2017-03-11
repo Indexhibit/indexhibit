@@ -1,5 +1,7 @@
 <?php if (!defined('SITE')) exit('No direct script access allowed');
 
+load_class('mediaabstract', false, 'lib');
+
 /**
 * Media class
 *
@@ -8,7 +10,7 @@
 * @version 1.0
 * @author Vaska 
 */
-class Media
+class Media extends MediaAbstract
 {
 	public $image;
 	public $path;
@@ -151,46 +153,6 @@ class Media
 		}
 		
 		return $this->filename_override;
-	}
-	
-	/**
-	* Returns server settings for max upload size
-	*
-	* @param void
-	* @return integer
-	*/
-	public function upload_max_size()
-	{
-		$upload_max_filesize = ini_get('upload_max_filesize');
-		$upload_max_filesize = preg_replace('/M/', '000000', $upload_max_filesize);
-		
-		$post_max_size = ini_get('post_max_size');
-		$post_max_size = preg_replace('/M/', '000000', $post_max_size);
-		
-		$this->upload_max_size = ($post_max_size >= $upload_max_filesize) ? $upload_max_filesize : $post_max_size;
-	}
-
-	/**
-	* Returns filetype by file extension
-	*
-	* @param void
-	* @return string
-	*/
-	public function getFileType()
-	{
-		$type = explode('.', $this->filename);
-		$this->filemime = array_pop($type);
-	}
-	
-	/**
-	* Returns array of image filetypes
-	*
-	* @param void
-	* @return array
-	*/
-	public function allowThumbs()
-	{
-		return $this->uploads['images'];
 	}
 	
 	
@@ -336,7 +298,7 @@ class Media
 		
 		imagedestroy($this->input_image);
 	}
-	
+
 	
 	public function user_image()
 	{
@@ -352,8 +314,8 @@ class Media
 		
 		imagedestroy($this->input_image);
 	}
-	
-	
+
+
 	public function cover_image()
 	{
 		$this->getFileType();
@@ -404,6 +366,62 @@ class Media
 		if (function_exists('chmod')) chmod($out, 0777);
 	}
 
+    public function makeCustomSize($width, $height, $sourceFilename, $destinationFilename)
+    {
+        if ($width > $height) {
+            $max = $width;
+        } else {
+            $max = $height;
+        }
+
+        $tmp = explode('.', $sourceFilename);
+        $mime = array_pop($tmp);
+        $mime = strtolower($mime);
+
+        switch($mime)
+        {
+            case 'gif':
+                $image = imagecreatefromgif($sourceFilename);
+                break;
+            case 'jpg':
+            case 'jpeg':
+                $image = imagecreatefromjpeg($sourceFilename);
+                break;
+            case 'png':
+                $image = imagecreatefrompng($sourceFilename);
+                break;
+        }
+
+        if ($max != 9999)
+        {
+            // get the new sizes
+            $this->resizing($max);
+
+            $output_image = imagecreatetruecolor($this->new_size['w'], $this->new_size['h']);
+
+            // resizing
+            @imagecopyresampled($output_image,  $image, 0, 0, 0, 0,
+                $this->new_size['w'], $this->new_size['h'], $this->size[0], $this->size[1]);
+        }
+        else
+        {
+            // copy the image and output it at the same size
+            $output_image = imagecreatetruecolor($this->size[0], $this->size[1]);
+
+            @imagecopy($output_image, $image, 0, 0, 0, 0, $this->size[0], $this->size[1]);
+        }
+
+        //$this->image =  $this->path . $this->id . $this->filename;
+
+        //echo $this->path . $this->id . $this->filename; exit;
+
+        $out = $destinationFilename;
+
+        $this->do_output($output_image, $out);
+        imagedestroy($output_image);
+
+        if (function_exists('chmod')) chmod($out, 0777);
+    }
 
 	public function make_thumbnail_cinematic()
 	{
@@ -907,20 +925,6 @@ class Media
 		if (function_exists('chmod')) chmod($name, 0777);
 	}
 
-	
-	/**
-	* Returns file size
-	*
-	* @param void
-	* @return integer
-	*/
-	public function file_size()
-	{
-		$size = str_replace('.', '', @filesize($this->image));
-		$this->file_size = ($size == 0) ? 0 : $size;
-	}
-	
-	
 	/**
 	* Returns input image according to type
 	*
@@ -1302,8 +1306,8 @@ class Media
 		
 		return $filename;
 	}
-	
-	
+
+
 	/// experimental
 	public function is_ani($filename)
 	{

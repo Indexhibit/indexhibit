@@ -172,7 +172,11 @@ slide: function(event, ui) { $('label#padding_left_value span').html(ui.value) }
 		///////////////////
 		$this->x = $OBJ->vars->exhibit['thumbs'];
 		
-		$R = load_class('resize', true, 'lib');
+		load_class('resize', false, 'lib');
+        load_class('mediafactory', true, 'lib');
+        $factory = new MediaFactory();
+        $media = $factory->factory($default['mediaclass']);
+        $R = new Resize($media);
 
 		foreach ($this->imgs as $do)
 		{

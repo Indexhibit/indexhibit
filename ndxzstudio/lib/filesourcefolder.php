@@ -75,7 +75,9 @@ class FilesourceFolder implements Filesource
 			if (in_array($clean['media_mime'], $default['images']))
 			{
 				// make all the thumbs...
-				$IMG =& load_class('media', true, 'lib');
+                load_class('mediafactory', true, 'lib');
+                $factory = new MediaFactory();
+                $IMG = $factory->factory($default['mediaclass']);
 				
 				// we need to get these from some defaults someplace
 				$IMG->thumbsize = ($rs['thumbs'] != '') ? $rs['thumbs'] : 200;
@@ -331,7 +333,9 @@ class FilesourceFolder implements Filesource
 
 		if ($imgs)
 		{
-			$IMG =& load_class('media', true, 'lib');
+            load_class('mediafactory', true, 'lib');
+            $factory = new MediaFactory();
+            $IMG = $factory->factory($default['mediaclass']);
 	
 			foreach($imgs as $key => $do)
 			{
