@@ -24,6 +24,7 @@ class Db
 	{
 		$this->initialize();
 		$this->setNames();
+		$this->setSqlMode();
 	}
 
 
@@ -73,6 +74,13 @@ class Db
 		$this->query("SET NAMES 'utf8'");
 	}
 
+    /**
+     * Set SQL_MODE, needed to work with MySQL 5.6.
+     */
+	public function setSqlMode()
+    {
+        $this->query("SET SESSION sql_mode = 'ANSI'");
+    }
 
 	/**
 	* Returns count
