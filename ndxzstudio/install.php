@@ -589,7 +589,7 @@ class Installation
 		
 		// we need to deal with the inputs here better
 		$sql[] = "INSERT INTO `".PX."settings` (`adm_id`, `site_name`, `installdate`, `version`, `curr_time`, `site_lang`, `time_format`, `tagging`, `help`, `hibernate`, `obj_name`, `obj_theme`, `obj_itop`, `obj_ibot`, `obj_org`, `obj_apikey`, `site_format`, `site_offset`, `site_vars`) VALUES
-		(1, ".$this->db->escape($c['n_site']).", '".getNow()."', '" . VERSION . "', 1, 'en-us', '%d %B %Y', 1, 0, '', ".$this->db->escape($c['n_site']).", 'default', \"<h1><a href='/' title='{{obj_name}}'>{{obj_name}}</a></h1>\", \"<p>Copyright 2007-2012<br />\n<a href='http:\/\/www\.indexhibit\.org\/'>Built with Indexhibit</a></p>\", 2, 'asdfsafasfadsfdfs', '%d %B %Y', 0, 'a:3:{s:9:\"passwords\";s:1:\"1\";s:9:\"templates\";s:1:\"0\";s:4:\"tags\";s:1:\"1\";}');";
+		(1, ".$this->db->escape($c['n_site']).", '".getNow()."', '" . VERSION . "', 1, 'en-us', '%d %B %Y', 1, 0, '', ".$this->db->escape($c['n_site']).", 'default', \"<h1><a href='/' title='{{obj_name}}'>{{obj_name}}</a></h1>\", \"<p>Copyright 2007-2017<br />\n<a href='http:\/\/www\.indexhibit\.org\/'>Built with Indexhibit</a></p>\", 2, 'asdfsafasfadsfdfs', '%d %B %Y', 0, 'a:3:{s:9:\"passwords\";s:1:\"1\";s:9:\"templates\";s:1:\"0\";s:4:\"tags\";s:1:\"1\";}');";
 		
 		// user cookie saved language selection
 		$the_lang = (isset($_COOKIE['user_lang'])) ? $_COOKIE['user_lang'] : 'en-us';
