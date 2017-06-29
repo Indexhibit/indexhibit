@@ -17,8 +17,10 @@ class Jxs_ndxzbox
 		
 		$this->height = (int) $_POST['height'];
 
+		$media_id = (isset($_POST['i'])) ? (int) $_POST['i'] : 0;
+
 		$this->rs = $OBJ->db->fetchRecord("SELECT * FROM ".PX."objects, ".PX."media 
-			WHERE media_id = '$_POST[i]' 
+			WHERE media_id = '$media_id' 
 			AND media_ref_id = id");
 			
 		//sleep(1);
