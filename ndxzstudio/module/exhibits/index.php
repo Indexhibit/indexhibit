@@ -2208,6 +2208,7 @@ var ide = '$go[id]';";
 				// how to validate this?
 				$clean['section_id'] = $_POST['s'];
 				$q = 'link';
+				$clean['content'] = "<plugin:ndxz_iframed {{link}} />";
 			}
 			
 			// check for subsection
