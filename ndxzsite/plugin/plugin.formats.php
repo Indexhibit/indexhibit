@@ -225,5 +225,5 @@ function vimeo($file, $width='425', $height='315')
 	
 	$file = str_replace('.vimeo', '', $file);
 	
-	return "<div class='vimeo' style='width: {$width}px; height: {$height}px;'><iframe src='http://player.vimeo.com/video/$file' width='{$width}' height='{$height}' frameborder='0'></iframe></div>\n";
+	return "<div class='vimeo' style='width: {$width}px; height: {$height}px;'><iframe src='http://player.vimeo.com/video/$file' width='{$width}' height='{$height}' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>\n";
 }
