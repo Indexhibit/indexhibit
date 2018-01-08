@@ -85,15 +85,15 @@ li.active a:visited, li a.active, li span.active, #index ul.section li.active a:
 
 /* links styles only for the #index region */
 #index a:link {  } 
-#index a:visted {  }
+#index a:visited {  }
 #index a:hover {  } 
 #index a:active {  } 
 
 /* links styles only for the #exhibit region */
 #exhibit a:link { text-decoration: underline; }
-#exhibit a:active {  } 
+#exhibit a:visited {  }
 #exhibit a:hover { text-decoration: none; } 
-#exhibit a:visted {  }
+#exhibit a:active {  } 
 
 /* links styles just for h1 title of site (your name/logo) */
 #index h1 a { font-weight: normal; text-decoration: none; color: #000; }
