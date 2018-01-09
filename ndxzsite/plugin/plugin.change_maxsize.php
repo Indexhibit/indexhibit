@@ -22,11 +22,6 @@ class Change_maxsize
 		
 	}
 	
-	public function Change_maxsize()
-	{
-		self::__construct();
-	}
-	
 	function change()
 	{
 		$OBJ =& get_instance();

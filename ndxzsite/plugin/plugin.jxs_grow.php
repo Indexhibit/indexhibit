@@ -7,11 +7,6 @@ class Jxs_grow
 		
 	}
 	
-	public function Jxs_grow()
-	{
-		self::__construct();
-	}
-	
 	function output()
 	{
 		$OBJ =& get_instance();

@@ -59,11 +59,6 @@ class Media
 		$this->upload_max_size();
 	}
 	
-	public function Media()
-	{
-		self::__construct();
-	}
-	
 	/**
 	* Creates dynamic thumbnails for displays on all, section and tag pages
 	* only outputs to the 'dimgs' folder

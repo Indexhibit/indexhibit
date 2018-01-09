@@ -27,12 +27,6 @@ class Editor
 		
 	}
 	
-	public function Editor()
-	{
-		self::__construct();
-	}
-
-	
 	public function output()
 	{
 		$this->editor_button();

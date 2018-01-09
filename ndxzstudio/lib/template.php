@@ -59,13 +59,6 @@ class Template
 		$this->add_js('common.js');
 	}
 	
-	
-	public function Template()
-    {
-        self::__construct();
-    }
-	
-	
 	public function tpl_update_available()
 	{
 		$OBJ =& get_instance();

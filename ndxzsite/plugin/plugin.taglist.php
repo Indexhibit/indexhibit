@@ -8,11 +8,6 @@ class Taglist
 	{
 		
 	}
-	
-	public function Taglist()
-	{
-		self::__construct();
-	}
 
 	function load()
 	{

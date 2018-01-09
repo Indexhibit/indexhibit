@@ -7,11 +7,6 @@ class Submedia
 		
 	}
 	
-	public function Submedia()
-	{
-		self::__construct();
-	}
-	
 	function display()
 	{
 		$OBJ =& get_instance();

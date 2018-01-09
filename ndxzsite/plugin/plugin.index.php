@@ -38,11 +38,6 @@ class Index
 		$this->active_exhibit = $OBJ->vars->exhibit['id'];
 	}
 	
-	public function Index()
-    {
-        self::__construct();
-    }
-	
 	// returns array
 	function get_sections()
 	{

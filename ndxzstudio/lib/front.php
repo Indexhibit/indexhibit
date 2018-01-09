@@ -30,11 +30,6 @@ class Front
 		$this->init_front();
 	}
 	
-	public function Front()
-	{
-		self::__construct();
-	}
-	
 	/**
 	* Returns exhibition format parameters
 	*

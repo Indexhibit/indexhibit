@@ -36,11 +36,6 @@ class Core
 		$this->load_db();
 	}
 	
-	public function Core()
-    {
-        self::__construct();
-    }
-	
 	/**
 	* Return language and core classes
 	*

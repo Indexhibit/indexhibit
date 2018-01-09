@@ -136,12 +136,6 @@ slide: function(event, ui) { $('label#padding_left_value span').html(ui.value) }
 			$OBJ->abstracts->abstract['title-placement'] : 0;
 	}
 	
-	public function Exhibit()
-	{
-		self::__construct();
-	}
-	
-	
 	function createExhibit()
 	{
 		$OBJ =& get_instance();

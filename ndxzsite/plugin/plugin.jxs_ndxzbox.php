@@ -28,11 +28,6 @@ class Jxs_ndxzbox
 		$this->centered();
 	}
 	
-	public function Jxs_ndxzbox()
-	{
-		self::__construct();
-	}
-	
 	public function output()
 	{
 		$x['output'] = $this->html;

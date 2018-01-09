@@ -17,11 +17,6 @@ class Abstracts
 		
 	}
 	
-	public function Abstracts()
-	{
-		self::__construct();
-	}
-	
 	/**
 	* Returns loaded abstracts object or false
 	* Only for exhibits/pages - images will be separate

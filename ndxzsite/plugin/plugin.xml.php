@@ -13,11 +13,6 @@ class xml
 		
 	}
 	
-	public function xml()
-	{
-		self::__construct();
-	}
-	
 	// /xml/
 	function rss()
 	{

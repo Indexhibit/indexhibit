@@ -26,11 +26,6 @@ class New_statistics
 		$this->refer = (isset($_SERVER['HTTP_REFERER'])) ?  $_SERVER['HTTP_REFERER'] : '';
 	}
 	
-	public function New_statistics()
-	{
-		self::__construct();
-	}
-	
 	public function counter()
 	{
 		$this->stat_insertHit();

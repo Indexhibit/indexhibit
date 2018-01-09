@@ -24,7 +24,7 @@ class Router extends Core
 	{
 		// don't access this space directly
 		// work above or below it
-		parent::Core();
+		parent::__construct();
 		
 		// hackish so the front end will work
 		$this->auto_load();
@@ -42,11 +42,6 @@ class Router extends Core
 		
 		$this->check_routes();
 	}
-	
-	public function Router()
-    {
-        self::__construct();
-    }
 	
 	/**
 	* Returns null or loads error procedure

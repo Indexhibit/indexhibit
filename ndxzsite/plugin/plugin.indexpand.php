@@ -22,11 +22,6 @@ class Indexpand
 		
 	}
 	
-	public function Indexpand()
-	{
-		self::__construct();
-	}
-	
 	function default_settings()
 	{
 		$OBJ =& get_instance();

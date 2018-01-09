@@ -18,7 +18,7 @@ class Exhibits extends Router
 	
 	public function __construct()
 	{
-		parent::Router();
+		parent::__construct();
 		
 		// which object are we accessing?
 		define('OBJECT', 'exhibits');
@@ -33,11 +33,6 @@ class Exhibits extends Router
 			'del_bg_img', 'bg_img_upload', 'upd_jxs', 'upd_img', 'upd_jxdelimg',
 			'upd_jxtext');
 	}
-	
-	public function Exhibits()
-    {
-        self::__construct();
-    }
 	
 	public function _submit()
 	{

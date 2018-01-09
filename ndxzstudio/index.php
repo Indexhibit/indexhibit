@@ -5,10 +5,10 @@
 // -----------------------------------------------------------
 
 // hide errors for the live site
-error_reporting(0);
+//error_reporting(0);
 
 // because we are backwards compatible
-ini_set('display_errors', 'Off');
+//ini_set('display_errors', 'Off');
 
 // the basics
 if (file_exists('../ndxzsite/config/config.php')) require_once '../ndxzsite/config/config.php';

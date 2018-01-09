@@ -65,12 +65,6 @@ class Exhibit
 				$OBJ->abstracts->abstract['height'] : 575;
 	}
 	
-	public function Exhibit()
-	{
-		self::__construct();
-	}
-	
-	
 	public function createExhibit()
 	{
 		$OBJ =& get_instance();

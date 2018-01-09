@@ -19,7 +19,12 @@ class indexhibit_style
 {
 	var $options = array();
 
-	function picker()
+	public function __construct()
+	{
+		
+	}
+
+	public function picker()
 	{
 		$OBJ =& get_instance();
 		
@@ -64,7 +69,7 @@ class indexhibit_style
 		}
 	}
 
-	function make_option()
+	public function make_option()
 	{
 		$OBJ =& get_instance();
 		
@@ -184,7 +189,7 @@ class indexhibit_style
 	}
 	
 	
-	function font_style($value, $title, $id)
+	public function font_style($value, $title, $id)
 	{
 		$OBJ =& get_instance();
 		
@@ -205,7 +210,7 @@ class indexhibit_style
 	}
 	
 	
-	function color_chooser($value='fff', $title, $id)
+	public function color_chooser($value='fff', $title, $id)
 	{
 		$OBJ =& get_instance();
 
@@ -237,7 +242,7 @@ class indexhibit_style
 		return $html;
 	}
 	
-	function fonts($value, $title, $id)
+	public function fonts($value, $title, $id)
 	{
 		$OBJ =& get_instance();
 		
@@ -262,7 +267,7 @@ class indexhibit_style
 		return $html;
 	}
 	
-	function slider_widget($value=9, $min=0, $max=200, $title, $id)
+	public function slider_widget($value=9, $min=0, $max=200, $title, $id)
 	{
 		$OBJ =& get_instance();
 
@@ -284,7 +289,7 @@ class indexhibit_style
 		return $html;
 	}
 	
-	function slider_line_height($size=9)
+	public function slider_line_height($size=9)
 	{
 		$OBJ =& get_instance();
 
@@ -307,7 +312,7 @@ class indexhibit_style
 	}
 	
 	
-	function font_size($size=9, $title, $var, $min, $max)
+	public function font_size($size=9, $title, $var, $min, $max)
 	{
 		$OBJ =& get_instance();
 
@@ -330,7 +335,7 @@ class indexhibit_style
 	}
 	
 	
-	function slider_font_size($size=9)
+	public function slider_font_size($size=9)
 	{
 		$OBJ =& get_instance();
 
@@ -352,7 +357,7 @@ class indexhibit_style
 		return $html;
 	}
 	
-	function slider_menu_width($width)
+	public function slider_menu_width($width)
 	{
 		$OBJ =& get_instance();
 

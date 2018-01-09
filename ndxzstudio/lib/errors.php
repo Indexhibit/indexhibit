@@ -13,11 +13,6 @@ class Errors
 		
 	}
 	
-	public function Errors()
-    {
-        self::__construct();
-    }
-	
 	/**
 	* Returns error page
 	*

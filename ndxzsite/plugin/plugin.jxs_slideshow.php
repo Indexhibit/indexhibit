@@ -1,12 +1,7 @@
 <?php if (!defined('SITE')) exit('No direct script access allowed');
 
 class Jxs_slideshow
-{
-	public function Jxs_slideshow()
-	{
-		self::__construct();
-	}
-	
+{	
 	public function output()
 	{
 		echo json_encode($this->output); 

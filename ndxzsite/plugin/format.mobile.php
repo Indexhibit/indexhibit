@@ -46,11 +46,6 @@ class Exhibit
 	{
 		
 	}
-	
-	public function Exhibit()
-	{
-		self::__construct();
-	}
 
 	function default_settings()
 	{

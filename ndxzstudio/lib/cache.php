@@ -24,11 +24,6 @@ class Cache
 		$this->defaults = $default;
 	}
 	
-	public function Cache()
-    {
-        self::__construct();
-    }
-	
 	public function cache_age()
 	{
 		return adjust_now(-$this->defaults['cache_time']);

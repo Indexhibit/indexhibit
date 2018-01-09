@@ -25,11 +25,6 @@ class Tag
 		$this->method = 'exh'; // default
 	}
 	
-	public function Tag()
-	{
-		self::__construct();
-	}
-	
 	// get tags
 	public function get_all_tags()
 	{

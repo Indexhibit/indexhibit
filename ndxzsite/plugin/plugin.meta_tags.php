@@ -22,11 +22,6 @@ class add_meta_keyword_description
 		
 	}
 	
-	public function add_meta_keyword_description()
-	{
-		self::__construct();
-	}
-	
 	function add()
 	{	
 		$OBJ =& get_instance();

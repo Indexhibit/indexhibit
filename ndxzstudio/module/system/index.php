@@ -9,7 +9,7 @@ class System extends Router
 
 	public function __construct()
 	{
-		parent::Router();
+		parent::__construct();
 		
 		// library of $_POST options
 		$this->submits = array('upd_user', 'upd_settings', 'add_sec',
@@ -20,11 +20,6 @@ class System extends Router
 			'upd_format_edit', 'upd_theme', 'del_tag', 'merge_tag', 'edit_tag', 'upd_jxs_opt');
 			
 		$this->tabs = $this->default['system_admin'];
-	}
-	
-	public function System()
-	{
-		self::__construct();
 	}
 	
 	public function _submit()
@@ -426,7 +421,7 @@ class System extends Router
 				closedir($fp);
 			}
 			
-			array_multisort($files, SORT_DESC, SORT_STRING);
+			//array_multisort($files, SORT_DESC, SORT_STRING);
 		
 			if (!empty($files))
 			{
@@ -441,20 +436,19 @@ class System extends Router
 						{
 							require_once(DIRNAME . '/ndxzstudio/upgrade/' . $file);
 							$upgrade = 'upgrade_' . str_replace('.', '', $ver);
-							$TMP = new $upgrade();
+							$TMP = new $upgrade;
 							$TMP->upgrade();
 							//$messages[] = $TMP->messages;
 						}
 					}
 				}
-				
-				exit;
 			
 				// update settings with last version
-				$this->db->updateArray(PX.'settings', array('version' => $ver), "adm_id = '1'");
+				//$this->db->updateArray(PX.'settings', array('version' => $ver), "adm_id = '1'");
 			
 				// need a system redirect here...
 				system_redirect("?a=$go[a]&q=upgrade&x=complete");
+				exit;
 			}
 		}
 

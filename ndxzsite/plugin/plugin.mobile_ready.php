@@ -21,11 +21,6 @@ class Mobile_ready
 		
 	}
 	
-	public function Mobile_ready()
-	{
-		self::__construct();
-	}
-	
 	function enable()
 	{
 		$OBJ =& get_instance();

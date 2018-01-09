@@ -26,11 +26,6 @@ class Installation
 		//$this->mysqli_ver();
 	}
 	
-	public function Installation()
-	{
-		self::__construct();
-	}
-	
 	public function test()
 	{
 		$this->output = 'Yes!';

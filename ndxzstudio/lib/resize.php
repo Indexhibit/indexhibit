@@ -30,11 +30,6 @@ class Resize
 		$this->path = DIRNAME . '/files/dimgs/';
 	}
 	
-	public function Resize()
-	{
-		self::__construct();
-	}
-	
 	//$R->reformat($new_width, $this->force_height, $size, $go, $OBJ->vars->exhibit['id'], $name);
 	public function reformat($width, $height, $size, $img, $id=0, $name, $dir='')
 	{

@@ -24,13 +24,6 @@ class Plugins
 		$this->plugin_path = DIRNAME . '/ndxzsite/plugin/';
 	}
 	
-	
-	public function Plugins()
-	{
-		self::__construct();
-	}
-	
-	
 	public function get_plugins_info() 
 	{
 		$this->counter = 0; $arr = Array();

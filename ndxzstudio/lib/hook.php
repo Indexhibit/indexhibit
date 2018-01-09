@@ -28,12 +28,6 @@ class Hook
 		
 	}
 	
-	public function Hook()
-    {
-        self::__construct();
-    }
-	
-	
 	public function register_hook($hook)
 	{
 		$this->registered_hook[$hook] = true;

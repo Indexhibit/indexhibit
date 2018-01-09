@@ -33,9 +33,4 @@ class Vars
 
 		$this->default = $default;
 	}
-	
-	public function Vars()
-	{
-		self::__construct();
-	}
 }

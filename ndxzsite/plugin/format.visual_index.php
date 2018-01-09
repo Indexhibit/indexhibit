@@ -154,12 +154,6 @@ slide: function(event, ui) { $('label#text_box_height_value span').html(ui.value
 			$OBJ->hook->options['visual_index_settings']['collapse'] : 1;
 	}
 	
-	public function Exhibit()
-    {
-        self::__construct();
-    }
-	
-	
 	// rough example of how to do the resets
 	function reset()
 	{

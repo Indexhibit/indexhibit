@@ -20,11 +20,6 @@ class Access
 		
 	}
 	
-	public function Access()
-    {
-        self::__construct();
-    }
-	
 	/**
 	* User logout 
 	*

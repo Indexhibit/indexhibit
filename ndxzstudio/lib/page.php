@@ -52,11 +52,6 @@ class Page
 		//}
 	}
 	
-	public function Page()
-    {
-        self::__construct();
-    }
-	
 	public function version()
 	{
 		return $this->version;

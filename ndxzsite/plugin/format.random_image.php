@@ -19,12 +19,6 @@ class Exhibit
 
 	}
 	
-	public function Exhibit()
-	{
-		self::__construct();
-	}
-	
-	
 	function createExhibit()
 	{
 		$OBJ =& get_instance();

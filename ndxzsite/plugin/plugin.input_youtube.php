@@ -26,11 +26,6 @@ class input_youtube
 		
 	}
 	
-	public function input_youtube()
-	{
-		self::__construct();
-	}
-	
 	function input_link()
 	{
 		$OBJ =& get_instance();

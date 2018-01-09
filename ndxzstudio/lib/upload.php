@@ -61,11 +61,6 @@ class Upload
             $this->options = array_replace_recursive($this->options, $options);
         }
     }
-    
-    public function Upload()
-	{
-		self::__construct();
-	}
 	
 	// new
     protected function getFullUrl() {

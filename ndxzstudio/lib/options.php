@@ -15,11 +15,6 @@ class Options
 
 	}
 	
-	public function Options()
-	{
-		self::__construct();
-	}
-	
 	public function format()
 	{
 		$OBJ =& get_instance();
