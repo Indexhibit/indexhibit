@@ -51,7 +51,7 @@ $OBJ->lang->setlang($OBJ->access->prefs['user_lang']);
 $OBJ->goto_module($OBJ->go['a']);
 
 // load collections add-on if it exists
-//$OBJ->load_collector($OBJ->go['a'], $OBJ->go['oid']);
+$OBJ->load_collector($OBJ->go['a'], $OBJ->go['oid']);
 
 // we load this before anything happens so we can override
 // you can only have one at a time...
