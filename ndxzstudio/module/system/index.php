@@ -15,7 +15,7 @@ class System extends Router
 		$this->submits = array('upd_user', 'upd_settings', 'add_sec',
 			'edit_sec', 'del_sec', 'upd_profile', 'upd_jxs', 'upd_ord', 'upd_jxtag',
 			'clear_cache', 'upd_jxcode', 'upd_img', 'upd_tsettings', 'upd_backup', 'upd_jxbackup',
-			'upd_options', 'add_user', 'upd_user', 'del_user', 'deact_user', 'send_login',
+			'upd_options', 'add_user', 'upd_user', 'del_user', 'deact_user', 'sendlogin',
 			'add_alt', 'upd_alt', 'del_alt', 'upd_plugins_edit', 'clear_dimgs', 'upd_prefs', 'abstract',
 			'upd_format_edit', 'upd_theme', 'del_tag', 'merge_tag', 'edit_tag', 'upd_jxs_opt');
 			
@@ -6341,7 +6341,7 @@ var ide = '$go[id]';";
 		{
 			if (($rs['email'] != '') && ($rs['userid'] != ''))
 			{
-				$b .= input('send_login', 'button', "onclick=\"transmit($go[id]); return false;\"", $this->lang->word('transmit login info')) . ' ';
+				$b .= input('sendlogin', 'button', "onclick=\"transmit($go[id]); return false;\"", $this->lang->word('transmit login info')) . ' ';
 			}
 		}
 
@@ -6449,27 +6449,21 @@ var ide = '$go[id]';";
 	}
 	
 
-	public function sbmt_send_login()
+	public function sbmt_sendlogin()
 	{
 		global $go;
-		
+
 		$id = (int) $_POST['id'];
-		
+
 		// make password
 		$temp['password'] = $this->createRandomPassword();
 		$clean['password'] = md5($temp['password']);
-		
+
 		// get user info
 		$rs = $this->db->fetchRecord("SELECT * FROM ".PX."users WHERE ID='$id'");
-		
+
 		// update password
 		if ($rs) $this->db->updateArray(PX.'users', $clean, "ID='$id'");
-		
-		$MAIL =& load_class('mail', true, 'lib');
-		
-		$MAIL->setRecipients($rs['user_name'] . ' ' . $rs['user_surname'], $rs['email'], 
-			$this->access->prefs['user_name'] . ' ' . $this->access->prefs['user_surname'], 
-			$this->access->prefs['email']);
 
 		#produce message in html format 
 		$body = "Your password was updated.\n\n";
@@ -6478,21 +6472,28 @@ var ide = '$go[id]';";
 		$body .= "Password: $temp[password]\n\n";
 		$body .= "URL: " . BASEURL . "/ndxzstudio/";
 
-		#build the message with the message title and message content 
-		$MAIL->buildMessage('Password Update', $body);
+		$mail =& load_class('mail', true, 'lib');
 
-		#build and send the email 
-		if($MAIL->sendmail()) 
+		$mail->setTo($rs['email'], 'From your website');
+		$mail->setSubject('Indexhibit Password Reset');
+		$mail->setMessage($body);
+		$mail->addMailHeader('Reply-To', 'noreply@indexhibit.org', 'indexhibit.org');
+		$mail->addGenericHeader('X-Mailer', 'PHP/' . phpversion());
+		$mail->addGenericHeader('Content-Type', 'text/html; charset="utf-8"');
+		$mail->setWrap(100);
+
+		$mail->send();
+
+		if($rs) 
 		{ 
-		    echo 'Message was sent. '; 
-			echo "User password is '$temp[password]'.";
+		   	echo 'Message was sent. '; 
+			echo "Temp password is '$temp[password]'.";
 		} 
 		else 
 		{ 
-		    echo 'Message was not sent - there was an error. '; 
-			echo "User password is '$temp[password]'.";
+			echo 'Message was not sent - there was an error. '; 
 		}
-		
+
 		exit;
 	}
 

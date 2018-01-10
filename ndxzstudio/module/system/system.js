@@ -36,7 +36,7 @@ function update_flickr()
 
 function transmit(ide)
 {
-	$.post('?a=system', { send_login : 'true', id : ide }, 
+	$.post('?a=system', { sendlogin : 'true', id : ide }, 
 		function(html) {
 			alert(html);
 	});

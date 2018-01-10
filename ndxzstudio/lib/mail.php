@@ -390,8 +390,6 @@ class Mail
             $message = $this->getWrapMessage();
         }
         
-        echo 'we are sending the email now'; exit;
-        
         return mail($to, $this->_subject, $message, $headers, $this->_params);
     }
     /**
