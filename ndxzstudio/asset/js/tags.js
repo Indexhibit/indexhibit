@@ -27,7 +27,7 @@ function upd_tags(id, style)
 		function(html) {
 			//alert(html);
 			$('#tag-holder').html(html);
-			if (style == 'exh') parent.update_tag_box();
+			//if (style == 'exh') parent.update_tag_box();
 			return false;
 	});
 }
