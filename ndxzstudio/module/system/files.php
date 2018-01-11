@@ -680,8 +680,8 @@ function getSections()
 	$input = label($OBJ->lang->word('section name') . ' ' . span($OBJ->lang->word('required'), "class='small-txt'")) . input('sec_desc', 'text', "maxlength='35'", NULL);
 	$input .= label($OBJ->lang->word('folder name') . ' ' . span($OBJ->lang->word('required'), "class='small-txt'")) . input('section', 'text', "maxlength='25'", NULL);
 
-	$input .= ($default['subdir'] == true) ? getSectionPrepend(null, 'sec_prepend', null) : 
-		input('sec_prepend', 'hidden', NULL, '/');
+	//$input .= ($default['subdir'] == true) ? getSectionPrepend(null, 'sec_prepend', null) : 
+	//	input('sec_prepend', 'hidden', NULL, '/');
 
 	//$input .= input('hsec_ord', 'hidden', NULL, $num);
 	//$input .= div(input('add_sec', 'submit', NULL, $OBJ->lang->word('add section')), "style='text-align: right;'");

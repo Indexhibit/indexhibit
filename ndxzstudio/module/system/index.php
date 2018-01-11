@@ -4777,6 +4777,7 @@ var ide = '$go[id]';";
 			// a few more things
 			$clean['sec_date'] 	= getNow();
 			$clean['sec_ord']	= $temp['hsec_ord'] + 1;
+			$clean['sec_obj']	= 'exhibits';
 			
 			// we need to romanize the path based upon 'section'
 			load_helpers( array('output', 'romanize') );
