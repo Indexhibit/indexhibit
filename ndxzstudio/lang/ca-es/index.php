@@ -229,6 +229,7 @@ $words = array
 	"change password" => "Modificar contrasenya",
 	"confirm password" => "Confirmar contrasenya",
 	"if change" => "Si canvia",
+	"collect" => "Collecciones",
 	"" => "",
 	
 	"" => ""

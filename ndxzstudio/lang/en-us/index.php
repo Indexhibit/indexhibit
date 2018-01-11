@@ -231,7 +231,7 @@ $words = array
 	"confirm password" => "Confirm Password",
 	"if change" => "If changing",
 	"updated" => "Updated",
-	"" => "",
+	"collect" => "Collections",
 	
 	"" => ""
 );

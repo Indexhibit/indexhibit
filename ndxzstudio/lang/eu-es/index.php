@@ -6,7 +6,7 @@
 * Euskara
 * 
 * @version 2.0
-* @author Pep Romero Garcés
+* @author Pep Romero Garcï¿½s
 */
 
 // EU-ES
@@ -231,6 +231,7 @@ $words = array
 	"confirm password" => "Pasahitza baieztatu",
 	"if change" => "Aldatuz gero",
 	"updated" => "Eguneratuta",
+	"collect" => "Collecciones",
 	"" => "",
 	
 	"" => ""
