@@ -56,7 +56,7 @@ $medias = array_merge($default['images'], $default['media'], $default['flash'], 
 $default['medias'] = array_merge($default['images'], $default['media'], $default['flash'], $default['services']);
 
 // kinds of sections
-$default['section_types'] = array(0 => 'default', 1 => 'chronological');
+$default['section_types'] = array(0 => 'default', 1 => 'chronological', 3 => 'tags');
 
 // this drives the tabs in system/admin
 $default['system_admin'] = array('theme', 'formats', 'plugins', 'spacer', 'settings', 'sections', 'assets', 'tag', 'spacer', 'statistics', 'spacer', 'users');

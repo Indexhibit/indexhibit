@@ -199,7 +199,7 @@ class Index
 	}
 	
 	
-	function ndxz_index_all_tags()
+	function ndxz_index_tags()
 	{
 		$OBJ =& get_instance();
 

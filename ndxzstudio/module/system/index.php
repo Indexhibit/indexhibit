@@ -1997,7 +1997,6 @@ var baseurl = '" . BASEURL . "';";
 		
 		// this is where we display subdirectories if they exist
 		// enable later
-		/*
 		if ($rs['sec_proj'] == 0)
 		{
 			// second column
@@ -2022,7 +2021,6 @@ var baseurl = '" . BASEURL . "';";
 			//$body .= "<div class='cl'><!-- --></div>\n";
 			//$body .= "</div>";
 		}
-		*/
 		
 		$body .= "<div class='cl'><!-- --></div>\n";
 		$body .= "</div>";

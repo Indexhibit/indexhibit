@@ -539,6 +539,7 @@ function get_section_type($state, $name, $attr)
 
 	$s = option(0, $OBJ->lang->word('default'), $state, 0);
 	$s .= option(1, $OBJ->lang->word('chronological'), $state, 1);
+	$s .= option(3, $OBJ->lang->word('tags'), $state, 3);
 	
 	return select($name, $attr, $s);	
 }
@@ -548,7 +549,7 @@ function get_section_type_name($input)
 {
 	$OBJ =& get_instance();
 
-	$temp = array(0 => 'default', 1 => 'chronological');
+	$temp = array(0 => 'default', 1 => 'chronological', 3 => 'tags');
 	
 	foreach ($temp as $key => $do)
 	{

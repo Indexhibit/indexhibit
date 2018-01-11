@@ -46,7 +46,7 @@ $default['exhibit_imgs'] = 6;
 
 // subsections within urls /more/more/more...
 // not sure if this is 100% yet
-$default['subdir'] = false;
+$default['subdir'] = true;
 
 $default['timer'] = false;
 
