@@ -4830,7 +4830,7 @@ var ide = '$go[id]';";
 		$temp['sec_prepend'] = $processor->process('sec_prepend', array('notags'));
 		
 		// this needs to update the objects table as well
-		//$clean['sec_obj'] = $processor->process('sec_obj', array('notags', 'reqnotempty'));
+		$clean['sec_obj'] = $processor->process('sec_obj', array('notags', 'reqnotempty'));
 
 		if ($processor->check_errors())
 		{
@@ -4873,7 +4873,7 @@ var ide = '$go[id]';";
 			// we need to update the page url
 			// we need to check for duplicates again? oi vey...
 			$new['url'] = $folder_name->urlStrip($clean['sec_path'] . '/');
-			//$new['object'] = $clean['sec_obj'];
+			$new['object'] = $clean['sec_obj'];
 			
 			$this->db->updateArray(PX.'objects', $new, "obj_ref_id = '$go[id]' AND section_top = '1'");
 			
