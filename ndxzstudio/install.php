@@ -231,9 +231,6 @@ class Installation
 		{
 			if (isset($_GET['s']))
 			{
-				// let's get an edition number
-				$this->makeEdition();
-
 				header('location:' . BASEURL . BASENAME . '/?a=system&q=preferences&flag=true');
 				exit;
 			}
@@ -250,9 +247,6 @@ class Installation
 	{
 		if (isset($_GET['s']))
 		{
-			// let's get an edition number
-			$this->makeEdition();
-
 			// to the preferences page
 			header('location:' . BASEURL . BASENAME . '/?a=system&q=preferences&flag=true');
 			exit;
@@ -903,15 +897,6 @@ if (!defined('PX')) { define('PX', '$c[n_appnd]'); }";
 		}
 		
 		return $s;
-	}
-
-	
-	function makeEdition()
-	{
-		$rest = 'http://api.indexhibit.org/?method=edition&url=' . urlencode(BASEURL);
-		$edition = @file_get_contents($rest);
-		
-		return;
 	}
 	
 	
