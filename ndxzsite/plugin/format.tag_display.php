@@ -53,7 +53,36 @@ class Exhibit
 	
 	public function __construct()
 	{
+		$OBJ =& get_instance(); 
+
+		// PADDING AND TEXT WIDTH ADJUSTMENTS UP HERE!!!
+		$this->picture_block_padding_right = (isset($OBJ->hook->options['tag_display_settings']['margin'])) ? 
+			$OBJ->hook->options['tag_display_settings']['margin'] : 25;
+		$this->bottom_margin = (isset($OBJ->hook->options['tag_display_settings']['bottom_margin'])) ? 
+			$OBJ->hook->options['tag_display_settings']['bottom_margin'] : 25;
+		$this->text_block_height = (isset($OBJ->hook->options['tag_display_settings']['text_box_height'])) ? 
+			$OBJ->hook->options['tag_display_settings']['text_box_height'] : 18;
+		$this->text_width = 250;
+		$this->text_padding_right = 35;
+		$this->final_img_container = 0; // do not adjust this one
 		
+		// thumbs shape == 0 and grid = true...
+		if (isset($OBJ->hook->options['tag_display_settings']['grid']))
+		{
+			$this->grid = ($OBJ->hook->options['tag_display_settings']['grid'] == 1) ? true : false;
+		}
+		
+		// thumbs shape == 0 and grid = true...
+		$this->grid = (isset($OBJ->hook->options['tag_display_settings']['grid'])) ? 
+			$OBJ->hook->options['tag_display_settings']['grid'] : 0;
+		
+		$this->overlay = (isset($OBJ->hook->options['tag_display_settings']['overlay'])) ? 
+			$OBJ->hook->options['tag_display_settings']['overlay'] : 'dark';
+		
+		$this->center = 'true';
+			
+		$this->collapse = (isset($OBJ->hook->options['tag_display_settings']['collapse'])) ? 
+			$OBJ->hook->options['tag_display_settings']['collapse'] : 1;
 	}
 	
 		function default_settings()
@@ -130,41 +159,6 @@ class Exhibit
 		{
 			return ($var == $check) ? " selected='selected'" : '';
 		}
-	
-
-	function __construct()
-	{
-		$OBJ =& get_instance(); 
-
-		// PADDING AND TEXT WIDTH ADJUSTMENTS UP HERE!!!
-		$this->picture_block_padding_right = (isset($OBJ->hook->options['tag_display_settings']['margin'])) ? 
-			$OBJ->hook->options['tag_display_settings']['margin'] : 25;
-		$this->bottom_margin = (isset($OBJ->hook->options['tag_display_settings']['bottom_margin'])) ? 
-			$OBJ->hook->options['tag_display_settings']['bottom_margin'] : 25;
-		$this->text_block_height = (isset($OBJ->hook->options['tag_display_settings']['text_box_height'])) ? 
-			$OBJ->hook->options['tag_display_settings']['text_box_height'] : 18;
-		$this->text_width = 250;
-		$this->text_padding_right = 35;
-		$this->final_img_container = 0; // do not adjust this one
-		
-		// thumbs shape == 0 and grid = true...
-		if (isset($OBJ->hook->options['tag_display_settings']['grid']))
-		{
-			$this->grid = ($OBJ->hook->options['tag_display_settings']['grid'] == 1) ? true : false;
-		}
-		
-		// thumbs shape == 0 and grid = true...
-		$this->grid = (isset($OBJ->hook->options['tag_display_settings']['grid'])) ? 
-			$OBJ->hook->options['tag_display_settings']['grid'] : 0;
-		
-		$this->overlay = (isset($OBJ->hook->options['tag_display_settings']['overlay'])) ? 
-			$OBJ->hook->options['tag_display_settings']['overlay'] : 'dark';
-		
-		$this->center = 'true';
-			
-		$this->collapse = (isset($OBJ->hook->options['tag_display_settings']['collapse'])) ? 
-			$OBJ->hook->options['tag_display_settings']['collapse'] : 1;
-	}
 	
 	
 	public function Exhibit()
