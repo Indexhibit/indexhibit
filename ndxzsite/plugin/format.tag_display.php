@@ -161,12 +161,6 @@ class Exhibit
 		}
 	
 	
-	public function Exhibit()
-	{
-		self::__construct();
-	}
-	
-	
 	// rough example of how to do the resets
 	function reset()
 	{
