@@ -172,7 +172,7 @@ class Exhibit
 
 				$a .= (($image['media_title'] !=  '') && ($image['media_caption'] !=  '')) ? "<p>" : '';
 				$a .= ($image['media_title'] !=  '') ? $image['media_title'] : '';
-				$a .= ($image['media_title'] !=  '') ? ": " : '';
+				$a .= ($image['media_title'] !=  '') ? " " : '';
 				$a .= ($image['media_caption'] !=  '') ? strip_tags($image['media_caption'], "a,i,b") : '';
 				$a .= (($image['media_title'] !=  '') && ($image['media_caption'] !=  '')) ? "</p>" : '';
 
@@ -214,7 +214,7 @@ class Exhibit
 
 				$a .= (($image['media_title'] !=  '') && ($image['media_caption'] !=  '')) ? "<p>" : '';
 				$a .= ($image['media_title'] !=  '') ? $image['media_title'] : '';
-				$a .= ($image['media_title'] !=  '') ? ": " : '';
+				$a .= ($image['media_title'] !=  '') ? " " : '';
 				$a .= ($image['media_caption'] !=  '') ? strip_tags($image['media_caption'], "a,i,b") : '';
 				$a .= (($image['media_title'] !=  '') && ($image['media_caption'] !=  '')) ? "</p>" : '';
 

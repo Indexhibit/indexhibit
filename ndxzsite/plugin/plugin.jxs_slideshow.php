@@ -89,7 +89,7 @@ class Jxs_slideshow
 
 				$a .= (($rs['media_title'] !=  '') && ($rs['media_caption'] !=  '')) ? "<p>" : '';
 				$a .= ($rs['media_title'] !=  '') ? $rs['media_title'] : '';
-				$a .= ($rs['media_title'] !=  '') ? ": " : '';
+				$a .= ($rs['media_title'] !=  '') ? " " : '';
 				$a .= ($rs['media_caption'] !=  '') ? strip_tags($rs['media_caption'], "a,i,b") : '';
 				$a .= (($rs['media_title'] !=  '') && ($rs['media_caption'] !=  '')) ? "</p>" : '';
 
@@ -165,7 +165,7 @@ class Jxs_slideshow
 
 				$a .= (($rs['media_title'] !=  '') && ($rs['media_caption'] !=  '')) ? "<p>" : '';
 				$a .= ($rs['media_title'] !=  '') ? $rs['media_title'] : '';
-				$a .= ($rs['media_title'] !=  '') ? ": " : '';
+				$a .= ($rs['media_title'] !=  '') ? " " : '';
 				$a .= ($rs['media_caption'] !=  '') ? strip_tags($rs['media_caption'], "a,i,b") : '';
 				$a .= (($rs['media_title'] !=  '') && ($rs['media_caption'] !=  '')) ? "</p>" : '';
 

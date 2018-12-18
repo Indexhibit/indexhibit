@@ -36,6 +36,7 @@ $serverport = ($_SERVER['SERVER_PORT'] == '80') ? '' : ':' . $_SERVER['SERVER_PO
 $path = dirname($_SERVER["SCRIPT_NAME"]);
 $path = str_replace('/ndxzstudio', '', $path);
 $base = $protocol . '://' . preg_replace('/\/+/', '/', $servername . $serverport . $path);
+$base = str_replace(':443', '', $base);
 define('BASEURL', preg_replace("/\/$/i", '', $base)); // no trailing slashes
 
 // Add default types for files, images and movies upload

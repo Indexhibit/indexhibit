@@ -547,7 +547,7 @@ class Index
 		$s .= "</ul>\n";
 		
 		// last check ???
-		if (($this->section['status'] != 1) && (empty($tmp_subs))) return;
+		//if (($this->section['status'] != 1) && (empty($tmp_subs))) return;
 
 		return $s;	
 	}
