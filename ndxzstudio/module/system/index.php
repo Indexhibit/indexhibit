@@ -6715,8 +6715,15 @@ var ide = '$go[id]';";
 		$t = the_templates(DIRNAME . '/ndxzsite/' . $this->access->settings['obj_theme'], '', 'index.php');
 		$li = '';
 		$body .= p(label($this->lang->word('template set') . ' ' . span('(' . $this->access->settings['obj_theme'] . ')')));
-		foreach ($t as $key => $te) $li .= li(href($te, "?a=$go[a]&q=assets&edit=/" . $this->access->settings['obj_theme'] . "/$te"));
-		$li .= li(href('error.php', "?a=$go[a]&q=assets&edit=/error.php"));
+		foreach ($t as $key => $te) 
+		{
+			// exclude php files
+			if (substr($te, -3) != 'php')
+			{
+				$li .= li(href($te, "?a=$go[a]&q=assets&edit=/" . $this->access->settings['obj_theme'] . "/$te"));
+			}
+		}
+		//$li .= li(href('error.php', "?a=$go[a]&q=assets&edit=/error.php"));
 		$body .= ul($li, "class='ndxz_files'");
 		$body .= "</div>\n\n";
 		
@@ -6730,6 +6737,7 @@ var ide = '$go[id]';";
 		//$body .= "</div>\n\n";
 		
 		// third column
+		/*
 		$body .= "<div style='margin-top: 50px;'><!-- --></div>\n";
 		$t = the_templates(DIRNAME . '/ndxzsite/js', 'js', 'index.php');
 		$li = '';
@@ -6737,8 +6745,10 @@ var ide = '$go[id]';";
 		foreach ($t as $key => $te) $li .= li(href($te, "?a=$go[a]&q=assets&edit=/js/$te"));
 		$body .= ul($li, "class='ndxz_files'");
 		$body .= "</div>\n\n";
+		*/
 		
 		// fourth column
+		/*
 		$body .= "<div class='col'>\n";
 		$t = the_templates(DIRNAME . '/ndxzsite/plugin', '', 'index.php');
 		$li = '';
@@ -6746,6 +6756,7 @@ var ide = '$go[id]';";
 		foreach ($t as $key => $te) $li .= li(href($te, "?a=$go[a]&q=assets&edit=/plugin/$te"));
 		$body .= ul($li, "class='ndxz_files'");
 		$body .= "</div>\n\n";
+		*/
 		
 		$body .= "<div class='cl'><!-- --></div>\n";
 		$body .= "</div>";
@@ -6783,10 +6794,9 @@ var ide = '$go[id]';";
 		
 		if ($template == false) { echo 'Woops!'; exit; }
 		
-		// try to force the permissions?
-		//chmod(DIRNAME . '/ndxzsite' . $_GET['edit'], 777);
-		
-		if (is_writable(DIRNAME . '/ndxzsite' . $_GET['edit'])) 
+		// need to restrict which folders we can access
+		// disallow php & js editing
+		if (($format == 'css') && (is_writable(DIRNAME . '/ndxzsite' . $_GET['edit'])) 
 		{
 			$filename = DIRNAME . '/ndxzsite' . $template;
 			$fp = @fopen($filename, 'r');
@@ -6823,7 +6833,6 @@ var ide = '$go[id]';";
 		else
 		{
 			// we'll just show the code...
-			
 			$filename = DIRNAME . '/ndxzsite' . $template;
 			$fp = @fopen($filename, 'r');
 			$contents = fread($fp, filesize($filename));
