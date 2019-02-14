@@ -31,34 +31,41 @@ class Installation
 		require_once './helper/html.php';
 		require_once './helper/time.php';
 		require_once './lang/index.php';
-		
-		// look for the cookie here
-		$picked = (isset($_COOKIE['install'])) ? $_COOKIE['install'] : 'en-us';
 
 		$this->lang = new Lang;
 		$this->lang->setlang($picked);
-		
-		switch( $this->get_page() ) 
+
+		if (file_exists(DIRNAME . '/ndxzsite/config/config.php'))
 		{
-			case 0:
-				$this->page_zero();
-			break;
-
-			case 1:
-				$this->page_one();
-			break;
-
-			case 2:
-				$this->page_two();
-			break;
-
-			case 3:
-				$this->page_three();
-			break;
+			$this->html = p($this->lang->word('you are already installed'));
+		}
+		else
+		{
+			// look for the cookie here
+			$picked = (isset($_COOKIE['install'])) ? $_COOKIE['install'] : 'en-us';
 			
-			case 4:
-				$this->page_four();
-			break;
+			switch( $this->get_page() ) 
+			{
+				case 0:
+					$this->page_zero();
+				break;
+
+				case 1:
+					$this->page_one();
+				break;
+
+				case 2:
+					$this->page_two();
+				break;
+
+				case 3:
+					$this->page_three();
+				break;
+				
+				case 4:
+					$this->page_four();
+				break;
+			}
 		}
 	}
 	
@@ -73,7 +80,7 @@ class Installation
 		}
 		
 		// PHP version check here
-		if (version_compare(PHP_VERSION, '5.4.0', '>='))
+		if (version_compare(PHP_VERSION, '5.6.0', '>='))
 		{
 			if (file_exists(DIRNAME . '/ndxzsite/config/config.php'))
 			{
@@ -88,7 +95,7 @@ class Installation
 		}
 		else
 		{
-			$this->html = "<p>" . $this->lang->word('you need php 5.4 or greater') . "<p>\n";
+			$this->html = "<p>" . $this->lang->word('you need php 5.6 or greater') . "<p>\n";
 		}
 	}
 	
@@ -1027,7 +1034,7 @@ if (!defined('PX')) { define('PX', '$c[n_appnd]'); }";
 			{
 				$now = date("Y-m-d", time());
 
-				$page = '';
+				$page = [];
 
 				// a few more things
 				$clean['sec_date'] 	= $now;
@@ -1063,7 +1070,7 @@ if (!defined('PX')) { define('PX', '$c[n_appnd]'); }";
 			}
 			else // adjust the main page
 			{
-				$page = '';
+				$page = [];
 
 				$page['home'] = 1;
 				$page['section_top'] = 1;
