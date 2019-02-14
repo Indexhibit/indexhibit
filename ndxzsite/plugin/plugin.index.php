@@ -388,7 +388,7 @@ class Index
 
 				$s .= "<li><span id='subsection_title_" . $this->section['secid'] . "_$i' class='subsection_title{$active_subsection_title}'>" . str_replace('_', ' ', $key) . "</span>\n";
 				
-				$active_subsection = ($flag == true) ? " class='active_subsection'" : '';
+				$active_subsection = ($flag == true) ? ' active_subsection' : '';
 				$flag = false; // reset the flag for next time
 			
 				$s .= "<ul class='subsection{$active_subsection}'>\n" . $li . "</ul>\n";
@@ -531,7 +531,7 @@ class Index
 				
 					if ($sub['hidden'] != 1)  $s .= ($sub['status'] == 1) ? "<li><span id='subsection_title_" . $this->section['secid'] . "_$i' class='subsection_title'><a href='" . $OBJ->baseurl . ndxz_rewriter($sub['url']) . "'>" . $sub['title'] . "</a></span>\n" : "<li><span id='subsection_title_" . $this->section['secid'] . "_$i' class='subsection_title'>" . $sub['title'] . "</span>\n";
 				
-					$active_subsection = ($flag == true) ? " class='active_subsection'" : '';
+					$active_subsection = ($flag == true) ? ' active_subsection' : '';
 					$flag = false; // reset the flag for next time
 			
 					if ($li != '') $s .= "<ul class='subsection{$active_subsection}'>\n" . $li . "</ul>\n";
