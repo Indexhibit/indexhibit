@@ -6796,7 +6796,7 @@ var ide = '$go[id]';";
 		
 		// need to restrict which folders we can access
 		// disallow php & js editing
-		if (($format == 'css') && (is_writable(DIRNAME . '/ndxzsite' . $_GET['edit']))) 
+		if (($format == 'css') && (is_writable(DIRNAME . '/ndxzsite' . $_GET['edit'])))
 		{
 			$filename = DIRNAME . '/ndxzsite' . $template;
 			$fp = @fopen($filename, 'r');
