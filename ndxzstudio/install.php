@@ -32,40 +32,33 @@ class Installation
 		require_once './helper/time.php';
 		require_once './lang/index.php';
 
+		// look for the cookie here
+		$picked = (isset($_COOKIE['install'])) ? $_COOKIE['install'] : 'en-us';
+		
 		$this->lang = new Lang;
 		$this->lang->setlang($picked);
-
-		if (file_exists(DIRNAME . '/ndxzsite/config/config.php'))
-		{
-			$this->html = p($this->lang->word('you are already installed'));
-		}
-		else
-		{
-			// look for the cookie here
-			$picked = (isset($_COOKIE['install'])) ? $_COOKIE['install'] : 'en-us';
-			
-			switch( $this->get_page() ) 
-			{
-				case 0:
-					$this->page_zero();
-				break;
-
-				case 1:
-					$this->page_one();
-				break;
-
-				case 2:
-					$this->page_two();
-				break;
-
-				case 3:
-					$this->page_three();
-				break;
 				
-				case 4:
-					$this->page_four();
-				break;
-			}
+		switch( $this->get_page() ) 
+		{
+					case 0:
+						$this->page_zero();
+					break;
+		
+					case 1:
+						$this->page_one();
+					break;
+		
+					case 2:
+						$this->page_two();
+					break;
+		
+					case 3:
+						$this->page_three();
+					break;
+					
+					case 4:
+						$this->page_four();
+					break;
 		}
 	}
 	
