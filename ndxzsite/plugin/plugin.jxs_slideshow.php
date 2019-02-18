@@ -14,6 +14,7 @@ class Jxs_slideshow
 		global $default;
 
 		$media_id = (isset($_POST['i'])) ? (int) $_POST['i'] : 0;
+		$posted_z = (isset($_POST['z'])) ? (int) $_POST['z'] : 0;
 	
 		$rs = $OBJ->db->fetchRecord("SELECT * FROM ".PX."objects, ".PX."media 
 			WHERE media_id = '$media_id' 
@@ -73,7 +74,7 @@ class Jxs_slideshow
 			// autoplay is true from this format
 			$OBJ->vars->media['autoplay'] = true;
 			
-			$a = '<div id="slide' . $_POST['z'] . '" class="picture videoslide" style="z-index: ' . $_POST['z'] . '; position: absolute;' . $mime_display . '">';
+			$a = '<div id="slide' . $posted_z . '" class="picture videoslide" style="z-index: ' . $posted_z . '; position: absolute;' . $mime_display . '">';
 			
 			$a .= "<a href='#' onclick=\"next(); return false;\"><span class='nextlink'></span></a>";
 			
@@ -136,7 +137,7 @@ class Jxs_slideshow
 			
 			$adjuster = ($new_width - $click_width);
 			
-			$a = "<div id='slide" . $_POST['z'] . "' class='picture' style='z-index: " . $_POST['z'] . "; position: absolute; display: none;'>";
+			$a = "<div id='slide" . $posted_z . "' class='picture' style='z-index: " . $posted_z . "; position: absolute; display: none;'>";
 			
 			$a .= "<a style='width: {$click_width}px; height: {$bottom_setting}px;' href='#' onclick=\"next(); return false;\">";
 			
@@ -189,7 +190,7 @@ class Jxs_slideshow
 			$height = (isset($OBJ->abstracts->abstract['height'])) ? $OBJ->abstracts->abstract['height'] : 575;
 
 			// only if media_mime = txt
-			$a .= '<div  id="slide' . $_POST['z'] . '" class="picture" style="z-index: ' . $_POST['z'] . '; position: absolute; height: ' . $height . 'px;">';
+			$a .= '<div  id="slide' . $posted_z . '" class="picture" style="z-index: ' . $posted_z . '; position: absolute; height: ' . $height . 'px;">';
 			
 			// we need to get the text from the file
 			$handle = fopen(DIRNAME . '/files/' . $rs['media_file'], 'r');
@@ -208,7 +209,6 @@ class Jxs_slideshow
 			$this->output['output'] = $a;
 			return;
 		}
-
 
 		$this->output = '';
 	}
