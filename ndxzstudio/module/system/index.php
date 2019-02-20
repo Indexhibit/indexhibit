@@ -6788,6 +6788,8 @@ var ide = '$go[id]';";
 		// validate get
 		$type = explode('.', $_GET['edit']);
 		$format = array_pop($type);
+
+		if ($format != 'css') { system_redirect("?a=$go[a]&q=assets"); }
 		
 		// get the stuff
 		$template = (file_exists(DIRNAME . '/ndxzsite' . $_GET['edit'])) ? $_GET['edit'] : false;
