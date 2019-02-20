@@ -40,34 +40,36 @@ class Installation
 				
 		switch( $this->get_page() ) 
 		{
-					case 0:
-						$this->page_zero();
-					break;
+			case 0:
+				$this->page_zero();
+			break;
 		
-					case 1:
-						$this->page_one();
-					break;
+			case 1:
+				$this->page_one();
+			break;
 		
-					case 2:
-						$this->page_two();
-					break;
+			case 2:
+				$this->page_two();
+			break;
 		
-					case 3:
-						$this->page_three();
-					break;
+			case 3:
+				$this->page_three();
+			break;
 					
-					case 4:
-						$this->page_four();
-					break;
+			case 4:
+				$this->page_four();
+			break;
 		}
 	}
 	
 	function page_zero()
 	{
+		$user_lang = getPOST('user_lang', 'en-us', 'iso', 5);
+
 		// set cookie
-		if (isset($_POST['submitLang']) && ($_POST['user_lang'] != ''))
+		if (isset($_POST['submitLang']) && ($user_lang != ''))
 		{
-			setcookie('install', $_POST['user_lang'], time()+3600);
+			setcookie('install', $user_lang, time()+3600);
 			header("location:install.php?p=1");
 			exit;
 		}
@@ -154,92 +156,144 @@ class Installation
 	
 	function page_two()
 	{
+		global $indx;
 		$s = '';
 
 		if (isset($_POST['n_submit']))
 		{
-			$s = $this->do_installation();
+			if (!file_exists(DIRNAME . '/ndxzsite/config/config.php'))
+			{
+				// we go to page 3 after installation
+				$s = $this->do_installation();
+			}
 		}
 		
 		// if the previous installation can be found...
 		if (file_exists(DIRNAME . '/ndxz-studio/config/config.php'))
 		{
-			// let's try to get the information from an older version
-			$this->html = $this->previous_install_connection();
+			if (file_exists(DIRNAME . '/ndxzsite/config/config.php'))
+			{
+				// let's check if we have already upgraded
+				require_once '../ndxzsite/config/config.php';
+				require_once './db/db.mysql.php';
+				
+				$GLOBALS['indx'] = $indx;
+				$this->db = new Db();
+				
+				// get old settings
+				$objects = $this->db->fetchArray("SELECT ID FROM ".PX."objects");
+
+				// fresh install only adds three 'objects'
+				if (count($objects) < 4)
+				{
+					// let's try to get the information from an older version
+					$this->html = $this->previous_install_connection();
+				}
+				else
+				{
+					$this->html = p($this->lang->word('you are already installed'));
+				}
+			}
+			else
+			{
+				$this->html = $this->previous_install_connection();
+			}
 		}
 		else
 		{
-			$this->html = "<div id='log-form'>\n";
-			$this->html .= "<form name='iform' method='post'>\n";
-		
-			// build the form here
-			$this->html .= "<label>" . $this->lang->word('site name') . "</label><br />\n";
-			$this->html .= "<input type='text' name='n_site' value='".$this->showPosted('n_site')."' maxlength='35' />\n";
-		
-			$this->html .= "<label>" . $this->lang->word('user name') . "</label><br />\n";
-			$this->html .= "<input type='text' name='n_fname' value='".$this->showPosted('n_fname')."' maxlength='35' />\n";
-		
-			$this->html .= "<label>" . $this->lang->word('user last name') . "</label><br />\n";
-			$this->html .= "<input type='text' name='n_lname' value='".$this->showPosted('n_lname')."' maxlength='35' />\n";
-		
-			$this->html .= "<label>" . $this->lang->word('user email address') . "</label><br />\n";
-			$this->html .= "<input type='text' name='n_email' value='".$this->showPosted('n_email')."' maxlength='100' />\n";
-		
-			$this->html .= "<div style='width: 250px; margin: 24px 0 12px 0;'><hr /></div>";
-		
-			$this->html .= "<label>" . $this->lang->word('database server') . "</label><br />\n";
-			$this->html .= "<input type='text' name='n_host' value='".$this->showPosted('n_host')."' maxlength='50' />\n";
-		
-			$this->html .= "<label>" . $this->lang->word('database name') . "</label><br />\n";
-			$this->html .= "<input type='text' name='n_name' value='".$this->showPosted('n_name')."' maxlength='50' />\n";
-		
-			$this->html .= "<label>" . $this->lang->word('database username') . "</label><br />\n";
-			$this->html .= "<input type='text' name='n_user' value='".$this->showPosted('n_user')."' maxlength='35' />\n";
-		
-			$this->html .= "<label>" . $this->lang->word('database password') . "</label><br />\n";
-			$this->html .= "<input type='text' name='n_pwd' value='".$this->showPosted('n_pwd')."' maxlength='35' />\n";
-		
-			$this->html .= "<label>" . $this->lang->word('database append') . "</label><br />\n";
-			$this->html .= "<input type='text' name='n_appnd' value='ndxzbt_' maxlength='10' />\n";
-		
-			$this->html .= "<input type='submit' name='n_submit' value='" . $this->lang->word('submit') . "' maxlength='50' /><br />\n";
-		
-			$this->html .= "</form>\n";
-			$this->html .= $s;
-			$this->html .= "</div>\n";
+			if (!file_exists(DIRNAME . '/ndxzsite/config/config.php'))
+			{
+				// do not display if we have already upgraded
+				$this->html = "<div id='log-form'>\n";
+				$this->html .= "<form name='iform' method='post'>\n";
+			
+				// build the form here
+				$this->html .= "<label>" . $this->lang->word('site name') . "</label><br />\n";
+				$this->html .= "<input type='text' name='n_site' value='".$this->showPosted('n_site')."' maxlength='35' />\n";
+			
+				$this->html .= "<label>" . $this->lang->word('user name') . "</label><br />\n";
+				$this->html .= "<input type='text' name='n_fname' value='".$this->showPosted('n_fname')."' maxlength='35' />\n";
+			
+				$this->html .= "<label>" . $this->lang->word('user last name') . "</label><br />\n";
+				$this->html .= "<input type='text' name='n_lname' value='".$this->showPosted('n_lname')."' maxlength='35' />\n";
+			
+				$this->html .= "<label>" . $this->lang->word('user email address') . "</label><br />\n";
+				$this->html .= "<input type='text' name='n_email' value='".$this->showPosted('n_email')."' maxlength='100' />\n";
+			
+				$this->html .= "<div style='width: 250px; margin: 24px 0 12px 0;'><hr /></div>";
+			
+				$this->html .= "<label>" . $this->lang->word('database server') . "</label><br />\n";
+				$this->html .= "<input type='text' name='n_host' value='".$this->showPosted('n_host')."' maxlength='50' />\n";
+			
+				$this->html .= "<label>" . $this->lang->word('database name') . "</label><br />\n";
+				$this->html .= "<input type='text' name='n_name' value='".$this->showPosted('n_name')."' maxlength='50' />\n";
+			
+				$this->html .= "<label>" . $this->lang->word('database username') . "</label><br />\n";
+				$this->html .= "<input type='text' name='n_user' value='".$this->showPosted('n_user')."' maxlength='35' />\n";
+			
+				$this->html .= "<label>" . $this->lang->word('database password') . "</label><br />\n";
+				$this->html .= "<input type='text' name='n_pwd' value='".$this->showPosted('n_pwd')."' maxlength='35' />\n";
+			
+				$this->html .= "<label>" . $this->lang->word('database append') . "</label><br />\n";
+				$this->html .= "<input type='text' name='n_appnd' value='ndxzbt_' maxlength='20' />\n";
+			
+				$this->html .= "<input type='submit' name='n_submit' value='" . $this->lang->word('submit') . "' maxlength='50' /><br />\n";
+			
+				$this->html .= "</form>\n";
+				$this->html .= $s;
+				$this->html .= "</div>\n";
+			}
+			else
+			{
+				$this->html = p($this->lang->word('you are already installed'));
+			}
 		}
 	}
 	
 	function page_three()
 	{
-		// try to connect & install
-		if (isset($_POST['upgrade']))
+		global $indx;
+
+		// by this point we are installed
+		$objects = 0;
+
+		// we are upgraded if we are on this page
+		require_once '../ndxzsite/config/config.php';
+		require_once './db/db.mysql.php';
+		
+		$GLOBALS['indx'] = $indx;
+		$this->db = new Db();
+
+		if (file_exists(DIRNAME . '/ndxzsite/config/config.php'))
 		{
-			$this->do_the_upgrade();
+			// get old settings
+			$objects = $this->db->fetchArray("SELECT ID FROM ".PX."objects");
 		}
 
-		// check for the previous site again
-		if (file_exists(DIRNAME . '/ndxz-studio/config/config.php'))
+		if (isset($_POST['upgrade']))
 		{
-			$this->html = "<p>Do you want to import the data from your previous website?</p>";
-		
-			$this->html .= "<p><input type='submit' name='upgrade' value='" . $this->lang->word('import') . "' /></p>\n";
-			
-			$this->html .= "<p>Otherwise, you can <a href='" . BASEURL . BASENAME . "/?a=system&q=preferences&flag=true'>login</a> now.</p>";
-		}
-		else
-		{
-			if (isset($_GET['s']))
+			if (count($objects) < 4)
+			{
+				$this->do_the_upgrade();
+			}
+			else
 			{
 				header('location:' . BASEURL . BASENAME . '/?a=system&q=preferences&flag=true');
 				exit;
 			}
-			else
-			{
-				// there was an error of some kind
-				$this->html = "<p><span class='ok-not'>XX</span> " . $this->lang->word('cannot install') . "</p><br />";
-				$this->html .= "<p><small>" . $this->lang->word('goto forum') . "</small></p><br />";
-			}
+		}
+		elseif ((file_exists(DIRNAME . '/ndxz-studio/config/config.php')) && (count($objects) < 4))
+		{
+			$this->html = "<p>Do you want to import the data from your previous website?</p>";
+				
+			$this->html .= "<p><input type='submit' name='upgrade' value='" . $this->lang->word('import') . "' /></p>\n";
+					
+			$this->html .= "<p>Otherwise, you can <a href='" . BASEURL . BASENAME . "/?a=system&q=preferences&flag=true'>login</a> now.</p>";
+		}
+		else // they are installed or they are just mucking with the installer (whhich should be deleted)
+		{
+			header('location:' . BASEURL . BASENAME . '/?a=system&q=preferences&flag=true');
+			exit;
 		}
 	}
 	
@@ -287,7 +341,7 @@ class Installation
 	
 	function install_db()
 	{
-		global $c, $picked;
+		global $c, $picked, $indx;
 		
 		require_once '../ndxzsite/config/config.php';
 		require_once './db/db.mysql.php';
@@ -810,10 +864,10 @@ if (!defined('PX')) { define('PX', '$c[n_appnd]'); }";
 		$html .= "<input type='text' name='n_user' value='".$indx['user']."' maxlength='35' />\n";
 
 		$html .= "<label>" . $this->lang->word('database password') . "</label><br />\n";
-		$html .= "<input type='text' name='n_pwd' value='".$indx['pass']."' maxlength='35' />\n";
+		$html .= "<input type='password' name='n_pwd' value='".$indx['pass']."' maxlength='35' />\n";
 
 		$html .= "<label>" . $this->lang->word('database append') . "</label><br />\n";
-		$html .= "<input type='text' name='n_appnd' value='$prefix' maxlength='10' />\n";
+		$html .= "<input type='text' name='n_appnd' value='$prefix' maxlength='20' />\n";
 
 		$html .= "<input type='submit' name='n_submit' value='" . $this->lang->word('submit') . "' maxlength='50' /><br />\n";
 
@@ -836,7 +890,7 @@ if (!defined('PX')) { define('PX', '$c[n_appnd]'); }";
 			$c['n_user']	= getPOST('n_user', '', 'connect', 32);
 			$c['n_pwd']		= getPOST('n_pwd', '', 'connect', 32);
 			$c['n_site']	= getPOST('n_site', '', 'none', 35);
-			$c['n_appnd']	= getPOST('n_appnd', '', 'none', 10);
+			$c['n_appnd']	= getPOST('n_appnd', '', 'none', 20);
 		
 			// these need to be inserted into the database...
 			$c['n_fname']	= getPOST('n_fname', '', 'none', 35);
@@ -902,7 +956,7 @@ if (!defined('PX')) { define('PX', '$c[n_appnd]'); }";
 	
 	function do_the_upgrade()
 	{
-		global $go, $default;
+		global $go, $default, $indx;
 
 		require_once '../ndxzsite/config/config.php';
 		require_once './db/db.mysql.php';
