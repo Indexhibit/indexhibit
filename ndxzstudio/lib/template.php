@@ -62,6 +62,35 @@ class Template
 	public function tpl_update_available()
 	{
 		$OBJ =& get_instance();
+		$k = '';
+		$v = '';
+
+		///
+		$params = array();
+		$params['v']		= VERSION;
+		$params['method']	= 'version';
+
+		$encoded_params = array();
+
+		foreach ($params as $k => $v)
+		{
+			$encoded_params[] = urlencode($k).'='.urlencode($v);
+		}
+
+		$rest = 'http://api.indexhibit.org/' . '?' . implode('&', $encoded_params);
+	
+		// we'll need to deal with errors here eventually
+		$rsp = array();
+		$rsp = @file_get_contents($rest);
+		///
+
+		$result = unserialize($rsp);
+
+		// new version available?
+		if ($result['success'] == true)
+		{
+			return "<div style='height: 36px; background: red; color: white;'><div style='padding: 12px;'>A new version is available - <a href='https://www.indexhibit.org/news/' style='color: white;'>click here</a></div></div>";
+		}
 		
 		if (VERSION > $OBJ->vars->settings['version'])
 		{
