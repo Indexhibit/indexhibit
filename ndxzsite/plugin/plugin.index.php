@@ -527,13 +527,14 @@ class Index
 						}
 					}
 					
-					//$active_subsection_title = ($flag == true) ? " active_subsection_title" : '';
-				
-					if ($sub['hidden'] != 1)  $s .= ($sub['status'] == 1) ? "<li><span id='subsection_title_" . $this->section['secid'] . "_$i' class='subsection_title'><a href='" . $OBJ->baseurl . ndxz_rewriter($sub['url']) . "'>" . $sub['title'] . "</a></span>\n" : "<li><span id='subsection_title_" . $this->section['secid'] . "_$i' class='subsection_title'>" . $sub['title'] . "</span>\n";
-				
-					$active_subsection = ($flag == true) ? ' active_subsection' : '';
+					if ($OBJ->vars->exhibit['id'] == $sub['id']) $flag = true;
+					$active_subsection_title = ($flag == true) ? " active_subsection_title" : '';
+
+					if ($sub['hidden'] != 1)  $s .= ($sub['status'] == 1) ? "<li><span id='subsection_title_" . $this->section['secid'] . "_$i' class='subsection_title{$active_subsection_title}'><a href='" . $OBJ->baseurl . ndxz_rewriter($sub['url']) . "'>" . $sub['title'] . "</a></span>\n" : "<li><span id='subsection_title_" . $this->section['secid'] . "_$i' class='subsection_title{$active_subsection_title}'>" . $sub['title'] . "</span>\n";
+
+					$active_subsection = ($flag == true) ? " active_subsection" : '';
 					$flag = false; // reset the flag for next time
-			
+
 					if ($li != '') $s .= "<ul class='subsection{$active_subsection}'>\n" . $li . "</ul>\n";
 					if ($sub['hidden'] != 1)  $s .= "</li>\n";
 			

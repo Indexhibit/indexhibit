@@ -1,5 +1,4 @@
 <?php if (!defined('SITE')) exit('No direct script access allowed');
-
 /*
 Plugin Name: Vimeo Input
 Plugin URI: http://www.indexhibit.org/plugin/asset-edtior/
@@ -46,12 +45,9 @@ class input_vimeo
 		
 		$OBJ->template->pop_location = $OBJ->lang->word('Vimeo');
 		
-		//$OBJ->template->pop_links[] = array($OBJ->lang->word('close'), '#', "onclick=\"parent.Shadowbox.close(); return false;\"");
-		
 		$OBJ->template->pop_links[] = array($OBJ->lang->word('close'), '#', "onclick=\"parent.faceboxClose(); return false;\"");
 		
-		//$body = p("http://www.youtube.com/watch?v=<span style='color: red;'>UTPBDnHkVOI</span>&...");
-		$body = p("http://www.vimeo.com/<span style='color: red;'>6669394</span>");
+		$body = p("https://player.vimeo.com/video/<span style='color: red;'>6669394</span>");
 		
 		$body .= "<ul class='ext-files-list'>\n";
 		$body .= "<li class='ext-files-list-1' style='width: 200px;'>File</li>\n";
@@ -102,15 +98,19 @@ class input_vimeo
 					
 					// we should do a preg_match here for the url parts
 					$tmp = $this->check_vid_url($input);
-					$info = $this->getVimeoInfo($tmp);
-					
-					// automake the thumbnail
-					$test 		= explode('.', $tmp . '.vimeo');
-					$thetype 	= array_pop($test);
-					$thumb 		= str_replace($thetype, 'jpg', $tmp);
-					$clean['media_thumb'] = $thumb . '.jpg';
 
-					$ch = curl_init ($info['thumbnail_large']);
+					// clean tmp value
+					$tmp = str_replace('video/', '', $tmp);
+
+					// automake the thumbnail
+					//$test 				= explode('.', $tmp . '.vimeo');
+					//$thetype 				= array_pop($test);
+					$clean['media_thumb'] 	= $tmp . '.jpg';
+
+					// let's hope vimeo doesn't shut this route down
+					$data = json_decode( file_get_contents( 'http://vimeo.com/api/oembed.json?url=https://player.vimeo.com/video/' . $tmp ), true );
+
+					$ch = curl_init ($data['thumbnail_url']);
 					curl_setopt($ch, CURLOPT_HEADER, 0);
 					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 					curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
@@ -139,22 +139,7 @@ class input_vimeo
 			$OBJ->template->onload[] = "parent.updateImages();";
 		}
 	}
-	
-	
-	function getVimeoInfo($id) 
-	{
-		if (!function_exists('curl_init')) die('CURL is not installed!');
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, "http://vimeo.com/api/v2/video/$id.php");
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		$output = unserialize(curl_exec($ch));
-		$output = $output[0];
-		curl_close($ch);
 
-		return $output;
-	}
-	
 	
 	function check_vid_url($url='')
 	{

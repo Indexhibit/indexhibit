@@ -23,6 +23,7 @@ a:visited { text-decoration: none; color: #888888; }
 a:hover { text-decoration: underline; }
 a:active { text-decoration: none; color: #00cc00; }
 a img { border: none; }
+audio:focus { outline: none; }
 
 /* general styles */
 small { font-size: 9px; }

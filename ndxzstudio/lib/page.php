@@ -444,6 +444,24 @@ class Page
 	}
 	
 	
+	public function preload_page()
+	{
+		$OBJ =& get_instance();
+		
+		$s = '';
+
+		if (isset($OBJ->page->exhibit['preload_page']))
+		{
+			foreach ($OBJ->page->exhibit['preload_page'] as $do)
+			{
+				$s .= $do;
+			}
+			
+			return $s;
+		}
+	}
+	
+	
 	public function front_test()
 	{
 		echo ' testing ';

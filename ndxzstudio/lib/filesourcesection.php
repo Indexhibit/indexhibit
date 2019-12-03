@@ -27,8 +27,8 @@ class FilesourceSection
 
 		// the images
 		// how do we get the section in here?
-		$imgs = $OBJ->db->fetchArray("SELECT * 
-			FROM ".PX."media, ".PX."objects_prefs, ".PX."objects  
+		$imgs = $OBJ->db->fetchArray("SELECT *  
+			FROM ".PX."media, ".PX."objects  
 			WHERE media_ref_id = id 
 			AND section_id = '" . $this->rs['section_id'] . "'  
 			AND media_mime IN ('" . implode('\', \'', $medias) . "') 
@@ -37,7 +37,6 @@ class FilesourceSection
 			AND status = '1' 
 			AND hidden != '1' 
 			AND media_source = '0' 
-			GROUP BY media_ref_id 
 			ORDER BY ord ASC");
 			
 		if ($imgs)
@@ -244,15 +243,14 @@ class FilesourceSection
 		
 		// get images
 		$imgs = $OBJ->db->fetchArray("SELECT * 
-			FROM ".PX."media, ".PX."objects_prefs, ".PX."objects  
+			FROM ".PX."media, ".PX."objects  
 			WHERE media_ref_id = id 
 			AND section_id = '" . $OBJ->vars->exhibit['section_id'] . "'  
 			AND media_mime IN ('" . implode('\', \'', $this->medias) . "') 
-			AND media_order = (SELECT MIN(media_order) FROM ".PX."media WHERE media_ref_id = id)  
+			AND media_order = (SELECT MIN(media_order) FROM ".PX."media WHERE media_ref_id = id) 
 			AND section_top != '1'   
 			AND status = '1'  
 			AND media_source = '0' 
-			GROUP BY id 
 			ORDER BY ord ASC");
 			
 		$new = array();

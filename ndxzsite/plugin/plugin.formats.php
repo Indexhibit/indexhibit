@@ -23,16 +23,7 @@ function mp3($file, $text='')
 	// we check if file exists first
 	if (!file_exists(DIRNAME . "/files/$file")) return;
 
-	$title = ($text == '') ? $file : $text;
-	$s = "<span class='flat mp3'><a href='" . $OBJ->baseurl . "/files/$file' class='sm2_link'>$title</a></span>\n";	
-	
-	$OBJ->page->add_lib_js('soundmanager2-nodebug-jsmin.js', 50);
-	$OBJ->page->add_lib_js('inlineplayer.js', 51);
-	$OBJ->page->exhibit['lib_css'][] = "audio.css";
-
- 	$OBJ->page->add_jquery_onready("soundManager.url = '" . $OBJ->baseurl . "/ndxzsite/img/';
-soundManager.flashVersion = 9;
-soundManager.useFlashBlock = false;", 6);
+	$s = "<span class='mp3'><audio controls><source src='" . $OBJ->baseurl . "/files/$file' type='audio/mpeg'>Your browser does not support the audio element.</audio></span>";
 	
 	return $s;
 }
@@ -173,7 +164,7 @@ function flv($file, $width='400', $height='300', $prv_img='', $text='', $wrap='d
 }
 
 
-function youtube($file, $width='425', $height='344', $prv_img='')
+function youtube($file, $width='0', $height='0', $prv_img='')
 {
 	$OBJ =& get_instance();
 
@@ -181,50 +172,30 @@ function youtube($file, $width='425', $height='344', $prv_img='')
 	
 	$file = str_replace('.youtube', '', $file);
 	
-	// if you want the native youtube player simply uncomment this
-	// we'll add a plugin/hook to do this later
-	//return "<div class='vimeo' style='width: {$width}px; height: {$height}px;'><iframe width='$width' height='$height' src='http://www.youtube.com/embed/$file' frameborder='0' allowfullscreen></iframe></div>";
-	
-	// our helper js files
-	//$OBJ->lib_class('page');
-	//$OBJ->page->add_lib_js('jwplayer.js', 21);
-	
-	$width = ($width == 0) ? '' : "width='$width'";
-	$height = ($height == 0) ? '' : "height='$height'";
-	
-	return "<iframe $width $height src='https://www.youtube.com/embed/$file'></iframe>";
-
-/*
-	$out = "<div id='mplayer-$no' class='youtube'>This text will be replaced</div>\n";
-
-	$out .= "<script type='text/javascript'>\n";
-	$out .= "jwplayer('mplayer-$no').setup({\n";
-	$out .= "'flashplayer': '" . $OBJ->baseurl . "/ndxzsite/img/player.swf',\n";
-	$out .= "'file': 'http://www.youtube.com/watch?v=$file',\n";
-	$out .= "'controlbar': 'over',\n";
-	if ($prv_img != '') $out .= "'image': '" . $OBJ->baseurl . GIMGS . "/$prv_img',\n";
-	$out .= "'screencolor': 'EEEEEE',\n";
-	$out .= "'autostart': 'false',\n";
-	$out .= "'provider': 'youtube',\n";
-	$out .= "'width': '$width',\n";
-	$out .= "'height': '$height',\n";
-	$out .= "'stretching': 'fill',\n";
-	$out .= "'controlbar.position': 'over',\n";
-	$out .= "'controlbar.idlehide': true\n";
-	$out .= "});\n";
-	$out .= "</script>\n";
-	*/
-	
-	//return $out;
+	if ($width == 0)
+	{
+		return "<div class='youtube'><iframe src='https://www.youtube.com/embed/$file' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>\n";
+	}
+	else
+	{
+		return "<div class='youtube' style='width: {$width}px; height: {$height}px;'><iframe src='https://www.youtube.com/embed/$file' width='{$width}' height='{$height}' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>\n";
+	}
 }
 
 
-function vimeo($file, $width='425', $height='315')
+function vimeo($file, $width='0', $height='0')
 {
 	if ($file == '') return;
 	
 	$file = str_replace('.vimeo', '', $file);
 	$file = str_replace('video/', '', $file);
 	
-	return "<div class='vimeo' style='width: {$width}px; height: {$height}px;'><iframe src='https://player.vimeo.com/video/$file' width='{$width}' height='{$height}' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>\n";
+	if ($width == 0)
+	{
+		return "<div class='vimeo'><iframe src='https://player.vimeo.com/video/$file' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>\n";
+	}
+	else
+	{
+		return "<div class='vimeo' style='width: {$width}px; height: {$height}px;'><iframe src='https://player.vimeo.com/video/$file' width='{$width}' height='{$height}' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>\n";
+	}
 }
