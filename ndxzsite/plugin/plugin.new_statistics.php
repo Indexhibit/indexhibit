@@ -22,8 +22,8 @@ class New_statistics
 	
 	public function __construct()
 	{
-		$this->uri = (isset($_SERVER['REQUEST_URI'])) ? $_SERVER['REQUEST_URI'] : '';
-		$this->refer = (isset($_SERVER['HTTP_REFERER'])) ?  $_SERVER['HTTP_REFERER'] : '';
+		$this->uri = (isset($_SERVER['REQUEST_URI'])) ? htmlspecialchars($_SERVER['REQUEST_URI']) : '';
+		$this->refer = (isset($_SERVER['HTTP_REFERER'])) ? htmlspecialchars($_SERVER['HTTP_REFERER']) : '';
 	}
 	
 	public function counter()

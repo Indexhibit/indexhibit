@@ -69,6 +69,7 @@ class Template
 		$params = array();
 		$params['v']		= VERSION;
 		$params['method']	= 'version';
+		$params['lang']		= $OBJ->vars->settings['site_lang'];
 
 		$encoded_params = array();
 
@@ -89,7 +90,7 @@ class Template
 		// new version available?
 		if ($result['success'] == true)
 		{
-			return "<div style='height: 36px; background: red; color: white;'><div style='padding: 12px;'>A new version is available - <a href='https://www.indexhibit.org/news/' style='color: white;'>click here</a></div></div>";
+			return $result['msg'];
 		}
 		
 		if (VERSION > $OBJ->vars->settings['version'])

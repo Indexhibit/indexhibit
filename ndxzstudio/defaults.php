@@ -4,7 +4,7 @@
 ini_set("magic_quotes_runtime", 0);
 
 // version
-define('VERSION', '2.1.5');
+define('VERSION', '2.1.6');
 	
 // Paths/definitions of things (relative to index file)
 define('LIBPATH', 'lib');
