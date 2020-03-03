@@ -396,7 +396,7 @@ class Upload
             foreach ($upload['tmp_name'] as $index => $value) 
             {
                 //if upload is in list of uploadable files
-                $type_test = end(explode('.', $upload['tmp_name'][$index]));
+                $type_test = end(explode('.', $upload['name'][$index]));
                 if (in_array($type_test, $types))
                 {
                     $info[] = $this->handle_file_upload(
