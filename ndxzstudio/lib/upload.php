@@ -365,7 +365,7 @@ class Upload
         }
         return $file;
     }
-    
+    /*
     public function get() {
         $file_name = isset($_REQUEST['file']) ?
             basename(stripslashes($_REQUEST['file'])) : null;
@@ -377,45 +377,71 @@ class Upload
         header('Content-type: application/json');
         echo json_encode($info);
     }
+    */
     
-    public function post() {
+    public function post() 
+    {
+        $OBJ =& get_instance();
+
+        $types = array_merge($OBJ->default['images'], $OBJ->default['media'], $OBJ->default['sound'], $OBJ->default['files']);
+
         if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
             return $this->delete();
         }
-        $upload = isset($_FILES[$this->options['param_name']]) ?
-            $_FILES[$this->options['param_name']] : null;
+        $upload = isset($_FILES[$this->options['param_name']]) ? $_FILES[$this->options['param_name']] : null;
         $info = array();
         if ($upload && is_array($upload['tmp_name'])) {
             // param_name is an array identifier like "files[]",
             // $_FILES is a multi-dimensional array:
-            foreach ($upload['tmp_name'] as $index => $value) {
+            foreach ($upload['tmp_name'] as $index => $value) 
+            {
+                //if upload is in list of uploadable files
+                $type_test = end(explode('.', $upload['tmp_name'][$index]));
+                if (in_array($type_test, $types))
+                {
+                    $info[] = $this->handle_file_upload(
+                        $upload['tmp_name'][$index],
+                        isset($_SERVER['HTTP_X_FILE_NAME']) ?
+                            $_SERVER['HTTP_X_FILE_NAME'] : $upload['name'][$index],
+                        isset($_SERVER['HTTP_X_FILE_SIZE']) ?
+                            $_SERVER['HTTP_X_FILE_SIZE'] : $upload['size'][$index],
+                        isset($_SERVER['HTTP_X_FILE_TYPE']) ?
+                            $_SERVER['HTTP_X_FILE_TYPE'] : $upload['type'][$index],
+                        $upload['error'][$index]
+                    );
+                }
+                else
+                {
+                    //nothing
+                }
+            }
+        } 
+        elseif ($upload || isset($_SERVER['HTTP_X_FILE_NAME'])) 
+        {
+            //if upload is in list of uploadable files
+            $type_test = end(explode('.', $upload['name']));
+            if (in_array($type_test, $types))
+            {
+                // param_name is a single object identifier like "file",
+                // $_FILES is a one-dimensional array:
                 $info[] = $this->handle_file_upload(
-                    $upload['tmp_name'][$index],
+                    isset($upload['tmp_name']) ? $upload['tmp_name'] : null,
                     isset($_SERVER['HTTP_X_FILE_NAME']) ?
-                        $_SERVER['HTTP_X_FILE_NAME'] : $upload['name'][$index],
+                        $_SERVER['HTTP_X_FILE_NAME'] : (isset($upload['name']) ?
+                            $upload['name'] : null),
                     isset($_SERVER['HTTP_X_FILE_SIZE']) ?
-                        $_SERVER['HTTP_X_FILE_SIZE'] : $upload['size'][$index],
+                        $_SERVER['HTTP_X_FILE_SIZE'] : (isset($upload['size']) ?
+                            $upload['size'] : null),
                     isset($_SERVER['HTTP_X_FILE_TYPE']) ?
-                        $_SERVER['HTTP_X_FILE_TYPE'] : $upload['type'][$index],
-                    $upload['error'][$index]
+                        $_SERVER['HTTP_X_FILE_TYPE'] : (isset($upload['type']) ?
+                            $upload['type'] : null),
+                    isset($upload['error']) ? $upload['error'] : null
                 );
             }
-        } elseif ($upload || isset($_SERVER['HTTP_X_FILE_NAME'])) {
-            // param_name is a single object identifier like "file",
-            // $_FILES is a one-dimensional array:
-            $info[] = $this->handle_file_upload(
-                isset($upload['tmp_name']) ? $upload['tmp_name'] : null,
-                isset($_SERVER['HTTP_X_FILE_NAME']) ?
-                    $_SERVER['HTTP_X_FILE_NAME'] : (isset($upload['name']) ?
-                        $upload['name'] : null),
-                isset($_SERVER['HTTP_X_FILE_SIZE']) ?
-                    $_SERVER['HTTP_X_FILE_SIZE'] : (isset($upload['size']) ?
-                        $upload['size'] : null),
-                isset($_SERVER['HTTP_X_FILE_TYPE']) ?
-                    $_SERVER['HTTP_X_FILE_TYPE'] : (isset($upload['type']) ?
-                        $upload['type'] : null),
-                isset($upload['error']) ? $upload['error'] : null
-            );
+            else
+            {
+                // nothing
+            }
         }
         header('Vary: Accept');
         $json = json_encode($info);
@@ -433,7 +459,7 @@ class Upload
         }
         echo $json;
     }
-    
+    /*
     public function delete() {
         $file_name = isset($_REQUEST['file']) ?
             basename(stripslashes($_REQUEST['file'])) : null;
@@ -450,4 +476,5 @@ class Upload
         header('Content-type: application/json');
         echo json_encode($success);
     }
+    */
 }

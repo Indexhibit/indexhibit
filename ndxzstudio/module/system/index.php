@@ -3597,16 +3597,16 @@ var baseurl = '" . BASEURL . "';";
 		header('Content-Disposition: inline; filename="files.json"');
 
 		switch ($_SERVER['REQUEST_METHOD']) {
-		    case 'HEAD':
-		    case 'GET':
-		        $this->upload->get();
-		        break;
+		    //case 'HEAD':
+		    //case 'GET':
+		    //    $this->upload->get();
+		    //    break;
 		    case 'POST':
 		        $this->upload->post();
 		        break;
-		    case 'DELETE':
-		        $this->upload->delete();
-		        break;
+		    //case 'DELETE':
+		    //    $this->upload->delete();
+		    //    break;
 		    default:
 		        header('HTTP/1.0 405 Method Not Allowed');
 		}
@@ -3669,7 +3669,7 @@ var baseurl = '" . BASEURL . "';";
 				$this->template->form_action = "?a=system&q=fileupload&id=$go[id]&x=background";
 
 				$this->template->onready[] = "$('#mformpop').bind('fileuploadstop', function (e, data) { location.href = '?a=exhibits&q=settings&id=$go[id]'; });
-$('#mformpop').fileupload('option' ,{ maxNumberOfFiles: 1, acceptFileTypes: /(png)|(jpe?g)|(gif)$/i });";
+$('#mformpop').fileupload('option' ,{ maxNumberOfFiles: 1, acceptFileTypes: /((png)|(jpe?g)|(gif)|(svg))$/i });";
 				break;
 			case 'thumb' :
 				$this->template->ex_js[] = "var maximagesize = $default[maxsize];";
@@ -3677,19 +3677,19 @@ $('#mformpop').fileupload('option' ,{ maxNumberOfFiles: 1, acceptFileTypes: /(pn
 				$this->template->form_action = "?a=system&q=fileupload&id=$go[id]&x=coverart&xid=$_GET[xid]";
 
 				$this->template->onready[] = "$('#mformpop').bind('fileuploadstop', function (e, data) { location.href = '?a=system&q=img&id=$_GET[xid]'; });
-$('#mformpop').fileupload('option' ,{ maxNumberOfFiles: 1, acceptFileTypes: /(png)|(jpe?g)|(gif)$/i });";
+$('#mformpop').fileupload('option' ,{ maxNumberOfFiles: 1, acceptFileTypes: /((png)|(jpe?g)|(gif)|(svg))$/i });";
 				break;
 			default :
 				$this->template->ex_js[] = "var maximagesize = $default[maxsize];";
 				$multiple = " multiple=";
 
 				// acceptFileTypes = all 'file' types
-				// maxFileSize = 
+				// maxFileSize =
 
 				$allowed = array_merge($default['media'], $default['sound'], $default['files'], $default['flash']);
 				$allowed_types = '(' . implode(')|(', $allowed) . ')|';
 
-				$this->template->onready[] = "$('#mformpop').bind('fileuploadstop', function (e, data) { parent.updateImages(); }); $('#mformpop').fileupload('option' ,{ acceptFileTypes: /{$allowed_types}(png)|(jpe?g)|(gif)$/i });";
+				$this->template->onready[] = "$('#mformpop').bind('fileuploadstop', function (e, data) { parent.updateImages(); }); $('#mformpop').fileupload('option' ,{ acceptFileTypes: /({$allowed_types}(png)|(jpe?g)|(gif)|(svg))$/i });";
 				break;
 		}
 		
