@@ -399,7 +399,7 @@ class System extends Router
 		
 		// ++++++++++++++++++++++++++++++++++++++++++++++++++++
 		
-		$x = (isset($_GET['x'])) ? $_GET['x'] : '';
+		$x = (isset($_GET['x'])) ? (string) $_GET['x'] : '';
 		
 		if ($x != 'complete')
 		{
@@ -3280,7 +3280,7 @@ var baseurl = '" . BASEURL . "';";
 		exit;
 	}
 	
-	
+	/*
 	public function page_find()
 	{
 		global $go, $default;
@@ -3290,7 +3290,7 @@ var baseurl = '" . BASEURL . "';";
 		
 		if (isset($_GET['x']))
 		{
-			$clean['media_file'] = $_GET['x'];
+			$clean['media_file'] = (string) $_GET['x'];
 			$clean['media_mime'] = array_pop( explode('.', $clean['media_file']) );
 			$clean['media_udate'] = getNow();
 			$clean['media_uploaded'] = $clean['media_udate'];
@@ -3332,7 +3332,7 @@ var baseurl = '" . BASEURL . "';";
 		$this->template->output('popup');
 		exit;
 	}
-	
+	*/
 	
 	
 	public function page_view()
@@ -3422,7 +3422,7 @@ var ide = '$go[id]';";
 		
 		if (isset($_GET['x']))
 		{
-			$clean['media_file'] = $_GET['x'];
+			$clean['media_file'] = (string) $_GET['x'];
 			$clean['media_mime'] = array_pop( explode('.', $clean['media_file']) );
 			$clean['media_udate'] = getNow();
 			$clean['media_uploaded'] = $clean['media_udate'];
@@ -3671,14 +3671,15 @@ var baseurl = '" . BASEURL . "';";
 				$this->template->onready[] = "$('#mformpop').bind('fileuploadstop', function (e, data) { location.href = '?a=exhibits&q=settings&id=$go[id]'; });
 $('#mformpop').fileupload('option' ,{ maxNumberOfFiles: 1, acceptFileTypes: /((png)|(jpe?g)|(gif)|(svg))$/i });";
 				break;
-			case 'thumb' :
-				$this->template->ex_js[] = "var maximagesize = $default[maxsize];";
-				$multiple = '';
-				$this->template->form_action = "?a=system&q=fileupload&id=$go[id]&x=coverart&xid=$_GET[xid]";
+				case 'thumb' :
+								$xid = (int) $_GET[xid];
+								$this->template->ex_js[] = "var maximagesize = $default[maxsize];";
+								$multiple = '';
+								$this->template->form_action = "?a=system&q=fileupload&id=$go[id]&x=coverart&xid=$xid";
 
-				$this->template->onready[] = "$('#mformpop').bind('fileuploadstop', function (e, data) { location.href = '?a=system&q=img&id=$_GET[xid]'; });
-$('#mformpop').fileupload('option' ,{ maxNumberOfFiles: 1, acceptFileTypes: /((png)|(jpe?g)|(gif)|(svg))$/i });";
-				break;
+								$this->template->onready[] = "$('#mformpop').bind('fileuploadstop', function (e, data) { location.href = '?a=system&q=img&id=$xid'; });
+				$('#mformpop').fileupload('option' ,{ maxNumberOfFiles: 1, acceptFileTypes: /((png)|(jpe?g)|(gif)|(svg))$/i });";
+								break;
 			default :
 				$this->template->ex_js[] = "var maximagesize = $default[maxsize];";
 				$multiple = " multiple=";
@@ -5078,7 +5079,7 @@ var ide = '$go[id]';";
 	public function page_jxbackup()
 	{
 		// validate this
-		$clean['name'] = $_GET['edit'];
+		$clean['name'] = (string) $_GET['edit'];
 		$file = DIRNAME . '/ndxzsite' . $clean['name'];
 		
 		if (file_exists($file)) 
@@ -6786,7 +6787,7 @@ var ide = '$go[id]';";
 		
 		// figure out what we're dealing with - format?
 		// validate get
-		$type = explode('.', $_GET['edit']);
+		$type = explode('.', (string) $_GET['edit']);
 		$format = array_pop($type);
 
 		if ($format != 'css') { system_redirect("?a=$go[a]&q=assets"); }
