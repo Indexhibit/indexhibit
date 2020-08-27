@@ -39,7 +39,8 @@ $OBJ->vars->default = $default;
 // load hooks
 $OBJ->hook->load_hooks();
 
-// make a hook to change defaults? later
+// make a hook to change defaults
+$OBJ->hook->do_action_array('update_defaults');
 
 // are we logged in?
 $OBJ->access->checkLogin();

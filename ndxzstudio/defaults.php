@@ -42,11 +42,11 @@ define('BASEURL', preg_replace("/\/$/i", '', $base)); // no trailing slashes
 // Add default types for files, images and movies upload
 // if we add new 'media' we need to update modedit.js
 $default['images'] 	= array('jpg', 'gif', 'png');
-$default['media']	= array('mov', 'mp4');
+$default['media']	= array('mp4');
 $default['sound']	= array('mp3');
 $default['files']	= array('txt', 'pdf', 'doc', 'xls', 'eps', 'dwg', 'zip');
-$default['flash'] 	= array('swf'); // separate because we can get dims from it
 $default['link']	= array('url');
+$default['flash']   = array();
 
 // EXPERIMENTAL - video basically
 $default['services'] = array('youtube', 'vimeo');

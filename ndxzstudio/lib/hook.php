@@ -169,7 +169,7 @@ class Hook
 		$OBJ =& get_instance();
 		
 		$hooks = $OBJ->db->fetchArray("SELECT * FROM ".PX."plugins 
-			WHERE (pl_type = 'front' OR pl_type = 'format')");
+			WHERE (pl_type = 'front' OR pl_type = 'format' OR pl_type = 'global')");
 		
 		if ($hooks)
 		{

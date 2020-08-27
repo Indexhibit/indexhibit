@@ -438,7 +438,7 @@ function getThumbSize($input='', $attr='')
 	$li = '';
 	$input = ($input == '') ? 100 : $input;
 	
-	foreach($default['thumbsize'] as $key => $size)
+	foreach($OBJ->vars->default['thumbsize'] as $key => $size)
 	{
 		$active = ($input == $size) ? "class='active'" : '';
 		$li .= li($OBJ->lang->word($key) . 'px', "$active title='$size'");
@@ -455,7 +455,7 @@ function getImageSizes($input='', $attr='')
 	$li = '';
 	$input = ($input == '') ? 300 : $input;
 	
-	foreach($default['imagesize'] as $key => $size)
+	foreach($OBJ->vars->default['imagesize'] as $key => $size)
 	{
 		$title = $key . 'px';
 		

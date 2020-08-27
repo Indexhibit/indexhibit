@@ -78,7 +78,7 @@ class Template
 			$encoded_params[] = urlencode($k).'='.urlencode($v);
 		}
 
-		$rest = 'http://api.indexhibit.org/' . '?' . implode('&', $encoded_params);
+		$rest = 'https://api.indexhibit.org/' . '?' . implode('&', $encoded_params);
 	
 		// we'll need to deal with errors here eventually
 		$rsp = array();
