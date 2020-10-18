@@ -312,11 +312,6 @@ class Db
 	*/
 	public function escape_str($str)
 	{
-		if (function_exists('get_magic_quotes_gpc'))
-		{
-			if (get_magic_quotes_gpc()) $str = stripslashes($str);
-		}
-
 		if (function_exists('mysqli_real_escape_string'))
 		{
 			return mysqli_real_escape_string($this->link, $str);
