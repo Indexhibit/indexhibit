@@ -79,7 +79,7 @@ object { display: block; }
 #index ul.section li.exhibit_link a:link {  }
 #index ul.section li.exhibit_link a:hover {  }
 #index ul.section li.exhibit_link a:active {  }
-#index ul.section li.exhibit_link a:visted {  }
+#index ul.section li.exhibit_link a:visited {  }
 
 /* active subsection title */
 #index span.active_subsection_title,
