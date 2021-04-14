@@ -248,6 +248,7 @@ function updateText(ida)
 	{
 		// silly that it really needs 'name' instead of 'id'
 		var text = tinyMCE.getInstanceById('content').getHTML();
+		text = text.replace("<script>", "") // Simple XSS Protection
 	}
 	
 	$.post('?a='+action, { upd_jxtext : 'true', v : text, id : ida }, 
