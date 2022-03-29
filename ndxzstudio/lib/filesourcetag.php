@@ -18,85 +18,30 @@ class FilesourceTag
 		$OBJ =& get_instance();
 		global $go, $default, $medias;
 
-		$body = "<ul id='boxes'>\n";
+		$body = "<ul style='list-style-type: none; font-size: 2em; margin-bottom: 3px;'>\n";
 
 		// the images
 		// how do we get the section in here?
-		$imgs = $OBJ->db->fetchArray("SELECT * 
-			FROM ".PX."media, ".PX."objects_prefs, ".PX."objects, ".PX."tags, ".PX."tagged  
+		//$imgs = $OBJ->db->fetchArray("SELECT DISTINCT *
+		//FROM ".PX."media, ".PX."objects_prefs, ".PX."objects, ".PX."tags, ".PX."tagged 
+		$imgs = $OBJ->db->fetchArray("SELECT DISTINCT * 
+			FROM ".PX."objects, ".PX."tags, ".PX."tagged  
 			WHERE tagged_id = '$id' 
 			AND tagged_id = tag_id 
-			AND tagged_obj_id = media_id
-			AND media_ref_id = id 
-			AND media_mime IN ('" . implode('\', \'', $medias) . "') 
+			AND tagged_obj_id = id
 			AND section_top != '1' 
-			GROUP BY media_id 
-			ORDER BY media_uploaded DESC");
-			
-		//print_r($imgs);
+			ORDER BY pdate DESC");
 
 		// set the width of the popup...deals with tags
 		$site_vars = unserialize($OBJ->access->settings['site_vars']);
-		$width = ($site_vars['tags'] == 1) ? 800 : 450;
 
 		if ($imgs)
 		{
 			foreach ($imgs as $img)
 			{
-				$path = GIMGS; $poster = false;
+				//$add .= "";
 				
-				if (!in_array($img['media_mime'], $default['images']))
-				{
-					if ($img['media_thumb'] == '')
-					{
-						$thumb = 'asset/img/thumb-default.gif';
-					}
-					else
-					{
-						$thumb = BASEURL . $path . '/sys-' . $img['media_ref_id'] . '_' . $img['media_thumb'];
-						$poster = true;
-					}
-				}
-				else
-				{
-					//if ($img['media_thumb'] == '')
-					//{
-						$thumb = BASEURL . $path . '/sys-' . $img['media_ref_id'] . '_' . $img['media_file'];
-					//}
-					//else
-					//{
-					//	$thumb = BASEURL . $path . '/sys-' . $img['media_ref_id'] . '_' . $img['media_thumb'];
-					//	$poster = true;
-					//}
-				}
-				
-				// might need to check this down the line...
-				if (!in_array($img['media_mime'], $default['images']))
-				{
-					// it's not an image but a movie...
-					if (!file_exists(DIRNAME . $path . '/sys-' . $img['media_ref_id'] . '_' . $img['media_thumb']) && $img['media_thumb'] != '')
-					{
-						$IMG =& load_class('media', true, 'lib');
-						$IMG->regenerate($img['media_ref_id'], $img['media_thumb']);
-					}
-				}
-				else
-				{
-					// final check for images...
-					if (!file_exists(DIRNAME . $path . '/sys-' . $img['media_ref_id'] . '_' . $img['media_file']))
-					{
-						$IMG =& load_class('media', true, 'lib');
-						$IMG->regenerate($img['media_ref_id'], $img['media_file']);
-					}
-				}
-				
-				// need to make this a class
-				$active = ($img['media_hide'] == 1) ? " style='border: 1px solid #f00;'" : " style='border: 1px solid #fff;'";
-				$poster = '';
-				
-				$add = (!in_array($img['media_mime'], $medias)) ? "<div style='position: absolute; z-index: 1; top: 1px; right: 0px; height: 9px; border-bottom: 1px solid #fff; border-left: 1px solid #fff; color: #fff; padding: 0 1px; font-weight: bold; text-transform: uppercase; font-size: 8px;' class='file-$img[media_mime]'>$img[media_mime]</div>$poster" : "<div style='position: absolute; z-index: 1; top: 1px; right: 0px; height: 9px; border-bottom: 1px solid #fff; border-left: 1px solid #fff; color: #fff; padding: 0 1px; font-weight: bold; text-transform: uppercase; font-size: 8px;' class='file-$img[media_mime]'>$img[media_mime]</div>$poster";
-				
-				$body .= "<li class='box' id='box$img[media_id]' style='position: relative;' title='$img[media_file]'><span style='cursor: default;'><a href='?a=system&amp;q=tagfile&amp;id=$img[media_id]&tag=$img[tag_id]' rel=\"facebox;height=450;width=810\" style='color: #999;'><img src='$thumb' title='" . strip_tags($img['title']) . "'{$active} /></a></span>$add</li>\n\n";
+				$body .= "<li><a href='?a=exhibits&amp;q=edit&amp;id=$img[id]' target='_blank' style='text-decoration: none;'>$img[title]</a></li>\n\n";
 			}
 		}
 		else
@@ -106,9 +51,7 @@ class FilesourceTag
 
 		$body .= "</ul>\n";
 
-		$body .= "<div class='cl'><!-- --></div>\n";
-
-		//$body .= "<div><span style='color: #0c0; font-size: 18px;'>&bull;</span> Active &nbsp;&nbsp;<span style='background: #000;'>&nbsp;&nbsp;&nbsp;</span> Inactive</div>";
+		//$body .= "<div class='cl'><!-- --></div>\n";
 
 		return $body;
 	}
@@ -122,7 +65,7 @@ class FilesourceTag
 		$body = "<ul id='boxes'>\n";
 
 		// the images
-		$imgs = $OBJ->db->fetchArray("SELECT * 
+		$imgs = $OBJ->db->fetchArray("SELECT DISTINCT * 
 			FROM ".PX."media, ".PX."objects  
 			WHERE NOT EXISTS
 				(
@@ -133,7 +76,6 @@ class FilesourceTag
 				) 
 			AND media_ref_id = id 
 			AND media_mime IN ('" . implode('\', \'', $medias) . "')
-			GROUP BY media_id 
 			ORDER BY media_uploaded DESC");
 
 		// set the width of the popup...deals with tags
@@ -226,14 +168,13 @@ class FilesourceTag
 
 		// the images
 		// how do we get the section in here?
-		$imgs = $OBJ->db->fetchArray("SELECT * 
+		$imgs = $OBJ->db->fetchArray("SELECT DISTINCT * 
 			FROM ".PX."media, ".PX."objects_prefs, ".PX."objects  
 			WHERE media_ref_id = id 
 			AND section_id = '" . $this->rs['section_id'] . "'  
 			AND media_mime IN ('" . implode('\', \'', $medias) . "') 
 			AND media_order = (SELECT MIN(media_order) FROM ".PX."media WHERE media_ref_id = id) 
 			AND section_top != '1' 
-			GROUP BY media_id 
 			ORDER BY ord ASC"); 
 
 		// set the width of the popup...deals with tags
@@ -455,16 +396,15 @@ class FilesourceTag
 		
 		// get images
 		$imgs = $OBJ->db->fetchArray("SELECT * 
-			FROM ".PX."media, ".PX."tagged, ".PX."tags, ".PX."objects   
-			WHERE tagged_id = '" . $OBJ->vars->exhibit['obj_ref_id'] . "'  
-			AND media_mime IN ('" . implode('\', \'', $medias) . "') 
+			FROM ".PX."tagged, ".PX."tags, ".PX."objects, ".PX."media 
+			WHERE tag_id = '" . $OBJ->vars->exhibit['obj_ref_id'] . "'
 			AND tagged_id = tag_id 
-			AND tagged_obj_id = media_id 
-			AND tagged_object = 'img' 
-			AND media_hide != '1' 
-			AND media_ref_id = id 
-			GROUP BY media_id 
-			ORDER BY media_uploaded DESC");
+			AND tagged_obj_id = id
+			AND hidden != '1' 
+			AND status = '1' 
+			AND id = media_ref_id 
+			AND media_order = (SELECT MIN(media_order) FROM ".PX."media,".PX."objects WHERE media_ref_id = id)
+			ORDER BY pdate DESC");
 
 		if ($imgs)
 		{

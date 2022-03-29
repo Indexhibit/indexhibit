@@ -186,7 +186,7 @@ slide: function(event, ui) { $('label#padding_left_value span').html(ui.value) }
 						$new_width = (($size[0] * $this->force_height) / $size[1]);
 						
 						// we're going to resize and output
-						$R->reformat($new_width, $this->force_height, $size, $go, $OBJ->vars->exhibit['id'], $name, $go['media_dir']);
+						$R->reformat(round($new_width), $this->force_height, $size, $go, $OBJ->vars->exhibit['id'], $name, $go['media_dir']);
 						
 						$the_file = '/files/dimgs/' . $name;
 					}

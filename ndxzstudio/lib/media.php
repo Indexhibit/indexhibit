@@ -68,9 +68,8 @@ class Media
 	*/
 	public function autoResize($img=array(), $page=array())
 	{
+		$OBJ =& get_instance();
 		global $go, $default;
-		
-		//print_r($page); exit;
 
 		//$IMG =& load_class('media2', true, 'lib');
 		$this->thumbsize = ($page['thumbs'] != '') ? $page['thumbs'] : 200;
@@ -131,7 +130,7 @@ class Media
 		$this->filename = $new_title;
 		$this->origname = $this->filename;
 
-		$this->id = $go['id'] . '_';
+		$this->id = $OBJ->vars->exhibit['id'] . '_';
 		$this->filename = $this->filename;
 
 		$this->filename_override = 'thumb_' . $page['thumbs_shape'] . 'x' . $this->thumbsize . '_' . $page['section_id'] . '_' . $img['media_ref_id'] . '_' . $img['media_id'] . '.' . $thetype;

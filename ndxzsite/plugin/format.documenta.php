@@ -208,7 +208,7 @@ $('#img-container').columnize({ $insert, lastNeverTallest: true });", 5);
 	}
 	
 	
-	function reduction($string='', $repl, $limit=40)
+	function reduction($string='', $repl='', $limit=40)
 	{
 	    if (($string == '') || ($string == null)) return;
 

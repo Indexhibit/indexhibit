@@ -27,8 +27,8 @@ class FilesourceSubSection
 
 		// the images
 		// how do we get the section in here?
-		$imgs = $OBJ->db->fetchArray("SELECT * 
-			FROM ".PX."media, ".PX."objects_prefs, ".PX."objects  
+		$imgs = $OBJ->db->fetchArray("SELECT DISTINCT * 
+			FROM ".PX."media, ".PX."objects  
 			WHERE media_ref_id = id 
 			AND section_id = '" . $this->rs['section_id'] . "'  
 			AND section_sub = '" . $this->rs['section_sub'] . "' 
@@ -38,7 +38,6 @@ class FilesourceSubSection
 			AND section_top != '1' 
 			AND status = '1' 
 			AND hidden != '1' 
-			GROUP BY media_ref_id 
 			ORDER BY ord ASC"); 
 
 		// set the width of the popup...deals with tags
@@ -159,8 +158,8 @@ class FilesourceSubSection
 		$this->medias = (empty($OBJ->vars->media)) ? $medias : $OBJ->vars->media;
 		
 		// get images
-		$imgs = $OBJ->db->fetchArray("SELECT * 
-			FROM ".PX."media, ".PX."objects_prefs, ".PX."objects  
+		$imgs = $OBJ->db->fetchArray("SELECT DISTINCT * 
+			FROM ".PX."media, ".PX."objects  
 			WHERE media_ref_id = id 
 			AND section_id = '" . $OBJ->vars->exhibit['section_id'] . "'  
 			AND section_sub = '" . $OBJ->vars->exhibit['section_sub'] . "' 
@@ -169,8 +168,7 @@ class FilesourceSubSection
 			AND media_order = (SELECT MIN(media_order) FROM ".PX."media WHERE media_ref_id = id)  
 			AND section_top != '1'   
 			AND status = '1' 
-			AND hidden != '1' 
-			GROUP BY id 
+			AND hidden != '1'  
 			ORDER BY ord ASC");
 			
 		//print_r($imgs); exit;

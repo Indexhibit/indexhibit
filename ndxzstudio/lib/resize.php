@@ -31,7 +31,7 @@ class Resize
 	}
 	
 	//$R->reformat($new_width, $this->force_height, $size, $go, $OBJ->vars->exhibit['id'], $name);
-	public function reformat($width, $height, $size, $img, $id=0, $name, $dir='')
+	public function reformat($width=null, $height=null, $size=null, $img=null, $id=0, $name=null, $dir=null)
 	{
 		global $default;
 		
@@ -275,7 +275,7 @@ class Resize
 	
 	// special function for...
 	// this is a resize function but does not work with the other functions
-	public function folder_load_images($images=array(), $id=0, $size=9999, $type='image', $dir)
+	public function folder_load_images($images=array(), $id=0, $size=9999, $type='image', $dir=null)
 	{
 		$OBJ =& get_instance();
 		global $default;
@@ -413,7 +413,7 @@ class Resize
 	
 	// special function for...
 	// this is a resize function but does not work with the other functions
-	public function single_load_image($img='', $id=0, $size=9999, $type='image', $dir)
+	public function single_load_image($img='', $id=0, $size=9999, $type='image', $dir=null)
 	{
 		$OBJ =& get_instance();
 		global $default;

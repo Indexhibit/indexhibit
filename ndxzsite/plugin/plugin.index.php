@@ -186,13 +186,20 @@ class Index
 	}
 	
 	
-	function iframed_link($active, $id, $title, $url, $link='', $target=0, $iframe=0)
+	function iframed_link($active=null, $id=null, $title=null, $url=null, $link='', $target=0, $iframe=0)
 	{
 		$OBJ =& get_instance();
 
 		$link = ($iframe == 1) ? $OBJ->baseurl . ndxz_rewriter($url) : $link;
 
-		$target = ($iframe == 1) ? '' : ($target == 1) ? " target='_new'" : '';
+		if ($iframe == 1)
+		{
+			$target = ($target == 1) ? " target='_new'" : '';
+		}
+		else
+		{
+			$target = '';
+		}
 		//$target = ($target == 1) ? " target='_new'" : '';
 
 		return "<li id='exhibit_$id' class='exhibit_title exhibit_link$active'><a href='$link'{$target}>" . $title . "</a></li>\n";
@@ -203,7 +210,7 @@ class Index
 	{
 		$OBJ =& get_instance();
 
-		$pages = $OBJ->db->fetchArray("SELECT id, title, url, ord, year, link, target, section_top, 
+		$pages = $OBJ->db->fetchArray("SELECT DISTINCT id, title, url, ord, year, link, target, section_top, 
 			content, pwd, pdate, new          
 			FROM ".PX."objects   
 			WHERE status = '1' 
@@ -265,14 +272,13 @@ class Index
 		$OBJ =& get_instance();
 
 		// get the tags for images only?
-		$tags = $OBJ->db->fetchArray("SELECT id, link, target, pwd, title, url, tag_name, tag_group, new  
+		$tags = $OBJ->db->fetchArray("SELECT DISTINCT id, link, target, pwd, title, url, tag_name, tag_group, new  
 			FROM ".PX."tagged, ".PX."tags, ".PX."objects, ".PX."media  
 			WHERE object = 'tag' 
-			AND tagged_object = 'img' 
+			AND tagged_object = 'exh' 
 			AND tag_id = tagged_id 
 			AND media_id = tagged_obj_id 
-			AND obj_ref_id = tag_id 
-			GROUP BY id 
+			AND obj_ref_id = tag_id  
 			ORDER BY tag_name ASC");
 			
 		if (!$tags) return;

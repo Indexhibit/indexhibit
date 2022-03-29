@@ -127,7 +127,7 @@ function utf8_isASCII($str)
 {
 	for ($i=0; $i<strlen($str); $i++) 
 	{
-		if (ord($str{$i}) >127) return false;
+		if (ord($str . $i) >127) return false;
 	}
 
 	return true;

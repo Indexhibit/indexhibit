@@ -215,7 +215,7 @@ slide: function(event, ui) { $('label#text_box_height_value span').html(ui.value
 				$a = "<div class='picture_holder' id='node" . $this->file['media_id'] . "' style='width: {$temp_x}px; height: {$yadjust}px;'>\n";
 				$a .= "<div class='picture'{$pwidth}>\n";
 				
-				$top_pad = (($OBJ->vars->exhibit['thumbs_shape'] == 0) || ($this->grid == 0)) ? "{$top_padding}px" : 0;
+				$top_pad = (($OBJ->vars->exhibit['thumbs_shape'] == 0) || ($this->grid == 0)) ? $top_padding : 0;
 				//$top_pad = round($top_pad / 2) . 'px';
 				$top_pad = ($OBJ->vars->exhibit['thumbs_shape'] == 0) ?
 					round($top_pad / 2) . 'px' : 0;
@@ -706,7 +706,7 @@ background-position: center top; background-repeat: no-repeat; }";
 	}
 	
 	
-	function do_break($limit=0, $counter, $html)
+	function do_break($limit=0, $counter=null, $html=null)
 	{
 		if ($limit != 0)
 		{

@@ -111,7 +111,7 @@ slide: function(event, ui) { $('label#bottom_margin_value span').html(ui.value) 
 				
 		$a .= "<div>\n";
 		
-		$a .= $this->makeLink($this->file, $OBJ->vars->exhibit, $this->title);
+		$a .= $this->makeLink($this->file, $OBJ->vars->exhibit, $OBJ->vars->exhibit['title']);
 		$a .= "<img src='" . $this->file['media_thumb_path'] . "' height='" . $this->smallest_height . "' alt='" . $this->file['media_thumb_path'] . "' />";
 		if ($OBJ->vars->exhibit['operand'] != 2) $a .= "</a>\n";
 		
@@ -151,7 +151,7 @@ slide: function(event, ui) { $('label#bottom_margin_value span').html(ui.value) 
         // we need to find the smallest height
         foreach ($this->imgs[0] as $height)
         {
-            $heights = getimagesize(DIRNAME . GIMGS . "/th-" . $height[media_ref_id] . '_' . $height[media_file]);
+            $heights = getimagesize(DIRNAME . GIMGS . "/th-" . $height['media_ref_id'] . '_' . $height['media_file']);
             $this->find_smallest_height[] = $heights[1];
         }
 

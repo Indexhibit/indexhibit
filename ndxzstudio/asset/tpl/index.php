@@ -18,7 +18,7 @@
 
 <body>
 
-<?php echo $this->tpl_update_available(); ?>
+<?php echo $this->tpl_update_news(); ?>
 
 <div id='all'>
 	

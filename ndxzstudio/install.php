@@ -371,7 +371,7 @@ class Installation
 		  PRIMARY KEY (ab_id)
 		) $isam ;";
 		
-		$sql[] = "CREATE TABLE IF NOT EXISTS".PX."profile (
+		$sql[] = "CREATE TABLE IF NOT EXISTS ".PX."profile (
 			pr_id int(11) NOT NULL AUTO_INCREMENT,
  			pr_apikey varchar(32) NOT NULL,
 			pr_sitekey varchar(32) NOT NULL,
@@ -581,9 +581,11 @@ class Installation
 		) $isam ;";
 
 		$sql[] = "CREATE TABLE IF NOT EXISTS ".PX."tagged (
+		  tagged_prim int(11) NOT NULL AUTO_INCREMENT,
 		  tagged_id smallint(6) NOT NULL DEFAULT 0,
 		  tagged_object varchar(3) NOT NULL DEFAULT '',
-		  tagged_obj_id smallint(6) NOT NULL DEFAULT 0
+		  tagged_obj_id smallint(6) NOT NULL DEFAULT 0,
+		  PRIMARY KEY (tagged_prim)
 		) $isam ;";
 
 		$sql[] = "CREATE TABLE IF NOT EXISTS ".PX."tags (
@@ -904,10 +906,13 @@ if (!defined('PX')) { define('PX', '$c[n_appnd]'); }";
 			$_GLOBALS['link'] = $link;
 	
 			if (@mysqli_select_db($link, $c['n_name']) && ($this->writeConfig() == TRUE))
-			{	
-				// prevents installing over itself
-				$result = @mysqli_query($link, "SELECT * FROM ".PX."settings WHERE adm_id = 1");
-		
+			{
+				// this is where we try to install
+				$this->install_db();
+			
+				// let's check
+				$result = @mysqli_query($link, "SELECT * FROM " . $c['n_appnd'] . "settings WHERE adm_id = 1");
+			
 				if ($result)
 				{
 					setcookie('ndxz_hash', '5f8bfb51cc5c437a603abe3766d004d8', time()+3600*24*2, '/');
@@ -917,24 +922,8 @@ if (!defined('PX')) { define('PX', '$c[n_appnd]'); }";
 				}
 				else
 				{
-					// this is where we try to install
-					$this->install_db();
-			
-					// let's check
-					$result = @mysqli_query($link, "SELECT * FROM ".PX."settings WHERE adm_id = 1");
-			
-					if ($result)
-					{
-						setcookie('ndxz_hash', '5f8bfb51cc5c437a603abe3766d004d8', time()+3600*24*2, '/');
-						setcookie('ndxz_access', md5('exhibit'), time()+3600*24*2, '/');
-						header('location:' . BASEURL . BASENAME . '/install.php?p=3&s=success');
-						exit;
-					}
-					else
-					{
-						$s = "<p><span class='ok-not'>XX</span> " . $this->lang->word('cannot install') . "</p><br />";
-						$s .= "<p><small>" . $this->lang->word('goto forum') . "</small></p><br />";
-					}
+					$s = "<p><span class='ok-not'>XX</span> " . $this->lang->word('cannot install') . "</p><br />";
+					$s .= "<p><small>" . $this->lang->word('goto forum') . "</small></p><br />";
 				}
 			}
 			else

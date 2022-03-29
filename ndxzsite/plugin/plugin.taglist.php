@@ -20,14 +20,12 @@ class Taglist
 	{
 		$OBJ =& get_instance();
 
-		$tags = $OBJ->db->fetchArray("SELECT id, link, target, pwd, title, url, tag_name, tag_group, new  
-			FROM ".PX."tagged, ".PX."tags, ".PX."objects, ".PX."media  
+		$tags = $OBJ->db->fetchArray("SELECT DISTINCT id, link, target, pwd, title, url, tag_name, tag_group, new  
+			FROM ".PX."tagged, ".PX."tags, ".PX."objects   
 			WHERE object = 'tag' 
-			AND tagged_object = 'img' 
-			AND tag_id = tagged_id 
-			AND media_id = tagged_obj_id 
+			AND tagged_object = 'exh' 
+			AND tag_id = tagged_id  
 			AND obj_ref_id = tag_id 
-			GROUP BY id 
 			ORDER BY tag_name ASC");
 			
 		if (!$tags) return;
@@ -94,7 +92,15 @@ class Taglist
 
 		$link = ($iframe == 1) ? $OBJ->baseurl . ndxz_rewriter($url) : $link;
 
-		$target = ($iframe == 1) ? '' : ($target == 1) ? " target='_new'" : '';
+		if ($iframe == 1)
+		{
+			$target = '';
+		}
+		else
+		{
+			$target = ($target == 1) ? " target='_new'" : '';
+		}
+
 		//$target = ($target == 1) ? " target='_new'" : '';
 
 		return "<li class='section-page section-link$active'><a href='$link'{$target}>" . $title . "</a></li>\n";

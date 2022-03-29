@@ -207,12 +207,11 @@ class Organize
 		
 		// add the tags
 		// get the tags
-		$tags = $OBJ->db->fetchArray("SELECT id, link, target, pwd, title, url, tag_name, tag_group 
+		$tags = $OBJ->db->fetchArray("SELECT DISTINCT id, link, target, pwd, title, url, tag_name, tag_group 
 			FROM ".PX."tagged, ".PX."tags, ".PX."objects 
 			WHERE object = 'tag' 
 			AND tag_id = tagged_id 
 			AND obj_ref_id = tag_id 
-			GROUP BY tag_name 
 			ORDER BY tag_name ASC");
 
 		if ($tags)
@@ -252,8 +251,6 @@ class Organize
 
 		$s = ''; $y = 0; $i = 0;
 		
-		//print_r($pages); exit;
-		
 		// i think we should rewrite the array in order with the section subs
 		if ($pages)
 		{
@@ -270,8 +267,8 @@ class Organize
 				}
 			}
 		}
-
 		
+
 		// <ul class='sortable' id='sort2-2008'>
 		// <li class='group'><span id='s2-2008'>
 		
@@ -280,7 +277,7 @@ class Organize
 		//print_r($pages); exit;
 		$current = '';
 		$the_year = false;
-		$total = count($pages);
+		//$total = count($pages);
 		$i = 1;
 		
 		// get the first set
@@ -498,7 +495,7 @@ class Organize
 		//print_r($pages); exit;
 		$current = '';
 		$the_year = false;
-		$total = count($pages);
+		//$total = count($pages);
 		$i = 1;
 
 		foreach ($pages as $page) 

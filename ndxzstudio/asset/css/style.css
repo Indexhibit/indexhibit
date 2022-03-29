@@ -578,3 +578,38 @@ ul#folderfiles li { list-style-type: none; margin-top: 6px; }
 .code span.attribute { color:#DD0000; }
 .code span.value { color:#800080; }
 .code span.comment span { color:#008000; }
+
+/* added 3/2002 */
+.tpl_update_news, .tpl_update_avail
+{
+	font-size: 18px;
+	color: white;
+	background: blue;
+	padding-top: 15px;
+	padding-bottom: 12px;
+}
+.tpl_update_news a, .tpl_update_avail a
+{ 
+	color: white; 
+	text-decoration: none; 
+}
+.tpl_update_news a:hover, .tpl_update_avail a:hover
+{
+	background: transparent;
+	border-bottom: 1px solid white;
+}
+.tpl_update_avail
+{
+	color: black;
+	background: #fff20d;
+}
+.tpl_update_avail a
+{ 
+	color: black; 
+	text-decoration: none; 
+}
+.tpl_update_avail a:hover
+{
+	background: transparent;
+	border-bottom: 1px solid black;
+}

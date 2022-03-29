@@ -202,11 +202,11 @@ class Processor
 	{
 		if ($this->variable) 
 		{
-			return ((int) $this->variable) ? (int) $this->variable : NULL;
+			return ((int) $this->variable) ? (int) $this->variable : 0;
 		} 
 		else 
 		{
-			return NULL;
+			return 0;
 		}
 	}
 	
@@ -241,6 +241,8 @@ class Processor
 	*/
 	public function length12()
 	{
+		if (is_null($this->variable)) return '';
+
 		if ((strlen($this->variable) > 12) && (strlen($this->variable) < 6))
 		{
 			$this->error[$this->descriptor] = " (Too many characters)";

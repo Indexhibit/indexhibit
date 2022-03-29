@@ -317,7 +317,7 @@ class FilesourceFolder implements Filesource
 		$out = array(); $i = 0;
 
 		// get images
-		$imgs = $OBJ->db->fetchArray("SELECT * 
+		$imgs = $OBJ->db->fetchArray("SELECT DISTINCT * 
 			FROM ".PX."media, ".PX."sections, ".PX."objects  
 			WHERE media_ref_id = id  
 			AND media_hide = '0' 
@@ -326,7 +326,6 @@ class FilesourceFolder implements Filesource
 			AND section_top != '1' 
 			AND section_id = secid 
 			AND object = 'exhibit' 
-			GROUP BY media_id 
 			ORDER BY sec_ord, ord ASC");
 
 		if ($imgs)

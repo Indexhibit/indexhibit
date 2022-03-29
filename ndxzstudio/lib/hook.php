@@ -133,11 +133,10 @@ class Hook
 		
 		$space = ($OBJ->go['q'] != 'index') ? $OBJ->go['a'] . ':' . $OBJ->go['q'] : $OBJ->go['a'];
 
-		$hooks = $OBJ->db->fetchArray("SELECT * FROM ".PX."plugins 
+		$hooks = $OBJ->db->fetchArray("SELECT DISTINCT * FROM ".PX."plugins 
 			WHERE (pl_type = 'global') 
 			OR (pl_type = 'module' AND pl_space = '" . $space . "')
-			OR (pl_type = 'module' AND pl_space = '" . $OBJ->go['a'] . "') 
-			GROUP BY pl_id");
+			OR (pl_type = 'module' AND pl_space = '" . $OBJ->go['a'] . "')");
 		
 		if ($hooks)
 		{

@@ -58,45 +58,63 @@ class Template
 		$this->add_css('style.css');
 		$this->add_js('common.js');
 	}
-	
-	public function tpl_update_available()
+
+	public function tpl_update_news()
 	{
 		$OBJ =& get_instance();
 		$k = '';
 		$v = '';
+		$alert = '';
 
-		///
-		$params = array();
-		$params['v']		= VERSION;
-		$params['method']	= 'version';
-		$params['lang']		= $OBJ->vars->settings['site_lang'];
-
-		$encoded_params = array();
-
-		foreach ($params as $k => $v)
+		// only do check on index page
+		if (($OBJ->go['a'] == 'exhibits') && ($OBJ->go['q'] == 'index'))
 		{
-			$encoded_params[] = urlencode($k).'='.urlencode($v);
+			$params = array();
+			$params['v']		= $OBJ->vars->settings['version'];
+			$params['method']	= 'news';
+			$params['lang']		= $OBJ->vars->settings['site_lang'];
+
+			$encoded_params = array();
+
+			foreach ($params as $k => $v)
+			{
+				$encoded_params[] = urlencode($k).'='.urlencode($v);
+			}
+
+			$url = 'https://api.indexhibit.org/' . '?' . implode('&', $encoded_params);
+
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_POST, 1);
+    		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    		$json = curl_exec($ch);
+    		$data = json_decode($json, TRUE);
+			curl_close ($ch);
+
+			if ($data['success'] != false)
+			{
+				if ($data['news'] != '')
+				{
+					$alert .= "<div class='tpl_update_news'>" . $data['news'] . "</div>";
+				}
+
+				if ($data['versionalert'] == true)
+				{
+					if (VERSION > $OBJ->vars->settings['version'])
+					{
+						$alert .= "<div class='tpl_update_avail'>Update to version " . VERSION . " - <a href='?a=system&q=upgrade'>click here</a></div>";
+					}
+					else
+					{
+						$alert .= "<div class='tpl_update_avail'>Download new version " . $data['newversion'] . " - <a href='https://indexhibit.org/news/'>click here</a></div>";
+					}
+				}
+
+				return $alert;
+			}
 		}
 
-		$rest = 'https://api.indexhibit.org/' . '?' . implode('&', $encoded_params);
-	
-		// we'll need to deal with errors here eventually
-		$rsp = array();
-		$rsp = @file_get_contents($rest);
-		///
-
-		$result = unserialize($rsp);
-
-		// new version available?
-		if ($result['success'] == true)
-		{
-			return $result['msg'];
-		}
-		
-		if (VERSION > $OBJ->vars->settings['version'])
-		{
-			return "<div style='height: 36px; background: #fff20d;'><div style='padding: 12px;'>Update to version " . VERSION . " - <a href='?a=system&q=upgrade'>click here</a></div></div>";
-		}
+		return;
 	}
 	
 	
@@ -446,6 +464,9 @@ class Template
 		
 		//$this->pref_nav['view'] = array(
 		//	'pref' => '<strong>' . $OBJ->lang->word('view site') . '</strong>', 'link' => BASEURL . '/', 'attr' => "class='prefs'");
+
+		$this->pref_nav['site'] = array(
+			'pref' => 'Website', 'link' => '/', 'attr' => "class='prefs'");
 		
 		if ($OBJ->access->is_admin())
 		{
@@ -457,7 +478,7 @@ class Template
 			'pref' => $OBJ->lang->word('preferences'), 'link' => '?a=system&q=preferences', 'attr' => "class='prefs'");
 			
 		$this->pref_nav['help'] = array(
-			'pref' => $OBJ->lang->word('help'), 'link' => 'http://www.indexhibit.org/forum/', 'attr' => "class='prefs'");
+			'pref' => $OBJ->lang->word('help'), 'link' => 'https://www.indexhibit.org/forum/', 'attr' => "class='prefs'");
 			
 		$this->pref_nav['logout'] = array(
 			'pref' => $OBJ->lang->word('logout'), 'link' => '?a=system&amp;q=logout', 'attr' => "class='prefs'");
@@ -501,8 +522,9 @@ class Template
 	{
 		$OBJ =& get_instance();
 
-		//return "<a href='http://www.indexhibit.org/'>Indexhibit<small><sup>™</sup></small> v" . $OBJ->access->settings['version'] . "</a> | <a href='#' onclick=\"OpenWindow('" . BASEURL . "/ndxzstudio/?a=system&amp;q=credits', 'Credits', 375, 425, 'yes'); return false;\">" . $OBJ->lang->word('credits') . "</a>";
-		return "<a href='http://www.indexhibit.org/'>Indexhibit<small><sup>™</sup></small> v" . $OBJ->access->settings['version'] . "</a>";
+		$donate = "<a href='https://www.indexhibit.org/donate/' target='_blank'>Donate</a> -";
+
+		return "$donate <a href='https://www.indexhibit.org/'>Indexhibit<small><sup>™</sup></small> v" . $OBJ->access->settings['version'] . "</a>";
 	}
 	
 	

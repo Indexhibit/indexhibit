@@ -12,7 +12,8 @@ function recent_stats()
 
 	$start_month = date('Y-m-d', mktime('00', '00', '00', $mn-2, $day, $yr));
 
-	$months = $OBJ->db->fetchArray("SELECT hit_month FROM ".PX."stats WHERE hit_month > '$start_month' GROUP BY hit_month");
+	$months = $OBJ->db->fetchArray("SELECT hit_month FROM ".PX."stats WHERE hit_month > '$start_month' 
+	GROUP BY hit_month");
 
 	if ($months)
 	{
@@ -50,7 +51,8 @@ function process_stats()
 	
 	$start_month = date('Y-m-d', mktime('00', '00', '00', $mn-2, $day, $yr));
 	
-	$months = $OBJ->db->fetchArray("SELECT hit_month FROM ".PX."stats WHERE hit_month <= '$start_month' GROUP BY hit_month");
+	$months = $OBJ->db->fetchArray("SELECT hit_month FROM ".PX."stats WHERE hit_month <= '$start_month' 
+	GROUP BY hit_month");
 	
 	if ($months)
 	{

@@ -8,7 +8,7 @@
 */
 class Abstracts
 {
-	public $abstract = false;
+	public $abstract = null;
 	public $temp;
 	public $input = array();
 	
@@ -75,7 +75,7 @@ class Abstracts
 	}
 	
 	// create abstract
-	public function abstract_check($abstract, $ab_var, $ab_obj, $ab_obj_id)
+	public function abstract_check($abstract=null, $ab_var=null, $ab_obj=null, $ab_obj_id=null)
 	{
 		$OBJ =& get_instance();
 		
@@ -127,7 +127,7 @@ class Abstracts
 	}
 	
 	// create abstract
-	public function abstract_create($abstract, $ab_var, $ab_obj, $ab_obj_id)
+	public function abstract_create($abstract=null, $ab_var=null, $ab_obj=null, $ab_obj_id=null)
 	{
 		$OBJ =& get_instance();
 
@@ -144,7 +144,7 @@ class Abstracts
 	
 	
 	// update abstract
-	public function abstract_update($abstract, $ab_var, $ab_obj, $ab_obj_id = null, $ab_id = null, $debug=false)
+	public function abstract_update($abstract=null, $ab_var=null, $ab_obj=null, $ab_obj_id = null, $ab_id = null, $debug=false)
 	{
 		$OBJ =& get_instance();
 
@@ -170,7 +170,7 @@ class Abstracts
 	
 	
 	// delete abstract
-	public function abstract_delete($ab_var, $ab_obj, $ab_obj_id = null, $ab_id = null)
+	public function abstract_delete($ab_var=null, $ab_obj=null, $ab_obj_id = null, $ab_id = null)
 	{
 		$OBJ =& get_instance();
 		
@@ -188,7 +188,7 @@ class Abstracts
 	
 	
 	// deletes all abstracts for a particular id and object
-	public function abstract_delete_all($ab_obj, $ab_obj_id)
+	public function abstract_delete_all($ab_obj=null, $ab_obj_id=null)
 	{
 		$OBJ =& get_instance();
 

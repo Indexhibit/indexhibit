@@ -27,7 +27,7 @@ class FilesourceAll
 
 		// the images
 		// we need the section id here
-		$imgs = $OBJ->db->fetchArray("SELECT * 
+		$imgs = $OBJ->db->fetchArray("SELECT DISTINCT * 
 			FROM ".PX."media, ".PX."sections, ".PX."objects  
 			WHERE media_ref_id = id    
 			AND media_mime IN ('" . implode('\', \'', $medias) . "') 
@@ -36,16 +36,14 @@ class FilesourceAll
 			AND object = 'exhibits' 
 			AND status = '1' 
 			AND media_source = '0' 
-			GROUP BY id 
 			ORDER BY sec_ord ASC, ord ASC");
 			
 		if ($imgs)
 		{
 			// get subsections order
-			$subs = $OBJ->db->fetchArray("SELECT sub_id, sec_ord, sub_order, secid 
+			$subs = $OBJ->db->fetchArray("SELECT DISTINCT sub_id, sec_ord, sub_order, secid 
 				FROM ".PX."sections, ".PX."subsections 
 				WHERE sub_sec_id = secid 
-				GROUP BY sub_id 
 				ORDER BY sec_ord ASC, sub_order ASC");
 				
 			// rewrite the subs order
@@ -252,7 +250,7 @@ class FilesourceAll
 		// get images
 		$this->medias = (empty($OBJ->vars->media)) ? $medias : $OBJ->vars->media;
 			
-		$imgs = $OBJ->db->fetchArray("SELECT * 
+		$imgs = $OBJ->db->fetchArray("SELECT DISTINCT * 
 			FROM ".PX."media, ".PX."sections, ".PX."objects  
 			WHERE media_ref_id = id    
 			AND media_mime IN ('" . implode('\', \'', $this->medias) . "') 
@@ -261,7 +259,6 @@ class FilesourceAll
 			AND object = 'exhibits' 
 			AND status = '1'  
 			AND media_source = '0' 
-			GROUP BY id 
 			ORDER BY sec_ord ASC, ord ASC");
 			
 		$new = array();
@@ -269,10 +266,9 @@ class FilesourceAll
 		if ($imgs)
 		{
 			// get subsections order
-			$subs = $OBJ->db->fetchArray("SELECT sub_id, sec_ord, sub_order, secid 
+			$subs = $OBJ->db->fetchArray("SELECT DISTINCT sub_id, sec_ord, sub_order, secid 
 				FROM ".PX."sections, ".PX."subsections 
 				WHERE sub_sec_id = secid 
-				GROUP BY sub_id 
 				ORDER BY sec_ord ASC, sub_order ASC");
 				
 			// rewrite the subs order

@@ -80,6 +80,7 @@ class New_statistics
 	*/
 	public function stat_reduceURL($input='')
 	{
+		//if (!$input) return $this->stat_reduceURL(BASEURL);
 		if (!$input) return NULL;
 	
 		$url = parse_url($input);

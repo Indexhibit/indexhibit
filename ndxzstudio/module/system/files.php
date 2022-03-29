@@ -436,7 +436,7 @@ function createFileBox($num)
 
 
 
-function getTimeOffset($default='', $name, $attr='')
+function getTimeOffset($default='', $name='', $attr='')
 {
 	$s = '';
 	$default = ($default == '') ? 0 : $default;
@@ -468,7 +468,7 @@ function getTimeOffset($default='', $name, $attr='')
 }
 
 
-function getTimeFormat($default='', $name, $attr='')
+function getTimeFormat($default='', $name='', $attr='')
 {
 	$s = '';
 	$default = ($default == '') ? '%Y-%m-%d %T' : $default;
@@ -489,7 +489,7 @@ function getTimeFormat($default='', $name, $attr='')
 	{
 		$hello = date('Y-m-d H:i:s', mktime($time[0], $time[1], $time[2], $time[4], $time[3], $time[5]));
 		
-		$newdate = strftime($format, strtotime($hello));
+		$newdate = strffftime($format, strtotime($hello));
 		
 		($default == $format) ? $sl = "selected ": $sl = "";
 		$s .= option($format, $newdate, $default, $format);
@@ -499,7 +499,7 @@ function getTimeFormat($default='', $name, $attr='')
 }
 
 
-function getLanguage($default='', $name, $attr='')
+function getLanguage($default='', $name='', $attr='')
 {
 	$OBJ =& get_instance();
 	
@@ -745,7 +745,7 @@ function getOrganize($state, $name, $attr)
 }
 
 
-function get_section_object($object='', $name, $attr='')
+function get_section_object($object='', $name='', $attr='')
 {
 	$OBJ =& get_instance();
 	
@@ -764,7 +764,7 @@ function get_section_object($object='', $name, $attr='')
 }
 
 
-function get_replacement($section='', $name, $attr='')
+function get_replacement($section='', $name='', $attr='')
 {
 	$OBJ =& get_instance();
 	
@@ -783,7 +783,7 @@ function get_replacement($section='', $name, $attr='')
 }
 
 
-function getSectionPrepend($section='', $name, $attr='')
+function getSectionPrepend($section='', $name='', $attr='')
 {
 	$OBJ =& get_instance();
 	
@@ -818,7 +818,7 @@ function getSectionPrepend($section='', $name, $attr='')
 }
 
 
-function getSectionOrd($section='', $name, $attr='')
+function getSectionOrd($section='', $name='', $attr='')
 {
 	$OBJ =& get_instance();
 	
@@ -835,7 +835,7 @@ function getSectionOrd($section='', $name, $attr='')
 }
 
 
-function the_templates($path, $format='', $default)
+function the_templates($path='', $format='', $default='')
 {
 	$OBJ =& get_instance();
 
@@ -893,7 +893,7 @@ function utf8Urldecode($value)
 
 
 
-function getTemplate($template='', $name, $attr='')
+function getTemplate($template='', $name='', $attr='')
 {
 	$OBJ =& get_instance();
 
@@ -911,7 +911,7 @@ function getTemplate($template='', $name, $attr='')
 
 
 
-function getSection($section='', $name, $attr='')
+function getSection($section='', $name=null, $attr='')
 {
 	global $default;
 	

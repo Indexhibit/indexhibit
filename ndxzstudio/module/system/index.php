@@ -261,18 +261,18 @@ class System extends Router
 			if ($_FILES['filename']['tmp_name'] != '')
 			{
 				$IMG =& load_class('media', TRUE, 'lib');
-				
+
 				// we need to get these from some defaults someplace
 				$IMG->thumbsize = 75;
 				$IMG->maxsize = 9999;
 				$IMG->quality = $default['img_quality'];
 				$IMG->makethumb	= true;
-				
+
 				// not sure why we need the trailing slash here
 				$dir = DIRNAME . '/files/';
 				$types = array_merge($default['images']);
 				$IMG->path = $dir;
-				
+
 				$new_images['name'] = $_FILES['filename']['name'];
 				$new_images['temp'] = $_FILES['filename']['tmp_name'];
 				$new_images['size'] = $_FILES['filename']['size'];
@@ -288,7 +288,7 @@ class System extends Router
 				{
 					$IMG->image = $IMG->path . '/' . $IMG->filename;
 					$IMG->user_image();
-					
+
 					// add to database
 					$clean['user_img'] = $IMG->filename;
 					$this->db->updateArray(PX.'users', $clean, "ID='" . $this->access->prefs['ID'] . "'");
@@ -674,6 +674,10 @@ class System extends Router
 		$total_since_hits = $this->db->getCount("SELECT sum(stor_hits) FROM ".PX."stats_storage");
 		$total_since_refer_hits = $this->db->getCount("SELECT sum(stor_referrer) FROM ".PX."stats_storage");
 		$total_avg_uniques = $this->db->getCount("SELECT avg(stor_unique) FROM ".PX."stats_storage");
+
+		$total_since_hits 		= ($total_since_hits > 0) ? $total_since_hits : 0;
+		$total_since_refer_hits = ($total_since_refer_hits > 0) ? $total_since_refer_hits : 0;
+		$total_avg_uniques 		= ($total_avg_uniques > 0) ? $total_avg_uniques : 0;
 		
 		$body .= "<div class='col'>\n";
 		$body .= span($this->lang->word('statistics since')) . br();
@@ -700,7 +704,9 @@ class System extends Router
 		
 		///// +++++++++++++++ GRAPH OF 30 DAYS OF HITS +++++++++
 		
-		$totalz = $this->db->fetchArray("SELECT hit_day, COUNT(hit_day) FROM ".PX."stats GROUP BY hit_day ORDER BY hit_day ASC");
+		$totalz = $this->db->fetchArray("SELECT hit_day, COUNT(hit_day) FROM ".PX."stats 
+		GROUP BY hit_day 
+		ORDER BY hit_day ASC");
 		
 		// rewrite array...get largest value...
 		$largest = 0; $height = 150;
@@ -1727,7 +1733,7 @@ var baseurl = '" . BASEURL . "';";
 		$body .= "<h3 style='margin-bottom: 9px;'>" . $this->lang->word('Tagged:') . " $tagged[tag_name]</h3>\n";
 		
 		$body .= "<p style='margin-bottom: 12px;'>";
-		$body .= "<a href='?a=system&q=showuntag&id=$go[id]'>" . $this->lang->word('Show Untagged') . "</a> ";
+		//$body .= "<a href='?a=system&q=showuntag&id=$go[id]'>" . $this->lang->word('Show Untagged') . "</a> ";
 		$body .= "<a href='?a=system&q=edittags&id=$go[id]' title='Edit'>" . $this->lang->word('Edit Tag') . "</a>";
 		$body .= "</p>";
 		
@@ -2002,13 +2008,13 @@ var baseurl = '" . BASEURL . "';";
 			// second column
 			$this->lib_class('subdirs');
 			$this->subdirs->secid = $this->vars->route['id'];
-		
+
 			$body .= "<div class='col' style='width: 600px;'>\n";
 			$body .= "<label style='display: block; margin-bottom: 6px;'>Subsections</label>\n";
 			$body .= "<div id='thesubsections' style='margin-bottom: 18px;'>\n";
 			$body .= $this->subdirs->getSubs($rs['secid']);
 			$body .= "</div>\n";
-			
+
 			$body .= "<div>\n";
 			$body .= "<p><a href='#' onclick=\"$('#addsubdirs').toggle(); return false;\">Add Subsection</a></p>\n";
 			$flag = ($rs['sec_subs'] != '') ? 1 : 0;
@@ -2017,7 +2023,7 @@ var baseurl = '" . BASEURL . "';";
 			$body .= "</div>\n";
 			$body .= "</div>\n";
 			$body .= "</div>\n";
-		
+
 			//$body .= "<div class='cl'><!-- --></div>\n";
 			//$body .= "</div>";
 		}
@@ -4072,6 +4078,7 @@ var ide = '$go[id]';";
 			// need site vars
 			//$site_vars = unserialize($this->bars->settings['site_vars']);
 			
+			/*
 			if ($this->vars->site['tags'] == 1)
 			{
 			$body .= "<div style='width:350px; float:left;'>\n";
@@ -4098,6 +4105,7 @@ var ide = '$go[id]';";
 			$body .= "</div>\n";
 			// end tags
 			}
+			*/
 			
 			$body .= "</div>\n";
 
@@ -4213,7 +4221,7 @@ var ide = '$go[id]';";
 		{
 			$check = $this->db->fetchArray("SELECT media_file FROM ".PX."media 
 				WHERE media_dir = '$_POST[media_info]' AND media_ref_id = '$go[id]'");
-				
+
 			if ($check)
 			{
 				foreach ($check as $c) { $tmp[] = $c['media_file']; }
@@ -4223,7 +4231,7 @@ var ide = '$go[id]';";
 			{
 				$check = array('0');
 			}
-			
+
 			$i = 1; $a = '';
 
 			// we list the files here...
@@ -4240,12 +4248,12 @@ var ide = '$go[id]';";
 					$i++;
 				}
 			}
-			
+
 			$body .= ($a == '') ? p("None found") : "<ul id='thefiles'>" . $a . "</ul>";
 			//$body .= ($a == '') ? '' : p(input('ins_all_files', 'submit', null, 'Autoload all files'));
 			$body .= ($a == '') ? '' : input('h_media_info', 'hidden', null, $_POST['media_info']);
 			$body .= "</div>\n";
-			
+
 			// need to alert the image updater
 			//$this->template->onready[] = "parent.updateImages();";
 		}
@@ -4615,7 +4623,7 @@ var ide = '$go[id]';";
 		$processor =& load_class('processor', TRUE, 'lib');
 		
 		$clean['site_offset'] = $processor->process('site_offset', array('digit'));
-		$clean['site_format'] = $processor->process('site_format', array('notags'));
+		//$clean['site_format'] = $processor->process('site_format', array('notags'));
 		$clean['site_lang'] = $processor->process('site_lang', array('notags'));
 
 		$clean['site_vars'] = serialize($_POST['site']);
@@ -4824,7 +4832,7 @@ var ide = '$go[id]';";
 	
 		$clean['sec_desc'] = $processor->process('sec_desc', array('notags', 'reqnotempty'));
 		$clean['section'] = $processor->process('section', array('nophp', 'reqnotempty'));
-		$clean['sec_proj'] = $processor->process('sec_proj', array('nophp'));
+		$clean['sec_proj'] = $processor->process('sec_proj', array('digit'));
 		$clean['sec_report'] = $processor->process('sec_report', array('boolean'));
 		$clean['sec_hide'] = $processor->process('sec_hide', array('boolean'));
 		$clean['sec_pwd'] = $processor->process('sec_pwd', array('notags'));
@@ -5207,9 +5215,9 @@ var ide = '$go[id]';";
 
 					//$test = ($image['media_thumb'] == '') ? explode('.', strtolower($image['media_file'])) :
 					//	explode('.', strtolower($image['media_thumb']));
-						
+
 					$test = ($image['media_thumb'] == '') ? $image['media_file'] : $image['media_thumb'];
-							
+
 					$tmp = ($image['media_thumb'] == '') ? explode('.', $image['media_file']) :
 							explode('.', $image['media_thumb']);
 
@@ -5218,12 +5226,12 @@ var ide = '$go[id]';";
 					$IMG->type = '.' . $thetype;
 					$IMG->filename = $test;
 					$IMG->origname = $IMG->filename;
-				
+
 					$IMG->id = $go['id'] . '_';
 					$IMG->filename = $IMG->filename;
-				
+
 					$IMG->image = $IMG->path . '/' . $IMG->filename;
-					
+
 					// check for black and white flag
 					// another time...
 					if (preg_match('/^bw/', $IMG->filename))
@@ -5248,12 +5256,12 @@ var ide = '$go[id]';";
 						$IMG->type = '.' . $thetype;
 						$IMG->filename = $test[0] . '.' . $thetype;
 						$IMG->origname = $IMG->filename;
-				
+
 						$IMG->id = $go['id'] . '_';
 						$IMG->filename = $IMG->filename;
-				
+
 						$IMG->image = $IMG->path . '/' . $IMG->filename;
-						
+
 						// check for black and white flag
 						// another time...
 						if (preg_match('/^bw/', $IMG->filename))
@@ -5265,7 +5273,7 @@ var ide = '$go[id]';";
 						$IMG->uploader();
 					}
 				}
-			
+
 				//@chmod($IMG->path . '/' . $IMG->filename, 0755);
 			}
 		}
@@ -6028,14 +6036,16 @@ var ide = '$go[id]';";
 			}
 			
 			// ouch...we need to know if this page is in an active section
+			/*
 			$group = $this->db->fetchRecord("SELECT sec_group FROM ".PX."objects, ".PX."sections 
 				WHERE id='$go[id]' 
 				AND object = 'exhibit' 
 				AND section_top != '1' 
 				AND section_id = secid");
+			*/
 			
 			$this->tag->id = $go['id'];
-			echo $this->tag->get_active_tags2($group['sec_group']);
+			echo $this->tag->get_active_tags2();
 			exit;
 			break;
 				
@@ -6049,8 +6059,8 @@ var ide = '$go[id]';";
 			$extend = (int) $_POST['v'];
 			$cdate = $_POST['date']; // validate time?
 			
-			$clean['cdate'] = (strftime("%Y-%m-%d %H:%M:%S", strtotime($cdate)) > getNow()) ? $cdate : getNow();
-			$clean['cdate'] = $this->comment_expiration(1, $extend, $clean['cdate']);
+			//$clean['cdate'] = (strftime("%Y-%m-%d %H:%M:%S", strtotime($cdate)) > getNow()) ? $cdate : getNow();
+			$clean['cdate'] = $this->comment_expiration(1, $extend, $cdate);
 			
 			$this->db->updateArray(PX.'objects', $clean, "id='$clean[id]'");
 
@@ -6501,6 +6511,7 @@ var ide = '$go[id]';";
 	// we need a way to protect these page from outside access
 	public function sbmt_add_user()
 	{
+		$OBJ =& get_instance();
 		$OBJ->template->errors = TRUE;
 		global $go;
 		
@@ -6572,13 +6583,18 @@ var ide = '$go[id]';";
 		$clean['email'] 		= $p->process('email', array('notags', 'reqNotEmpty'));
 		$clean['userid']		= $p->process('userid', array('notags', 'reqNotEmpty'));
 		
-		//print_r($clean); exit;
-		
 		// initial user OR if user equals themself
 		if (($go['id'] != 1) || ($go['id'] == $this->access->prefs['ID']))
 		{
 			$clean['user_admin']	= $p->process('user_admin', array('notags', 'boolean', 'reqNotEmpty'));
 			$clean['user_active']	= $p->process('user_active', array('notags', 'boolean', 'reqNotEmpty'));
+			
+			// can not deactivate primary user
+			if ($go['id'] == 1)
+			{
+				$clean['user_admin']	= 1;
+				$clean['user_active']	= 1;
+			}
 		}
 
 		// deal with password stuff...

@@ -27,13 +27,14 @@ class FilesourceSection
 
 		// the images
 		// how do we get the section in here?
-		$imgs = $OBJ->db->fetchArray("SELECT *  
+		$imgs = $OBJ->db->fetchArray("SELECT DISTINCT *  
 			FROM ".PX."media, ".PX."objects  
 			WHERE media_ref_id = id 
 			AND section_id = '" . $this->rs['section_id'] . "'  
 			AND media_mime IN ('" . implode('\', \'', $medias) . "') 
 			AND media_order = (SELECT MIN(media_order) FROM ".PX."media WHERE media_ref_id = id) 
 			AND section_top != '1' 
+			AND section_sub != 1
 			AND status = '1' 
 			AND hidden != '1' 
 			AND media_source = '0' 
@@ -42,11 +43,10 @@ class FilesourceSection
 		if ($imgs)
 		{
 			// get subsections order
-			$subs = $OBJ->db->fetchArray("SELECT sub_id, sec_ord, sub_order, secid 
+			$subs = $OBJ->db->fetchArray("SELECT DISTINCT sub_id, sec_ord, sub_order, secid 
 				FROM ".PX."sections, ".PX."subsections 
 				WHERE sub_sec_id = secid 
 				AND secid = '" . $this->rs['section_id'] . "'
-				GROUP BY sub_id 
 				ORDER BY sec_ord ASC, sub_order ASC");
 				
 			// rewrite the subs order
@@ -249,6 +249,7 @@ class FilesourceSection
 			AND media_mime IN ('" . implode('\', \'', $this->medias) . "') 
 			AND media_order = (SELECT MIN(media_order) FROM ".PX."media WHERE media_ref_id = id) 
 			AND section_top != '1'   
+			AND section_sub != 1
 			AND status = '1'  
 			AND media_source = '0' 
 			ORDER BY ord ASC");
@@ -258,11 +259,10 @@ class FilesourceSection
 		if ($imgs)
 		{
 			// get subsections order
-			$subs = $OBJ->db->fetchArray("SELECT sub_id, sec_ord, sub_order, secid 
+			$subs = $OBJ->db->fetchArray("SELECT DISTINCT sub_id, sec_ord, sub_order, secid 
 				FROM ".PX."sections, ".PX."subsections 
 				WHERE sub_sec_id = secid 
-				AND secid = '" . $OBJ->vars->exhibit['section_id'] . "'
-				GROUP BY sub_id 
+				AND secid = '" . $OBJ->vars->exhibit['section_id'] . "' 
 				ORDER BY sec_ord ASC, sub_order ASC");
 				
 			// rewrite the subs order

@@ -222,12 +222,12 @@ class Exhibit
 					$a = "<div class='picture_holder' id='node" . $this->file['media_id'] . "' style='width: {$temp_x}px; height: {$yadjust}px;'>\n";
 					$a .= "<div class='picture'{$pwidth}>\n";
 
-					$top_pad = (($OBJ->vars->exhibit['thumbs_shape'] == 0) || ($this->grid == 0)) ? "{$top_padding}px" : 0;
+					$top_pad = (($OBJ->vars->exhibit['thumbs_shape'] == 0) || ($this->grid == 0)) ? "{$top_padding}" : 0;
 					//$top_pad = round($top_pad / 2) . 'px';
 					$top_pad = ($OBJ->vars->exhibit['thumbs_shape'] == 0) ?
-						round($top_pad / 2) . 'px' : 0;
+						round($top_pad / 2) : 0;
 
-					$a .= "<div style='padding-top: {$top_pad};'>\n";
+					$a .= "<div style='padding-top: {$top_pad}px;'>\n";
 
 					$a .= $this->makeLink($this->file, $OBJ->vars->exhibit, $this->title);
 					$a .= "<img src='" . $this->file['media_thumb_path'] . "' width='" . $this->size[0] . "' height='" . $this->size[1] . "' alt='" . $this->file['media_thumb_path'] . "' />";
@@ -264,9 +264,9 @@ class Exhibit
 					$top_pad = 0;
 					//$top_pad = round($top_pad / 2) . 'px';
 					$top_pad = ($OBJ->vars->exhibit['thumbs_shape'] == 0) ?
-						round($top_pad / 2) . 'px' : 0;
+						round($top_pad / 2) : 0;
 
-					$a .= "<div style='padding-top: {$top_pad};'>\n";
+					$a .= "<div style='padding-top: {$top_pad}px;'>\n";
 
 					$a .= $this->makeLink($this->file, $OBJ->vars->exhibit, $this->title);
 					$a .= "<img src='" . $this->file['media_thumb_path'] . "' width='" . $this->size[0] . "' height='" . $this->size[1] . "' alt='" . $this->file['media_thumb_path'] . "' />";
@@ -301,9 +301,9 @@ class Exhibit
 					$a .= "<div class='picture'{$pwidth}>\n";
 
 					$top_pad = ($OBJ->vars->exhibit['thumbs_shape'] == 0) ?
-						($OBJ->vars->exhibit['thumbs'] - $this->size[1]) . 'px' : 0;
+						($OBJ->vars->exhibit['thumbs'] - $this->size[1]) : 0;
 
-					$a .= "<div style='padding-top: {$top_pad};'>\n";
+					$a .= "<div style='padding-top: {$top_pad}px;'>\n";
 
 					$a .= $this->makeLink($this->file, $OBJ->vars->exhibit, $this->title);
 					$a .= "<img src='" . $this->file['media_thumb_path'] . "' width='" . $this->size[0] . "' height='" . $this->size[1] . "' alt='" . $this->file['media_thumb_path'] . "' />";
@@ -377,9 +377,9 @@ class Exhibit
 					$a .= "<div class='picture'{$pwidth}>\n";
 
 					$top_pad = ($OBJ->vars->exhibit['thumbs_shape'] == 0) ?
-						($OBJ->vars->exhibit['thumbs'] - $this->size[1]) . 'px' : 0;
+						($OBJ->vars->exhibit['thumbs'] - $this->size[1]) : 0;
 
-					$a .= "<div style='padding-top: {$top_pad};'>\n";
+					$a .= "<div style='padding-top: {$top_pad}px;'>\n";
 
 					$a .= $this->makeLink($this->file, $OBJ->vars->exhibit, $this->title);
 					$a .= "<img src='" . $this->file['media_thumb_path'] . "' width='" . $this->size[0] . "' height='" . $this->size[1] . "' alt='" . $this->file['media_thumb_path'] . "' />";
@@ -420,9 +420,9 @@ class Exhibit
 					$a .= "<div class='picture'{$pwidth}>\n";
 
 					$top_pad = ($OBJ->vars->exhibit['thumbs_shape'] == 0) ?
-						($OBJ->vars->exhibit['thumbs'] - $this->size[1]) . 'px' : 0;
+						($OBJ->vars->exhibit['thumbs'] - $this->size[1]) : 0;
 
-					$a .= "<div style='padding-top: {$top_pad};'>\n";
+					$a .= "<div style='padding-top: {$top_pad}px;'>\n";
 
 					$a .= $this->makeLink($this->file, $OBJ->vars->exhibit, $this->title);
 					$a .= "<img src='" . $this->file['media_thumb_path'] . "' width='" . $this->size[0] . "' height='" . $this->size[1] . "' alt='" . $this->file['media_thumb_path'] . "' />";
@@ -704,7 +704,7 @@ class Exhibit
 		}
 
 
-		function do_break($limit=0, $counter, $html)
+		function do_break($limit=0, $counter=0, $html=null)
 		{
 			if ($limit != 0)
 			{

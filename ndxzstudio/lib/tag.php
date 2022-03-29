@@ -72,9 +72,9 @@ class Tag
 			foreach ($this->tags as $tag)
 			{
 				// let's count things here...
-				$count = $OBJ->db->getCount("SELECT count(*) FROM ".PX."tagged, ".PX."media 
+				$count = $OBJ->db->getCount("SELECT count(*) FROM ".PX."tagged, ".PX."objects 
 					WHERE tagged_id = '$tag[tag_id]' 
-					AND media_id = tagged_obj_id");
+					AND id = tagged_obj_id");
 			
 				$body .= "<div style='float: left; width: 170px; height: 21px;'>";
 				//$body .= "<a href='?a=system&q=edittags&id=$tag[tag_id]' rel=\"facebox;width=900;height=550;modal=true\" title='Edit'>+</a>&nbsp;";
@@ -142,7 +142,7 @@ class Tag
 	
 	
 	// active - input is a string
-	public function get_active_tags2($grupo='')
+	public function get_active_tags2()
 	{
 		$OBJ =& get_instance();
 
@@ -151,6 +151,7 @@ class Tag
 		$activ = $OBJ->db->fetchArray("SELECT tagged_id FROM ".PX."tagged 
 			WHERE tagged_obj_id='$this->id' 
 			AND tagged_object = '$this->method'");
+
 		/*
 		echo "SELECT tagged_id FROM ".PX."tagged 
 			WHERE tagged_obj_id='$this->id' 
