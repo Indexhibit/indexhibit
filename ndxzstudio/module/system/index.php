@@ -3675,17 +3675,17 @@ var baseurl = '" . BASEURL . "';";
 				$this->template->form_action = "?a=system&q=fileupload&id=$go[id]&x=background";
 
 				$this->template->onready[] = "$('#mformpop').bind('fileuploadstop', function (e, data) { location.href = '?a=exhibits&q=settings&id=$go[id]'; });
-$('#mformpop').fileupload('option' ,{ maxNumberOfFiles: 1, acceptFileTypes: /((png)|(jpe?g)|(gif)|(svg))$/i });";
-				break;
-				case 'thumb' :
-								$xid = (int) $_GET[xid];
-								$this->template->ex_js[] = "var maximagesize = $default[maxsize];";
-								$multiple = '';
-								$this->template->form_action = "?a=system&q=fileupload&id=$go[id]&x=coverart&xid=$xid";
-
-								$this->template->onready[] = "$('#mformpop').bind('fileuploadstop', function (e, data) { location.href = '?a=system&q=img&id=$xid'; });
 				$('#mformpop').fileupload('option' ,{ maxNumberOfFiles: 1, acceptFileTypes: /((png)|(jpe?g)|(gif)|(svg))$/i });";
-								break;
+				break;
+			case 'thumb' :
+				$xid = (int) $_GET[xid];
+				$this->template->ex_js[] = "var maximagesize = $default[maxsize];";
+				$multiple = '';
+				$this->template->form_action = "?a=system&q=fileupload&id=$go[id]&x=coverart&xid=$xid";
+
+				$this->template->onready[] = "$('#mformpop').bind('fileuploadstop', function (e, data) { location.href = '?a=system&q=img&id=$xid'; });
+				$('#mformpop').fileupload('option' ,{ maxNumberOfFiles: 1, acceptFileTypes: /((png)|(jpe?g)|(gif)|(svg))$/i });";
+				break;
 			default :
 				$this->template->ex_js[] = "var maximagesize = $default[maxsize];";
 				$multiple = " multiple=";
