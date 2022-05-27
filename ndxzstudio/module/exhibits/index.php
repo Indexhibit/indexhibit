@@ -214,7 +214,7 @@ var baseurl = '" . BASEURL . "';";
 			$this->editor->process = $rs['process'];
 			$this->editor->content_id = 'content';
 			$this->editor->advanced = true;
-			$this->editor->css = "style='width: 670px; \width: 658px; w\idth: 658px; padding: 6px;'";
+			$this->editor->css = '';
 			$abody .= $this->editor->output();
 			$abody .= "</div>\n";
 			// end editor
@@ -287,12 +287,6 @@ var baseurl = '" . BASEURL . "';";
 			$body .= "<div id='uploadings' class='as-holder' style='margin-bottom: 9px;{$uploadings_display}'><label style='display: block; margin-bottom: 6px;'>" . $this->lang->word('Upload/Import') . "</label>\n";
 			
 			$body .= " <a href='?a=system&q=upload&id=$go[id]' rel=\"facebox;width=800;height=500;modal=true\"><img src='asset/img/page-upload.gif' title='" . $this->lang->word('upload files') . "' /></a>";
-			
-			$folders = " <a href='?a=system&q=folder&id=$go[id]' rel=\"facebox;width=600;height=500;modal=true\"><img src='asset/img/files.gif' title='" . $this->lang->word('folder load') . "' /></a> ";
-			
-			// bring folders back later
-			//$body .= $folders . $f;
-			$body .= $f;
 			
 			$body .= $this->hook->do_action('system_uploader_link');
 			
@@ -597,7 +591,7 @@ var ide = '$go[id]';";
 		$F->rs = $rs;
 		
 		// get our output
-		$body = div($F->switchInterface(), "id='img-settings'");
+		$body = div($F->switchInterface(), "class='cols'");
 		//////////////////		
 
 		$this->template->body = $body;

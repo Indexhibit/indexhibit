@@ -646,7 +646,7 @@ class Installation
 
 		$sql[] = "INSERT INTO `".PX."users` (`ID`, `userid`, `password`, `email`, `threads`, `writing`, `user_offset`, `user_format`, `user_lang`, `user_hash`, `user_help`, `user_mode`, `user_name`, `user_surname`, `user_admin`, `user_active`, `user_client`) VALUES
 		(1, 'index1', '22645ed8b5f5fa4b597d0fe61bed6a96', ".$this->db->escape($c['n_email']).", 15, 0, 0, '%d %B %Y', ".$this->db->escape($the_lang).", '5f8bfb51cc5c437a603abe3766d004d8', 0, 1, ".$this->db->escape($c['n_fname']).", ".$this->db->escape($c['n_lname']).", 1, 1, 0);";
-		
+
 		foreach ($sql as $install)
 		{
 			$this->db->query($install);

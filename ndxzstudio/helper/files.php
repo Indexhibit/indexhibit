@@ -166,6 +166,114 @@ function show_the_folders_files($folders=null)
 }
 
 
+// returns a list of folders inside the 'files' folder
+function get_asset_folders($path, $default, $exclude=array())
+{
+	// let's get the folders and info...
+	$folders = array();
+
+	if (is_dir($path))
+	{
+		if ($fp = opendir($path)) 
+		{
+			while (($module = readdir($fp)) !== false) 
+			{
+				if (is_dir($path . '/' . $module) && (!preg_match("/.DS_Store/i", $module)) && (!preg_match("/\./", $module)) && (!preg_match("/^_/", $module)) && (!preg_match("/^CVS$/", $module)))
+				{
+					if (!in_array($module, $exclude)) $folders[] = $module;
+				}
+			} 
+		}
+		closedir($fp);
+	}
+ 
+	return $folders;
+}
+
+
+function get_assets_from_folders($folds)
+{
+	$OBJ =& get_instance();
+	global $go;
+
+	// let's get the folders and info...
+	$files = array();
+	$output = '';
+
+	if (is_array($folds))
+	{
+		foreach ($folds as $fold)
+		{
+			if (is_dir(DIRNAME . '/files/' . $fold))
+			{
+				$folders[$fold] = array_diff(scandir(DIRNAME . '/files/' . $fold), array('.', '..'));;
+			}
+		}
+	}
+
+
+	if ($folders == null) return;
+	
+	// get a list of all files in the system - duplicates can not be added to exhibit
+	$loaded = $OBJ->db->fetchArray("SELECT media_file FROM ".PX."media 
+		WHERE media_ref_id = '" . $go['id'] . "'");
+		
+	if ($loaded)
+	{
+		foreach ($loaded as $load) $new[] = $load['media_file'];
+		$loaded = $new;
+	}
+	else
+	{
+		$loaded = array();
+	}
+	
+	load_helper('html');
+	$i = 0; $j = 0;
+	
+	$html = "<ul id='folderfiles'>\n";
+	
+	foreach ($folders as $key => $folder)
+	{
+		if (is_writable(DIRNAME . '/files/' . $key . '/'))
+		{
+			$html .= "<li class='folder_name' style='margin-top: 24px;'>/$key</li>\n";
+			$html .= "<ul id='j$j' style='margin-bottom: 12px;'>\n";
+		
+			foreach ($folder as $file)
+			{
+				// this doesn't really seem to work
+				if (is_writable(DIRNAME . '/files/' . $key . '/'))
+				{
+					$html .= (!in_array($file, $loaded)) ?
+						li(href($file, '#', "onclick=\"file_add_single($go[id], $i, '$file', '$key'); return false;\""), "id='file-$i' style='margin: 5px 0;'") :
+						li($file, "id='file-$i' style='margin: 5px 0; color: red;'");
+				}
+				else
+				{
+					//if (is_writable(DIRNAME . '/files/' . $key . '/' . $file))
+					//{
+						$html .= li($file, "id='file-$i' style='margin: 5px 0; color: red;'");
+					//}
+				}
+				
+				$i++;
+			}
+		
+			$html .= "</ul>\n";
+		
+			$j++;
+		}
+	}
+	
+	$html .= "</ul>\n";
+	
+	return $html;
+	
+	return $files;	
+}
+
+
 function get_the_files_from_folders($path, $default, $exclude=array())
 {
 	// let's get the folders and info...
@@ -212,10 +320,6 @@ function get_the_files_from_folders($path, $default, $exclude=array())
 			closedir($fp);
 		}
 	}
- 
-	//sort($modules);
-	
-	//return $modules;
 	
 	return $files;	
 }

@@ -195,6 +195,7 @@ class FilesourceExhibit
 						//$out[$i][$key]['media_thx'] = $sizeth[0];
 						//$out[$i][$key]['media_thy'] = $sizeth[1];
 						$out[$i][$key]['media_uploaded'] = $do['media_uploaded'];
+
 						$out[$i][$key]['media_file'] = $do['media_file']; // should not have the id appended to it
 						$out[$i][$key]['media_path'] = $OBJ->baseurl . $path . '/' . $do['media_ref_id'] . '_' . $do['media_file'];
 						
@@ -228,10 +229,18 @@ class FilesourceExhibit
 						//$out[$i][$key]['media_thx'] = $sizeth[0];
 						//$out[$i][$key]['media_thy'] = $sizeth[1];
 						
-						
 						$out[$i][$key]['media_uploaded'] = $do['media_uploaded'];
 						$out[$i][$key]['media_file'] = $do['media_file']; // should not have the id appended to it
-						$out[$i][$key]['media_path'] = $OBJ->baseurl . $path . '/' . $do['media_ref_id'] . '_' . $do['media_file'];
+
+						// this means it has an alt path - like a large video
+						if ($do['media_dir'] != '')
+						{
+							$out[$i][$key]['media_path'] = $OBJ->baseurl . '/files/' . $do['media_dir'] . '/' . $do['media_file'];
+						}
+						else
+						{
+							$out[$i][$key]['media_path'] = $OBJ->baseurl . $path . '/' . $do['media_ref_id'] . '_' . $do['media_file'];
+						}
 						
 						// something to think about here
 						// the problem here is that we aren't accessing the true media thumb

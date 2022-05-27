@@ -18,7 +18,7 @@ class FilesourceTag
 		$OBJ =& get_instance();
 		global $go, $default, $medias;
 
-		$body = "<ul style='list-style-type: none; font-size: 2em; margin-bottom: 3px;'>\n";
+		$body = "<ul style='list-style-type: none; font-size: 1.1em; margin-bottom: 3px;'>\n";
 
 		// the images
 		// how do we get the section in here?

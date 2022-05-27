@@ -5,6 +5,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=10.0, user-scalable=yes, minimal-ui' />
 
 <title><?php echo $this->title; ?></title>
 
@@ -18,7 +20,7 @@
 
 <body>
 
-<?php echo $this->tpl_update_news(); ?>
+<?php //echo $this->tpl_update_news(); ?>
 
 <div id='all'>
 	
@@ -26,7 +28,16 @@
 	
 <div id='header' class='c2'>
 	<div class='col'><?php echo $this->tpl_site_menu(); ?></div>
-	<div class='col right'><?php echo $this->tpl_prefs(); ?></div>	
+	<div class='col right'>
+		<nav id="hamnav">
+
+		<label for="hamburger">&#9776;</label>
+  		<input type="checkbox" id="hamburger"/>
+
+		<?php echo $this->tpl_prefs(); ?>
+
+		</nav>
+	</div>	
 	<div class='cl'><!-- --></div>	
 </div>
 

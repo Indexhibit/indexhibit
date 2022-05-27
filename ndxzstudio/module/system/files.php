@@ -624,7 +624,7 @@ function getSections()
 		return p('None');
 	}
 	
-	$s .= "<ul id='sizes' class='sec_info' style='width: 870px;'>\n";
+	$s .= "<ul id='sizes' class='sec_info'>\n";
 	
 	if ($rs)
 	{

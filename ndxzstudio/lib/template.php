@@ -340,16 +340,18 @@ class Template
 	*/
 	public function tpl_prefs()
 	{
-		$out = '';
+		$out = "<ul id='tpl-prefs' class='menu'>";
 		
 		if (is_array($this->tpl_prefs_nav()))
 		{
 			foreach ($this->pref_nav as $pref)
 			{
 				$attr = (!isset($pref['attr'])) ? null : $pref['attr'];
-				$out .= ' ' . href($pref['pref'], $pref['link'], $attr);
+				$out .= '<li>' . href($pref['pref'], $pref['link'], $attr) . '</li>';
 			}
 		}
+
+		$out .= '</ul>';
 		
 		return $out;
 	}

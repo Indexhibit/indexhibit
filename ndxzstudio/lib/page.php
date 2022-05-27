@@ -239,7 +239,7 @@ class Page
 		$out = "<form name='ndxz_protect' id='ndxz-protect' method='post' action=''>\n";
 		$out .= "<p>Password Protected Section</p>\n";
 		$out .= "<p>Enter Password</p>\n";
-		$out .= "<p><input name='ndxz_sec_pwd' type='text' maxlength='12' /></p>\n";
+		$out .= "<p><input name='ndxz_sec_pwd' type='text' maxlength='100' /></p>\n";
 		$out .= "<p><input name='ndxz_hid' type='hidden' value='' /></p>\n";
 		$out .= "<p><input name='ndxz_sec_pwd_sbmt' type='submit' value='submit' /></p>\n";
 		$out .= "</form>\n";
@@ -261,7 +261,7 @@ class Page
 		// this can be changed via a plugin (need to make the plugin)
 		$out .= "<p>Password Protected Page (enter password):</p>\n";
 
-		$out .= "<div id='ndxz_pwd'><input name='ndxz_pwd' type='text' maxlength='12' /></div>\n";
+		$out .= "<div id='ndxz_pwd'><input name='ndxz_pwd' type='text' maxlength='100' /></div>\n";
 		$out .= "<div id='ndxz_pwd_sbmt'><button name='ndxz_pwd_sbmt' type='submit' />Submit</button></div>\n";
 		$out .= "<input name='ndxz_hid' type='hidden' value='' />\n";
 		$out .= "</form>\n";

@@ -246,7 +246,7 @@ class Options
 		// call custom first
 		$this->custom_options();
 
-		$bod = "<div style='width: 205px; float: left; padding: 0 5px;'>\n";
+		$bod = "<div class='col33'>\n";
 		
 		$bod .= $this->source();
 		$bod .= $this->format();
@@ -254,7 +254,7 @@ class Options
 		
 		$bod .= "</div>\n";
 		
-		$bod .= "<div style='width: 205px; float: left; padding: 0 5px;' id='img-sizes'>\n";
+		$bod .= "<div class='col33' id='img-sizes'>\n";
 
 		$bod .= $this->images();
 		$bod .= $this->thumbs();
@@ -263,7 +263,7 @@ class Options
 		
 		$bod .= "</div>\n";
 		
-		$bod .= "<div style='width: 205px; float: left; padding: 0 5px;'>\n";
+		$bod .= "<div class='col33'>\n";
 		
 		$bod .= $this->titling();
 		$bod .= $this->placement();

@@ -330,9 +330,9 @@ class System extends Router
 		$body .= ips($this->lang->word('user last name'), 'input', 'user_surname', $rs['user_surname'], "maxlength='50'", 'text', $this->lang->word('required'),'req');
 		$body .= ips($this->lang->word('user email'), 'input', 'email', $rs['email'], "maxlength='100'", 'text', $this->lang->word('required'), 'req');
 		
-		$body .= ips($this->lang->word('login'), 'input', 'userid', $rs['userid'], "maxlength='12'", 'text', $this->lang->word('required').' '.$this->lang->word('number chars'), 'req');
-		$body .= ips($this->lang->word('change password'), 'input', 'password', NULL, "maxlength='12'", 'password', $this->lang->word('required').' '.$this->lang->word('number chars'), 'req');
-		$body .= ips($this->lang->word('confirm password'), 'input', 'cpassword', NULL, "maxlength='12'", 'password', $this->lang->word('if change'),'req');
+		$body .= ips($this->lang->word('login'), 'input', 'userid', $rs['userid'], "maxlength='100'", 'text', $this->lang->word('required').' '.$this->lang->word('number chars'), 'req');
+		$body .= ips($this->lang->word('change password'), 'input', 'password', NULL, "maxlength='100'", 'password', $this->lang->word('required').' '.$this->lang->word('number chars'), 'req');
+		$body .= ips($this->lang->word('confirm password'), 'input', 'cpassword', NULL, "maxlength='100'", 'password', $this->lang->word('if change'),'req');
 		$body .= ips($this->lang->word('your language'), 'getLanguage', 'user_lang', $rs['user_lang'], NULL, 'text');
 		
 		$body .= input('huser_lang', 'hidden', NULL, $rs['user_lang']);
@@ -526,11 +526,16 @@ class System extends Router
 		
 		$body .= "<div class='cl'><!-- --></div>\n";
 		
+		//$body .= "<div class='buttons'>";		
+		//$body .= button('upd_settings', 'submit', "class='general_submit'", $this->lang->word('update'));		
+		//$body .= "</div>\n";
+		
+		$body .= "</div>";
+
 		$body .= "<div class='buttons'>";		
 		$body .= button('upd_settings', 'submit', "class='general_submit'", $this->lang->word('update'));		
 		$body .= "</div>\n";
-		
-		$body .= "</div>";
+
 		$body .= "</div>";
 		
 		$this->template->body = $body;
@@ -572,16 +577,10 @@ class System extends Router
 		$body .= "<label>".$this->lang->word('theme')."</label>\n";
 		$body .= getThemes(DIRNAME . '/ndxzsite/', $rs['obj_theme']);	
 		
-		$body .= "<div class='buttons'>";
-				
-		$body .= button('upd_theme', 'submit', "class='general_submit'", $this->lang->word('update'));
-				
-		$body .= "</div>\n";
-		
 		$body .= "</div>\n";
 		
 		// second column
-		$body .= "<div class='col' style='width: 300px;'>\n";
+		$body .= "<div class='col'>\n";
 		
 		$body .= label($this->lang->word('pre nav text').' '.span($this->lang->word('html allowed')));
 		
@@ -590,7 +589,7 @@ class System extends Router
 		$this->editor->content = $rs['obj_itop'];
 		$this->editor->process = 1;
 		$this->editor->content_id = 'obj_itop';
-		$this->editor->css = "style='width: 290px; height: 225px;'";
+		//$this->editor->css = "style='width: 290px; height: 225px;'";
 		$this->editor->canvas = 1;
 		$body .= $this->editor->admin_editor();
 		$this->editor->html = ''; // need to clear it out
@@ -599,7 +598,7 @@ class System extends Router
 		$body .= "</div>\n";
 		
 		// third column
-		$body .= "<div class='col' style='width: 300px;'>\n";
+		$body .= "<div class='col'>\n";
 		
 		$body .= label($this->lang->word('post nav text').' '.span($this->lang->word('html allowed')));
 		
@@ -607,7 +606,7 @@ class System extends Router
 		$this->editor->content = $rs['obj_ibot'];
 		$this->editor->process = 1;
 		$this->editor->content_id = 'obj_ibot';
-		$this->editor->css = "style='width: 290px; height: 225px;'";
+		//$this->editor->css = "style='width: 290px; height: 225px;'";
 		$this->editor->canvas = 2;
 		$body .= $this->editor->admin_editor();
 		//////////////
@@ -616,6 +615,10 @@ class System extends Router
 		
 		$body .= "<div class='cl'><!-- --></div>\n";
 		$body .= "</div>";
+
+		$body .= "<div class='buttons'>";
+		$body .= button('upd_theme', 'submit', "class='general_submit'", $this->lang->word('update'));
+		$body .= "</div>\n";
 		
 		$this->template->body = $body;
 		
@@ -723,8 +726,8 @@ class System extends Router
 		
 		$body .= "<div style='margin: 5px 0; padding: 20px 10px 5px 10px; background: white;' class='corners'>\n";
 
-		$body .= "<div class='col'>\n";
-		$body .= "<ul style='height: 150px;'>";
+		$body .= "<div class='col' style='width: 100%;'>\n";
+		$body .= "<ul style='height: 150px; display: flex;'>";
 		
 		if ($totalz)
 		{
@@ -777,14 +780,14 @@ class System extends Router
 				$color = ($d == "$yr-$mn-$day") ? '0c0' : $color;
 				if ($dayz[$d] == 0) $color = 'white';
 				
-				$rw[] = "<li style='list-style-type: none; height: " . ($height + 20) . "px; width: 30px; float: left; position: relative;'><div style='height: " . ($hits + 20) . "px; background: #{$color}; position: absolute; bottom: 0; left: 0; z-index: 1; width: 27px;'><strong style='padding: 3px 0 0 0; display: block; text-align: center; font-weight: normal; font-size: 9px;'>" . $dayz[$d] . "</strong></div>$ref $unq<div style='height: 12px; width: 27px; position: absolute; bottom: -16px; left: 0; z-index: 3; text-align: center; font-size: 9px;'>" . substr($d, 8, 2) . "</div></li>\n\n";
+				$rw[] = "<li class='stats-node' style='height: " . ($height + 20) . "px;'><div class='stats-graph' style='height: " . ($hits + 20) . "px; background: #{$color};'><strong>" . $dayz[$d] . "</strong></div>$ref $unq<div class='stats-count'>" . substr($d, 8, 2) . "</div></li>\n\n";
 			}
 			else
 			{
 				$color = ($d == "$yr-$mn-$day") ? '0c0' : $color;
 				$color = 'f3f3f3';
 
-				$rw[] = "<li style='list-style-type: none; height: " . ($height + 20) . "px; width: 30px; float: left; position: relative;'><div style='height: 20px; background: #{$color}; position: absolute; bottom: 0; left: 0; z-index: 1; width: 27px;'><strong style='padding: 3px 0 0 0; display: block; text-align: center; font-weight: normal; font-size: 9px;'>0</strong></div><div style='height: 12px; width: 27px; position: absolute; bottom: -16px; left: 0; z-index: 3; text-align: center; font-size: 9px;'>" . substr($d, 8, 2) . "</div></li>\n\n";
+				$rw[] = "<li class='stats-node' style='height: " . ($height + 20) . "px;'><div class='stats-graph' style='background: #{$color};'><strong>0</strong></div><div class='stats-count'>" . substr($d, 8, 2) . "</div></li>\n\n";
 			}
 		}
 		
@@ -1579,15 +1582,15 @@ var baseurl = '" . BASEURL . "';";
 		$body .= $this->toggler();
 		
 		$body .= "<div class='bg-grey corners'>\n";
-		$body .= "<div class='c3'>\n";
-		
-		$body .= "<div style='margin: 5px 5px 27px 5px;'>\n";
-		
-		$body .= "<div style='float: left; width: 200px;'>\n";
+
+		$body .= "<div>\n";
+
+		$body .= "<div style='margin-bottom: 24px;'>\n";
 		$body .= "<h3 style='margin-bottom: 9px;'>" . $this->lang->word('Tags Management') . "</h3>\n";
 		$body .= "</div>\n";
 		
-		$body .= "<div style='cursor: pointer; float: right; width: 300px;'>\n";
+		$body .= "<div>\n";
+		//$body .= "<div style='cursor: pointer; float: right; width: 300px;'>\n";
 		$body .= "<p style='margin: 0;'><strong>" . $this->lang->word('Add Tags') . "</strong> <small>" . $this->lang->word("Separate multiple tags with a comma ','.") . "</small></p>\n";
 		$body .= input('add_tag', 'text', "id='new_tag' style='display: inline; width: 200px;'", null);
 		$body .= "<input type='hidden' name='tag_group' id='tag_group' value=\"1\" /> ";
@@ -1597,7 +1600,7 @@ var baseurl = '" . BASEURL . "';";
 		$body .= "<div style='clear: both;'><!-- --></div>\n";	
 		$body .= "</div>\n";
 
-		$body .= "<div class='col' style='width: 850px; min-height: 400px;'>\n";
+		$body .= "<div style='min-height: 400px;'>\n";
 
 		// show all tags
 		$this->lib_class('tag');
@@ -1939,10 +1942,10 @@ var baseurl = '" . BASEURL . "';";
 		$body .= "<div class='bg-grey corners'>\n";
 		$body .= "<div class='c3'>\n";
 		
-		$body .= "<div style='margin: 5px;'>\n";
-		$body .= "<label>" . $this->lang->word('path') . "</label>";
-		$body .= "<h2>" . BASEURL . "$rs[sec_path]</h2>" . br();
-		$body .= "</div>\n";
+		//$body .= "<div style='margin: 5px;'>\n";
+		//$body .= "<label>" . $this->lang->word('path') . "</label>";
+		//$body .= "<h2>" . BASEURL . "$rs[sec_path]</h2>" . br();
+		//$body .= "</div>\n";
 		
 		// First column
 		$body .= "<div class='col'>\n";
@@ -1966,32 +1969,6 @@ var baseurl = '" . BASEURL . "';";
 			
 		// ADVANCED!
 		$body .= ips($this->lang->word('section object'), 'get_section_object', 'sec_obj', $rs['sec_obj']);
-		
-		$body .= "<div class='buttons'>";
-
-		if ($rs['secid'] != 1)
-		{
-			// let's run a check on this
-			$exhibits = $this->db->fetchArray("SELECT id FROM ".PX."objects 
-				WHERE section_id = '$go[id]' 
-				AND section_top != '1'");
-			
-			if (!$exhibits)
-			{
-				$body .= button('del_sec', 'submit', "class='general_delete' onclick=\"javascript:return confirm('" . $this->lang->word('sure delete section') . "');return false;\"", $this->lang->word('delete'));
-			}
-			else
-			{
-				$body .= button('del_sec', 'submit', "class='general_delete' onclick=\"alert('" . $this->lang->word('you need to delete/move all exhibits/pages from this section first.') . "');return false;\"", $this->lang->word('delete'));
-			}
-		}
-		
-		$body .= button('edit_sec', 'submit', "class='general_submit'", $this->lang->word('update'));
-		
-		$body .= "</div>\n";
-		
-		$body .= input('hsecid', 'hidden', NULL, $rs['secid']);
-		$body .= input('hsec_ord', 'hidden', NULL, $rs['sec_ord']);
 		
 		// we aren't really using this though
 		$new_section = explode('/', $rs['sec_path']);
@@ -2030,6 +2007,32 @@ var baseurl = '" . BASEURL . "';";
 		
 		$body .= "<div class='cl'><!-- --></div>\n";
 		$body .= "</div>";
+
+		$body .= "<div class='buttons'>";
+
+		if ($rs['secid'] != 1)
+		{
+			// let's run a check on this
+			$exhibits = $this->db->fetchArray("SELECT id FROM ".PX."objects 
+				WHERE section_id = '$go[id]' 
+				AND section_top != '1'");
+			
+			if (!$exhibits)
+			{
+				$body .= button('del_sec', 'submit', "class='general_delete' onclick=\"javascript:return confirm('" . $this->lang->word('sure delete section') . "');return false;\"", $this->lang->word('delete'));
+			}
+			else
+			{
+				$body .= button('del_sec', 'submit', "class='general_delete' onclick=\"alert('" . $this->lang->word('you need to delete/move all exhibits/pages from this section first.') . "');return false;\"", $this->lang->word('delete'));
+			}
+		}
+		
+		$body .= button('edit_sec', 'submit', "class='general_submit'", $this->lang->word('update'));
+		
+		$body .= "</div>\n";
+		
+		$body .= input('hsecid', 'hidden', NULL, $rs['secid']);
+		$body .= input('hsec_ord', 'hidden', NULL, $rs['sec_ord']);
 		
 		$this->template->body = $body;
 		$this->template->output('index');
@@ -2136,7 +2139,7 @@ var baseurl = '" . BASEURL . "';";
 
 		$body .= "<div class='c1 bg-grey corners'>\n";
 
-		$body .= "<div class='col' style='width: 870px;'>\n";
+		$body .= "<div class='col'>\n";
 		
 		// if there are uninstall extensions
 		//$body .= $this->extensions_add_check();
@@ -2298,7 +2301,7 @@ var baseurl = '" . BASEURL . "';";
 
 		$body .= "<div class='c1 bg-grey corners'>\n";
 
-		$body .= "<div class='col' style='width: 870px;'>\n";
+		$body .= "<div class='col'>\n";
 		
 		// if there are uninstall extensions
 		//$body .= $this->extensions_add_check();
@@ -3664,7 +3667,6 @@ var baseurl = '" . BASEURL . "';";
 		$this->template->js[] = "upload/jquery.fileupload-ui.js";
 		$this->template->js[] = "upload/locale.js";
 		$this->template->js[] = "upload/main.js";
-
 		
 		// we have a few scenarios here
 		switch($go['q'])
@@ -3675,17 +3677,19 @@ var baseurl = '" . BASEURL . "';";
 				$this->template->form_action = "?a=system&q=fileupload&id=$go[id]&x=background";
 
 				$this->template->onready[] = "$('#mformpop').bind('fileuploadstop', function (e, data) { location.href = '?a=exhibits&q=settings&id=$go[id]'; });
-$('#mformpop').fileupload('option' ,{ maxNumberOfFiles: 1, acceptFileTypes: /((png)|(jpe?g)|(gif)|(svg))$/i });";
+$('#mformpop').fileupload('option' ,{ maxNumberOfFiles: 1, acceptFileTypes: /((png)|(jpe?g)|(gif))$/i });";
 				break;
-				case 'thumb' :
-								$xid = (int) $_GET[xid];
-								$this->template->ex_js[] = "var maximagesize = $default[maxsize];";
-								$multiple = '';
-								$this->template->form_action = "?a=system&q=fileupload&id=$go[id]&x=coverart&xid=$xid";
 
-								$this->template->onready[] = "$('#mformpop').bind('fileuploadstop', function (e, data) { location.href = '?a=system&q=img&id=$xid'; });
-				$('#mformpop').fileupload('option' ,{ maxNumberOfFiles: 1, acceptFileTypes: /((png)|(jpe?g)|(gif)|(svg))$/i });";
-								break;
+			case 'thumb' :
+
+				$xid = (int) $_GET['xid'];
+				$this->template->ex_js[] = "var maximagesize = " . $default['maxsize'] . ";";
+				$multiple = '';
+				$this->template->form_action = "?a=system&q=fileupload&id=$go[id]&x=coverart&xid=$xid";
+				$this->template->onready[] = "$('#mformpop').bind('fileuploadstop', function (e, data) { location.href = '?a=system&q=img&id=$xid'; });
+				$('#mformpop').fileupload('option' ,{ maxNumberOfFiles: 1, acceptFileTypes: /((png)|(mp4)|(jpe?g)|(gif))$/i });";
+				break;
+
 			default :
 				$this->template->ex_js[] = "var maximagesize = $default[maxsize];";
 				$multiple = " multiple=";
@@ -3988,6 +3992,8 @@ var ide = '$go[id]';";
 			// ++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 			$np = div($this->array_neighbor($rs['media_id'], $rs['media_ref_id']), "style='margin-bottom: 18px;'");
+
+			$body = "<div class='cols'>\n";
 			
 			// if thumbnail show it...else...link to uploader
 			// if it's not a picture (meaning, it is a video or otherwise)
@@ -3995,7 +4001,7 @@ var ide = '$go[id]';";
 			{
 				if ($rs['media_thumb'] == '')
 				{
-					$body = "<div style='width:125px; float:left;'>$np\n";
+					$body .= "<div class='col25'>$np\n";
 					$body .= "<a href='?a=$go[a]&q=thumb&id=$rs[media_ref_id]&x=coverart&xid=$rs[media_id]'>" . $this->lang->word('attach cover') . "</a><br /><br />";
 					$body .= href($this->lang->word('Insert file'), '#', plugin_insert($rs) . " class='inserter'");
 					$body .= "</div>\n";
@@ -4006,7 +4012,7 @@ var ide = '$go[id]';";
 					
 					$media = "<br />" . href($this->lang->word('Insert file'), '#', plugin_insert($rs) . " class='inserter'");
 					
-					$body = "<div style='width:125px; float:left;'>$np\n";
+					$body .= "<div class='col25'>$np\n";
 					
 					$body .= "<img src='" . BASEURL . GIMGS . "/th-$rs[media_ref_id]_$rs[media_thumb]' width='100' /><br /><br /><a href='?a=$go[a]&q=detach&id=$rs[media_id]'>" . $this->lang->word('detach cover') . "</a><br /><br />\n";
 					
@@ -4017,7 +4023,8 @@ var ide = '$go[id]';";
 			{
 				$insert = "<br /><br /><a href='#' onClick=\"parent.ModInsGimg('$rs[media_ref_id]_$rs[media_file]', '', '');return false;\" class='inserter'>" . $this->lang->word('Insert image') . "</a>";
 				
-				$body = "<div style='width:125px; float:left;'>$np\n";
+				//$body = "<div style='width:125px; float:left;'>$np\n";
+				$body .= "<div class='col25'>$np\n";
 				
 				// if it does not have cover art
 				if ($rs['media_thumb'] != '')
@@ -4036,7 +4043,8 @@ var ide = '$go[id]';";
 				$body .= "<a href='" . BASEURL . GIMGS . "/$rs[media_file]' target='_new'>" . $this->lang->word('view source file') . "</a>$insert</div>\n";
 			}
 
-			$body .= "<div style='width:275px; float:left;'>\n";
+			//$body .= "<div style='width:275px; float:left;'>\n";
+			$body .= "<div class='col75'>\n";
 			
 			if ($rs['media_mime'] == 'url')
 			{
@@ -4075,41 +4083,10 @@ var ide = '$go[id]';";
 			$body .= "<input type='submit' name='upd_img' value='" . $this->lang->word('update') . "' />\n";
 			$body .= "</div>\n";
 			
-			// need site vars
-			//$site_vars = unserialize($this->bars->settings['site_vars']);
-			
-			/*
-			if ($this->vars->site['tags'] == 1)
-			{
-			$body .= "<div style='width:350px; float:left;'>\n";
-			// tags
-			$this->lib_class('tag');
-			$this->tag->method = 'img';
-			$this->tag->id = $rs['media_id'];
-			$this->tag->active_tags = $rs['media_tags'];
-			$this->tag->method = 'img';
-
-			$body .= "<div>\n";
-			$body .= label($this->lang->word('tags') . ' ' . span(href($this->lang->word('add tags'), '#', "onclick=\"toggle('tag-add'); return false;\""))) . "\n";
-			$body .= "<div id='tag-add' style='display: none; cursor: pointer;'>\n";
-			$body .= input('add_tag', 'text', "id='new_tag' style='display: inline; width: 100px;'", null);
-			$body .= "<input type='hidden' name='tag_group' id='tag_group' value=\"1\" /> ";
-			$body .= input('new_tag', 'button', "style='display: inline;' onclick=\"add_tags('img'); return false;\"", $this->lang->word('submit'));
-			$body .= input('new_tag', 'button', "style='display: inline;' onclick=\"$('#tag-add').toggle(); return false;\"", $this->lang->word('cancel'));
-			$body .= "<p>" . $this->lang->word('Separate multiple tags with a comma') . " ','.</p>\n";
-			$body .= "</div>\n";
-			$body .= "</div>\n";
-
-			$body .= "<div id='tag-box' style='display:block; padding:6px 0;'>\n";
-			$body .= div($this->tag->get_active_tags2(), "id='tag-holder'");
-			$body .= "</div>\n";
-			// end tags
-			}
-			*/
-			
 			$body .= "</div>\n";
 
 			$body .= "<div class='cl'><!-- --></div>\n";
+			$body .= "</div>\n";
 
 			$this->template->body = $body;
 			$this->template->output('popup');
@@ -4262,14 +4239,12 @@ var ide = '$go[id]';";
 			// this is where we list the files...
 			$body = "<label>" . $this->lang->word('folders') . ' ' . span('Select one') . "</label>\n";
 			$body .= "<div style='height: 200px;'>\n";
-			$folders = get_the_folders(DIRNAME . '/files/', null, array('gimgs', 'dimgs'));
-			
+			$folders = get_asset_folders(DIRNAME . '/files', null, array('gimgs', 'dimgs'));
+
 			if (is_array($folders))
 			{
-				$files = get_the_files_from_folders($folders, null);
+				$body .= get_assets_from_folders($folders); 
 			}
-			
-			if (is_array($files)) $body .= show_the_folders_files($files);
 
 			$body .= "</div>\n";
 		}
@@ -4748,8 +4723,9 @@ var ide = '$go[id]';";
 			$show = ($tab == $go['type']) ? " class='tabOn'" : " class='tabOff'";
 			$q = ('site' == $tab) ? '' : "&amp;q=$tab" ;
 			
+			// removing spacer - never used it
 			$out .= ($tab == 'spacer') ? 
-				li('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', "style='float:left;'") : 
+				'' : 
 				li(href($this->lang->word('tab_' . $tab), "?a=$go[a]$q"), "style='float:left;'$show");
 		}
 		
@@ -6711,7 +6687,7 @@ var ide = '$go[id]';";
 		
 		$body .= "<div class='bg-grey corners'>\n";
 		
-		$body .= div(p($this->lang->word("the editor is intended")), "style='background: #fff; margin: 5px; padding: 9px; border: 1px solid #ccc; font-size: 13px;'");
+		$body .= div(p($this->lang->word("the editor is intended")), "style='background: #fff; margin: 5px; padding: 9px; border: 1px solid #ccc;'");
 		
 		// add stuff from here
 		$body .= "<div id='add-page' style='display: none; margin-bottom: 18px;'>\n";
@@ -6844,7 +6820,7 @@ var ide = '$go[id]';";
 			$b .= "<div class='c1'>\n";
 			load_helper('output');
 			$code = mb_encode_numericentity($contents, UTF8EntConvert(1), 'utf-8');
-			$b .= div(textarea($code, "id='code' style='font-family: Courier, Courier New, monospace; font-size: 12px;'", 'code'), "class='code'");
+			$b .= div(textarea($code, "id='code' style='font-family: Courier, Courier New, monospace;'", 'code'), "class='code'");
 
 			$b .= "</div>\n";
 			$b .= "</div>\n";

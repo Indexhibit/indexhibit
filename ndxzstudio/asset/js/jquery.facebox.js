@@ -104,12 +104,14 @@
 	      closeImage   : 'asset/img/char.gif',
 	      imageTypes   : [ 'png', 'jpg', 'jpeg', 'gif' ],
 	      faceboxHtml  : '\
+		<div id="facebox-flex"> \
 	    <div id="facebox" style="display:none;"> \
 	      <div class="popup"> \
 	        <div class="content"> \
 	        </div> \
 	      </div> \
-	    </div>'
+	    </div> \
+		</div>'
 	    },
 
 		// <a href="#" class="close"><img src="/facebox/closelabel.png" title="close" class="close_image" /></a> \
@@ -136,9 +138,15 @@
 	        append('<div class="loading"><img src="' + $.facebox.settings.loadingImage + '"/></div>')
 
 	      $('#facebox').css({
-	        top:	getPageScroll()[1] + (getPageHeight() / 10),
-	        left:	$(window).width() / 2 - 205
+	        top:	21,
+	        left:	21
 	      }).show()
+
+		  // Vaska edit above
+		  //$('#facebox').css({
+	      //  top:	getPageScroll()[1] + (getPageHeight() / 10),
+	      //  left:	$(window).width() / 2 - 205
+	      //}).show()
 
 	      $(document).bind('keydown.facebox', function(e) {
 	        if (e.keyCode == 27) $.facebox.close()
@@ -153,12 +161,15 @@
 	      $('#facebox .content').append(data)
 	      $('#facebox .loading').remove()
 	      $('#facebox .body').children().fadeIn('normal')
-	      $('#facebox').css('left', $(window).width() / 2 - ($('#facebox .popup').width() / 2))
-		  /* $('#facebox').css('top', $(window).height() / 2 - ($('#facebox .popup').height() / 2)) */
+	      $('#facebox').css('left', 21)
+		  // Vaska edit above
+		  //$('#facebox').css('left', $(window).width() / 2 - ($('#facebox .popup').width() / 2))
+		  $('#facebox-flex').css('visibility', 'visible')
 	      $(document).trigger('reveal.facebox').trigger('afterReveal.facebox')
 	    },
 
 	    close: function() {
+		  $('#facebox-flex').css('visibility', 'hidden')
 		  $(document).trigger('close.facebox')
 	      return false
 	    }
@@ -353,13 +364,29 @@
 	function fillFaceboxFromAjax(href, klass) 
 	{
 		var randurlid = Math.ceil(Math.random() * 1000000000);
+		var respWidth = 50;
+		var respHeight = 70;
+
+		if ($(window).width() > 900)
+		{
+			respWidth = 50;
+			respHeight = 50;
+		}
+		else
+		{
+			respWidth = 95;
+			respHeight = 75;
+		}
 
 		$.get(href, function(data) 
 		{ 
 			//alert(data);
 			//fillFaceboxFromAjax("<iframe src='" + href + "' height='500'>fds</iframe>", klass)
-			$.facebox.reveal("<iframe src='" + href + "&rand=" + randurlid + "' frameborder='0' width='" + $.facebox.settings.width + "' height='" + $.facebox.settings.height + "'>fds</iframe>", klass) 
+			$.facebox.reveal("<iframe src='" + href + "&rand=" + randurlid + "' frameborder='0' style='width: " + respWidth + "vw; height: " + respHeight + "vh;'>fds</iframe>", klass) 
 			//$.facebox.reveal(data, klass) 
+
+			// Vaska edit above
+			//$.facebox.reveal("<iframe src='" + href + "&rand=" + randurlid + "' frameborder='0' width='" + $.facebox.settings.width + "' height='" + $.facebox.settings.height + "'>fds</iframe>", klass) 
 		})
 	}
 
@@ -408,6 +435,7 @@
 	   */
 	  $(document).bind('close.facebox', function() {
 	    	$(document).unbind('keydown.facebox')
+			$('#facebox-flex').css('visibility', 'hidden')
 		    $('#facebox').hide(0, function() {
 		      	$('#facebox .content').removeClass().addClass('content')
 			      $('#facebox .loading').remove()

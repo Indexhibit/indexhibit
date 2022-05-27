@@ -201,7 +201,7 @@ class Access
 		if (isset($_POST['submitLogin'])) 
 		{	
 			$clean['login'] 	= md5(getPOST('uid', null, 'connect', 100));
-			$clean['password'] 	= md5(getPOST('pwd', null, 'connect', 32));
+			$clean['password'] 	= md5(getPOST('pwd', null, 'connect', 100));
 			$clean['user_active'] = 1;
 			
 			$this->prefs = $OBJ->db->fetchRecord("SELECT * FROM ".PX."users 
