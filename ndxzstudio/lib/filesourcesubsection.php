@@ -101,7 +101,7 @@ class FilesourceSubSection
 				
 				$poster = '';
 				
-				$add = (!in_array($img['media_mime'], $medias)) ? "<div style='position: absolute; z-index: 1; top: 1px; right: 0px; height: 9px; border-bottom: 1px solid #fff; border-left: 1px solid #fff; color: #fff; padding: 0 1px; font-weight: bold; text-transform: uppercase; font-size: 8px;' class='file-$img[media_mime]'>$img[media_mime]</div>$poster" : "<div style='position: absolute; z-index: 1; top: 1px; right: 0px; height: 9px; border-bottom: 1px solid #fff; border-left: 1px solid #fff; color: #fff; padding: 0 1px; font-weight: bold; text-transform: uppercase; font-size: 8px;' class='file-$img[media_mime]'>$img[media_mime]</div>$poster";
+				$add = (!in_array($img['media_mime'], $medias)) ? "<div style='position: absolute; z-index: 1; top: 1px; right: 0px; border-bottom: 1px solid #fff; border-left: 1px solid #fff; color: #fff; padding: 1px 3px; font-weight: bold; text-transform: uppercase; font-size: 8px;' class='file-$img[media_mime]'>$img[media_mime]</div>$poster" : "<div style='position: absolute; z-index: 1; top: 1px; right: 0px; border-bottom: 1px solid #fff; border-left: 1px solid #fff; color: #fff; padding: 1px 3px; font-weight: bold; text-transform: uppercase; font-size: 8px;' class='file-$img[media_mime]'>$img[media_mime]</div>$poster";
 
 				$body .= "<li class='box' id='box$img[media_id]' style=\"position: relative; background-image: url('$thumb');\" title='$img[media_file]'><span style='cursor: default;'></span>$add</li>\n\n";
 			}

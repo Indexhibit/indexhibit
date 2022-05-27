@@ -275,7 +275,7 @@ iframe.prv-text { width: 880px; height: 500px; background: #fff; }
 #img-container { margin: 3px 0 9px 0; padding: 9px 2px; }
 #boxes { list-style: none; margin-bottom: 12px; font-size: 9px; }
 #boxes li { cursor: move; position: relative; float: left; margin: 2px 14px 36px 0px;
-	width: 80px; height: 80px; padding: 0; text-align: left; background-repeat: no-repeat; background-position: center center; background-size: contain; border: 1px solid #D0D0D0; }
+	width: 80px; height: 80px; padding: 0; text-align: left; background-repeat: no-repeat; background-position: center center; background-size: contain; }
 #boxes li span { display: block; width: 80px; height: 80px; }
 /* #boxes li img { height: 50px; width: 50px; } */
 /*#boxes li img { max-width: 75px; max-height: 75px; } */
