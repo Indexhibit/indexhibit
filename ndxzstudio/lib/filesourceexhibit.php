@@ -51,7 +51,7 @@ class FilesourceExhibit
 					}
 					else
 					{
-						$thumb = BASEURL . $path . '/sys-' . $img['media_ref_id'] . '_' . $img['media_thumb'];
+						$thumb = BASEURL . $path . '/systh-' . $img['media_ref_id'] . '_' . $img['media_thumb'];
 						$cover = true;
 					}
 				}
@@ -59,11 +59,11 @@ class FilesourceExhibit
 				{
 					if ($img['media_thumb'] == '')
 					{
-						$thumb = BASEURL . $path . '/sys-' . $img['media_ref_id'] . '_' . $img['media_file'];
+						$thumb = BASEURL . $path . '/systh-' . $img['media_ref_id'] . '_' . $img['media_file'];
 					}
 					else
 					{
-						$thumb = BASEURL . $path . '/sys-' . $img['media_ref_id'] . '_' . $img['media_thumb'];
+						$thumb = BASEURL . $path . '/systh-' . $img['media_ref_id'] . '_' . $img['media_thumb'];
 						$cover = true;
 					}
 				}
@@ -71,7 +71,7 @@ class FilesourceExhibit
 				if (!in_array($img['media_mime'], $default['images']))
 				{
 					// it's not an image but a movie...
-					if (!file_exists(DIRNAME . $path . '/sys-' . $img['media_ref_id'] . '_' . $img['media_thumb']) && $img['media_thumb'] != '')
+					if (!file_exists(DIRNAME . $path . '/systh-' . $img['media_ref_id'] . '_' . $img['media_thumb']) && $img['media_thumb'] != '')
 					{
 						$IMG =& load_class('media', true, 'lib');
 						$IMG->regenerate($img['media_ref_id'], $img['media_thumb']);
@@ -80,7 +80,7 @@ class FilesourceExhibit
 				else
 				{
 					// final check for images...
-					if (!file_exists(DIRNAME . $path . '/sys-' . $img['media_ref_id'] . '_' . $img['media_file']))
+					if (!file_exists(DIRNAME . $path . '/systh-' . $img['media_ref_id'] . '_' . $img['media_file']))
 					{
 						$IMG =& load_class('media', true, 'lib');
 						$IMG->regenerate($img['media_ref_id'], $img['media_file']);
@@ -88,14 +88,13 @@ class FilesourceExhibit
 				}
 
 				// need to make this a class
-				$active = ($img['media_hide'] == 1) ? " style='border: 1px solid #f00;'" : " style='border: 1px solid #fff;'";
+				$active = ($img['media_hide'] == 1) ? ' file-inactive' : '';
 
 				$cover = ($cover == true) ? "<div style='background: #000; position: absolute; z-index: 1; bottom: 1px; right: 0px; height: 9px; border: 1px solid #000; color: #fff; padding: 0 1px; font-weight: bold; text-transform: uppercase; font-size: 8px;'>C</div>" : '';
 				
-				$add = (!in_array($img['media_mime'], $medias)) ? "<div style='position: absolute; z-index: 1; top: 1px; right: 0px; height: 9px; border-bottom: 1px solid #fff; border-left: 1px solid #fff; color: #fff; padding: 0 1px; font-weight: bold; text-transform: uppercase; font-size: 8px;' class='file-$img[media_mime]'>$img[media_mime]</div>$cover" : "<div style='position: absolute; z-index: 1; top: 1px; right: 0px; height: 9px; border-bottom: 1px solid #fff; border-left: 1px solid #fff; color: #fff; padding: 0 1px; font-weight: bold; text-transform: uppercase; font-size: 8px;' class='file-$img[media_mime]'>$img[media_mime]</div>$cover";
+				$add = (!in_array($img['media_mime'], $medias)) ? "<div style='position: absolute; z-index: 1; top: 0px; right: 0px; height: 9px; border-bottom: 1px solid #fff; border-left: 1px solid #fff; color: #fff; padding: 0 1px; font-weight: bold; text-transform: uppercase; font-size: 8px;' class='file-$img[media_mime]'>$img[media_mime]</div>$cover" : "<div style='position: absolute; z-index: 1; top: 0px; right: 0px; height: 9px; border-bottom: 1px solid #fff; border-left: 1px solid #fff; color: #fff; padding: 0 1px; font-weight: bold; text-transform: uppercase; font-size: 8px;' class='file-$img[media_mime]{$active}'>$img[media_mime]</div>$cover";
 				
-				$body .= "<li class='box' id='box$img[media_id]' style='position: relative;' title='$img[media_file]'><span class='drag-img'><img src='$thumb' title='" . strip_tags($img['media_title']) . "'{$active} /></span>$add<br /><a href='#' onclick=\"deleteImage($img[media_id], '$img[media_file]'); return false;\" style='color: #999;'><img src='asset/img/img-delete.gif' title='".$OBJ->lang->word('delete')."' style='width: 11px; height: 11px;' /></a> <a href='?a=system&amp;q=img&amp;id=$img[media_id]' rel=\"facebox;height=450;width=810\" style='color: #999;'><img src='asset/img/img-edit.gif' title='".$OBJ->lang->word('edit')."' style='width: 11px; height: 11px;' /></a></li>\n\n";
-
+				$body .= "<li class='box' id='box$img[media_id]' title='$img[media_file]' style=\"position: relative; background-image: url('$thumb');\"><span class='drag-img'></span>$add<br /><a href='#' onclick=\"deleteImage($img[media_id]); return false;\" style='color: #999;'><img src='asset/img/img-delete.gif' title='".$OBJ->lang->word('delete')."' style='width: 11px; height: 11px;' /></a> <a href='?a=system&amp;q=img&amp;id=$img[media_id]' rel=\"facebox;height=450;width=810\" style='color: #999;'><img src='asset/img/img-edit.gif' title='".$OBJ->lang->word('edit')."' style='width: 11px; height: 11px;' /></a></li>\n\n";
 			}
 		}
 		else

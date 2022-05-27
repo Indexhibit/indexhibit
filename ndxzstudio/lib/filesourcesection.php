@@ -98,7 +98,7 @@ class FilesourceSection
 					}
 					else
 					{
-						$thumb = BASEURL . $path . '/sys-' . $img['media_ref_id'] . '_' . $img['media_thumb'];
+						$thumb = BASEURL . $path . '/systh-' . $img['media_ref_id'] . '_' . $img['media_thumb'];
 						$poster = true;
 					}
 				}
@@ -106,11 +106,11 @@ class FilesourceSection
 				{
 					if ($img['media_thumb'] == '')
 					{
-						$thumb = BASEURL . $path . '/sys-' . $img['media_ref_id'] . '_' . $img['media_file'];
+						$thumb = BASEURL . $path . '/systh-' . $img['media_ref_id'] . '_' . $img['media_file'];
 					}
 					else
 					{
-						$thumb = BASEURL . $path . '/sys-' . $img['media_ref_id'] . '_' . $img['media_thumb'];
+						$thumb = BASEURL . $path . '/systh-' . $img['media_ref_id'] . '_' . $img['media_thumb'];
 						$poster = true;
 					}
 				}
@@ -119,7 +119,7 @@ class FilesourceSection
 				if (!in_array($img['media_mime'], $default['images']))
 				{
 					// it's not an image but a movie...
-					if (!file_exists(DIRNAME . $path . '/sys-' . $img['media_ref_id'] . '_' . $img['media_thumb']) && $img['media_thumb'] != '')
+					if (!file_exists(DIRNAME . $path . '/systh-' . $img['media_ref_id'] . '_' . $img['media_thumb']) && $img['media_thumb'] != '')
 					{
 						$IMG =& load_class('media', true, 'lib');
 						$IMG->regenerate($img['media_ref_id'], $img['media_thumb']);
@@ -128,7 +128,7 @@ class FilesourceSection
 				else
 				{
 					// final check for images...
-					if (!file_exists(DIRNAME . $path . '/sys-' . $img['media_ref_id'] . '_' . $img['media_file']))
+					if (!file_exists(DIRNAME . $path . '/systh-' . $img['media_ref_id'] . '_' . $img['media_file']))
 					{
 						$IMG =& load_class('media', true, 'lib');
 						$IMG->regenerate($img['media_ref_id'], $img['media_file']);
@@ -144,8 +144,10 @@ class FilesourceSection
 				$add = (!in_array($img['media_mime'], $medias)) ? "<div style='position: absolute; z-index: 1; top: 1px; right: 0px; height: 9px; border-bottom: 1px solid #fff; border-left: 1px solid #fff; color: #fff; padding: 0 1px; font-weight: bold; text-transform: uppercase; font-size: 8px;' class='file-$img[media_mime]'>$img[media_mime]</div>$poster" : "<div style='position: absolute; z-index: 1; top: 1px; right: 0px; height: 9px; border-bottom: 1px solid #fff; border-left: 1px solid #fff; color: #fff; padding: 0 1px; font-weight: bold; text-transform: uppercase; font-size: 8px;' class='file-$img[media_mime]'>$img[media_mime]</div>$poster";
 				
 				//$body .= "<li class='box' id='box$img[media_id]' style='position: relative;' title='$img[media_file]'><span class='drag-img'><img src='$thumb' title='" . strip_tags($img[media_title]) . "'{$active} /></span>$add<br /><a href='#' onclick=\"deleteImage($img[media_id], '$img[media_file]'); return false;\" style='color: #999;'><img src='asset/img/img-delete.gif' title='".$OBJ->lang->word('delete')."' style='width: 11px; height: 11px;' /></a> <a href='?a=system&amp;q=img&amp;id=$img[media_id]' rel=\"shadowbox;player=iframe;height=400;width=810\" style='color: #999;'><img src='asset/img/img-edit.gif' title='".$OBJ->lang->word('edit')."' style='width: 11px; height: 11px;' /></a></li>\n\n";
+
+				$body .= "<li class='box' id='box$img[media_id]' title='$img[media_file]' style=\"position: relative; background-image: url('$thumb');\">$add</li>\n\n";
 				
-				$body .= "<li class='box' id='box$img[media_id]' style='position: relative;' title='$img[media_file]'><span style='cursor: default;'><img src='$thumb' title='" . strip_tags($img['title']) . "'{$active} /></span>$add</li>\n\n";
+				//$body .= "<li class='box' id='box$img[media_id]' style='position: relative;' title='$img[media_file]'><span style='cursor: default;'><img src='$thumb' title='" . strip_tags($img['title']) . "'{$active} /></span>$add</li>\n\n";
 			}
 		}
 		else
