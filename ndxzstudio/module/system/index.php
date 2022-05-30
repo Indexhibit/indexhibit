@@ -689,20 +689,20 @@ class System extends Router
 
 		$body .= "<div class='col'>\n";
 		$body .= span($this->lang->word('total page visits')) . br();
-		$body .= "<h3 style='font-size: 24px; margin-top: 3px;'>" . $total_since_hits . '</h3>';
+		$body .= "<h3 style='margin-top: 3px;'>" . $total_since_hits . '</h3>';
 		$body .= "</div>\n";
 		
 		$body .= "<div class='col'>\n";
 		$body .= span($this->lang->word('total referrals')) . br();
-		$body .= "<h3 style='font-size: 24px; margin-top: 3px;'>" . $total_since_refer_hits . '</h3>';
+		$body .= "<h3 style='margin-top: 3px;'>" . $total_since_refer_hits . '</h3>';
 		$body .= "</div>\n";
 		
 		$body .= "<div class='col'>\n";
 		$body .= span($this->lang->word('average uniques per month')) . br();
-		$body .= "<h3 style='font-size: 24px; margin-top: 3px;'>" . number_format($total_avg_uniques, 2) . '</h3>';
+		$body .= "<h3 style='margin-top: 3px;'>" . number_format($total_avg_uniques, 2) . '</h3>';
 		$body .= "</div>\n";
 		
-		$body .= "<div style='clear: left;'><!-- --></div>\n";
+		//$body .= "<div style='clear: left;'><!-- --></div>\n";
 		$body .= "</div>\n";
 		
 		///// +++++++++++++++ GRAPH OF 30 DAYS OF HITS +++++++++
@@ -726,7 +726,7 @@ class System extends Router
 		
 		$body .= "<div style='margin: 5px 0; padding: 20px 10px 5px 10px; background: white;' class='corners'>\n";
 
-		$body .= "<div class='col' style='width: 100%;'>\n";
+		$body .= "<div style='width: 100%; height: 200px;'>\n";
 		$body .= "<ul style='height: 150px; display: flex;'>";
 		
 		if ($totalz)
@@ -796,20 +796,20 @@ class System extends Router
 		$body .= implode("", $reversed);
 		
 		$body .= "</ul>";
-		$body .= "<div style='clear: left;'><!-- --></div>";
-		$body .= "<div style='margin-top: 24px;'><!-- --></div>\n";
+		//$body .= "<div style='clear: left;'><!-- --></div>";
+		//$body .= "<div style='margin-top: 24px;'><!-- --></div>\n";
 		//$body .= "</div>";
 		
-		$body .= "<div style='clear: left;'><!-- --></div>";
+		//$body .= "<div style='clear: left;'><!-- --></div>";
 		$body .= "</div>";
 		
 		///// ++++++++++++++++++++++++++++++++++++++++++++++++++
 		
-		$body .= "<div class='half'>\n";
+		$body .= "<div>\n";
 		
 		/////////////////////////////////////////////
 		
-		$body .= "<div class='col1'>\n";
+		$body .= "<div style='min-height: 30vh;'>\n";
 		
 		$months = getMonthlyHits(NULL);
 		$body .= "<table class='table380' cellpadding='0' cellspacing='0' border='0'>\n";
@@ -839,11 +839,11 @@ class System extends Router
 		}
 		$body .= "</table>\n";
 
-		$body .= "</div>\n";
+		//$body .= "</div>\n";
 		
 		// ++++++++++++++++++++++++++++++++++++++++++++
 		
-		$body .= "<div class='col2'>\n";
+		//$body .= "<div class='col2'>\n";
 		
 		// ++++++++++++++++++++++++++++++++++++++++++++
 		
@@ -964,7 +964,7 @@ class System extends Router
 		
 		// ++++++++++++++++++++++++++++++++++++++++++++
 		
-		$body .= "<div class='cl'><!-- --></div>\n\n";
+		//$body .= "<div class='cl'><!-- --></div>\n\n";
 		$body .= "</div>\n";
 		
 		$body .= "</div>\n";

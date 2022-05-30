@@ -41,7 +41,7 @@ strong { font-weight: 600; }
 .c2a .col1 { width: 580px; }
 .c2a .col2 { width: 300px; }
 .c3 .col { width: 33%; }
-.c4 .col { width: 210px; }
+.c4 .col { width: 25%; }
 
 /* plugins and formats pages */
 .c4 .col:first-child { width: 20%; padding-right: 15px; }

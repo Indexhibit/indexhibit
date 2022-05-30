@@ -353,9 +353,9 @@ function show_login($message='', $showreset=true, $no_load_login=false)
 			$login = "<form method='post' action=''>
 <h1>Indexhibit</h1>
 <br />
-<p><strong>".$lang->word('login').":</strong> 
+<p><label>".$lang->word('login').":</label> 
 <input name='uid' type='text' maxlength='100' /></p>
-<p><strong>".$lang->word('password').":</strong> 
+<p><label>".$lang->word('password').":</label> 
 <input name='pwd' type='password' maxlength='100' /></p>
 <p><input name='submitLogin' type='submit' value='".$lang->word('login')."' class='login-button' /></p>
 <p>".$lang->word($message)."&nbsp;</p>
