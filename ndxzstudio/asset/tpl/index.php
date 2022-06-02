@@ -20,7 +20,7 @@
 
 <body>
 
-<?php //echo $this->tpl_update_news(); ?>
+<?php echo $this->tpl_update_news(); ?>
 
 <div id='all'>
 	
