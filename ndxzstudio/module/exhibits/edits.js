@@ -270,12 +270,12 @@ function save_text()
 	}
 }
 
-function deleteImage(ida, file)
+function deleteImage(ida, refid, file)
 {
 	var answer = confirm('Are you sure?');
 	
 	if (answer) {
-		$.post('?a='+action, { upd_jxdelimg : 'true', id : ide, f : file }, 
+		$.post('?a='+action, { upd_jxdelimg : 'true', id : ida, rid : refid, f : file }, 
 			function(html) {
 				$('li#box' + ida).remove();
 				updating(html);

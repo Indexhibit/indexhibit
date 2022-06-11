@@ -62,7 +62,7 @@ class Uploadhelper
 		$IMG =& load_class('media', true, 'lib');
 
 		// we'll query for all our defaults first...
-		$rs = $OBJ->db->fetchRecord("SELECT thumbs, images, thumbs_shape   
+		$rs = $OBJ->db->fetchRecord("SELECT thumbs, images, thumbs_shape, object    
 			FROM ".PX."objects    
 			WHERE id = '$go[id]'");
 
@@ -72,6 +72,7 @@ class Uploadhelper
 		$IMG->quality = $default['img_quality'];
 		$IMG->shape = ($rs['thumbs_shape'] != '') ? $rs['thumbs_shape'] : 0;
 		$IMG->makethumb	= true;
+		$object_type = $rs['object'];
 
 		load_helper('output');
 		$URL =& load_class('publish', TRUE, 'lib');
@@ -163,7 +164,8 @@ class Uploadhelper
 						$clean['media_file'] = $IMG->origname;
 						//$clean['media_thumb'] = $IMG->filename;
 						$clean['media_mime'] = strtolower($thetype);
-						$clean['media_obj_type'] = 'exhibits';
+						//$clean['media_obj_type'] = 'exhibits';
+						$clean['media_obj_type'] = $object_type;
 						$clean['media_x'] = $IMG->size[0];
 						$clean['media_y'] = $IMG->size[1];
 						$clean['media_kb'] = $IMG->orig_kb;
@@ -206,7 +208,7 @@ class Uploadhelper
 					$clean['media_ref_id'] = $go['id'];
 					$clean['media_file'] = $IMG->filename;
 					$clean['media_mime'] = strtolower($thetype);
-					$clean['media_obj_type'] = 'exhibits';
+					$clean['media_obj_type'] = $object_type;
 
 					$date = getNow();
 					$clean['media_udate'] = $date;

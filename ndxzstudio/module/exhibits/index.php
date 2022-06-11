@@ -1941,14 +1941,16 @@ var ide = '$go[id]';";
 		global $go;
 		
 		// id here really is the name of the file
-		$clean['media_id'] = $_POST['f'];
+		$clean['media_id'] = (int) $_POST['id'];
+		$clean['media_ref_id'] = (int) $_POST['rid'];
+		$clean['media_file'] = rawurldecode($_POST['f']);
 		
-		$this->db->deleteArray(PX.'media', "media_file='$clean[media_id]'");
+		$this->db->deleteArray(PX.'media', "media_id='$clean[media_id]'");
 		
-		$file = $_POST['id'] . '_' . $clean['media_id'];
+		$file = $clean['media_ref_id'] . '_' . $clean['media_file'];
 		
 		//load_helper('files');
-		$this->delete_image(DIRNAME . GIMGS . '/' . $clean['media_id']); // source image
+		$this->delete_image(DIRNAME . GIMGS . '/' . $clean['media_file']); // source image
 		$this->delete_image(DIRNAME . GIMGS . '/' . $file); // image
 		$this->delete_image(DIRNAME . GIMGS . '/th-' . $file); // thumbnail
 		$this->delete_image(DIRNAME . GIMGS . '/sys-' . $file); // system thumbnail
