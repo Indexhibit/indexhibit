@@ -64,6 +64,11 @@ if ($OBJ->hook->registered_hook('update_module')) $OBJ->extend_module($OBJ->hook
 $OBJ->tunnel($OBJ->go['a'], $OBJ->go['a'], $OBJ->go['q']);
 
 // output
+$ts = gmdate("D, d M Y H:i:s") . " GMT";
+header("Expires: $ts");
+header("Last-Modified: $ts");
+header("Pragma: no-cache");
+header("Cache-Control: no-cache, must-revalidate");
 header('Content-Type: text/html; charset=utf-8'); 
 $OBJ->template->output('index');
 exit;

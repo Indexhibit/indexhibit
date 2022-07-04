@@ -35,8 +35,7 @@ class FilesourceSection
 			AND media_order = (SELECT MIN(media_order) FROM ".PX."media WHERE media_ref_id = id) 
 			AND section_top != '1' 
 			AND section_sub != 1
-			AND status = '1' 
-			AND hidden != '1' 
+			AND status = '1'
 			AND media_source = '0' 
 			ORDER BY ord ASC");
 			

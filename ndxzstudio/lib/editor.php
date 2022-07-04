@@ -15,6 +15,7 @@ class Editor
 	public $process;
 	public $advanced = false;
 	public $canvas = 0;
+	public $no_buttons = false;
 
 	/**
 	* Editor
@@ -82,10 +83,9 @@ class Editor
 	{
 		$OBJ =& get_instance();
 
-		$this->html .= "<div class='col' style='margin-top: 18px; margin-left: 0; width: 48%;'>\n";
+		if ($this->no_buttons == true) return;
 
-		// text processing
-		//$this->html .= ($OBJ->vars->exhibit['process'] == 1) ? href("<img src='asset/img/process-on.gif' alt='1' />",'#',"id='processing' title='text processing' class='btn btn-off' onmouseover=\"this.className='btn btn-over'\" onmouseout=\"this.className='btn btn-off'\" onClick=\"processing(); return false;\" width='20'") : href("<img src='asset/img/process-off.gif' alt='0' />",'#',"id='processing' title='text processing' class='btn btn-off' onmouseover=\"this.className='btn btn-over'\" onmouseout=\"this.className='btn btn-off'\" onClick=\"processing(); return false;\" width='20'");
+		$this->html .= "<div class='col' style='margin-top: 18px; margin-left: 0; width: 48%;'>\n";
 
 		$this->html .= $this->editor_buttons();
 
@@ -101,6 +101,8 @@ class Editor
 	public function top_space()
 	{
 		$OBJ =& get_instance();
+
+		if ($this->no_buttons == true) return;
 
 		$this->html .= "<div class='col txt-right' style='margin-top: 18px; float: right; width: 48%;'>\n";
 
@@ -152,14 +154,6 @@ class Editor
 		$button['highlight'] = array('custom', 'edCanvas', 'highlight.gif', 'highlight', '<span class=\'highlight\'></span>');
 		$button['l2'] = array('spacer');
 		$button['link'] = array('standard_pop', 'edCanvas', 'link.gif', '?a=system&amp;q=links', 'links manager', "rel=\"facebox;width=400;height=400\"");
-
-		//$button['l1'] = array('spacer');
-		//$button['code'] = array('standard', 'edCanvas', 'code.gif', 'code', 'code');
-		//$button['h2'] = array('standard', 'edCanvas', 'h2.gif', 'h2', 'h2');
-		//$button['h3'] = array('standard', 'edCanvas', 'h3.gif', 'h3', 'h3');
-		//$button['h4'] = array('standard', 'edCanvas', 'h4.gif', 'h4', 'h4');
-
-		//$button['files'] = array('standard_pop', 'edCanvas', 'files.gif', '?a=system&amp;q=utilities&amp;x=img', 'files manager', "rel=\"shadowbox;player=iframe;height=325;width=350\"");
 
 		return $button;
 	}
@@ -216,18 +210,6 @@ class Editor
 
 		$s = '';
 
-		//if ($go['id'] != 1)
-		//{	
-		//	if ($rs['section_top'] != 1)
-		//	{
-				//$s .= "<input name='delete' type='image' src='asset/img/delete.gif' title='".$OBJ->lang->word('delete')."' onClick=\"javascript:return confirm('".$OBJ->lang->word('are you sure')."');return false;\" class='btn btn-off' onmouseover=\"this.className='btn btn-over'\" onmouseout=\"this.className='btn btn-off'\" style='margin-bottom: 0;' />\n";
-
-				//$s .= "<img src=\"asset/img/line_spcr.gif\" border=\"0\">\n";
-		//	}
-		//}
-
-		//$s .= "<input name='preview' type='image' src='asset/img/f-prev.gif' title='Preview (without saving)' class='btn btn-off' onmouseover=\"this.className='btn btn-over'\" onmouseout=\"this.className='btn btn-off'\" style='margin-bottom: 0;' onclick=\"previewText($go[id]); return false;\" />\n";
-
 		// save things
 		$s .= "<input name='save' type='image' src='asset/img/save.gif' title='".$OBJ->lang->word('save')."'  class='btn btn-off' onmouseover=\"this.className='btn btn-over'\" onmouseout=\"this.className='btn btn-off'\" style='margin-bottom: 0;' onclick=\"updateText($go[id]); return false;\" />\n";
 
@@ -238,14 +220,17 @@ class Editor
 	{
 		$OBJ =& get_instance();
 
-		$OBJ->template->add_js('alexking.quicktags.js');
-		$OBJ->template->add_js('modEdit.js');
-		//$OBJ->template->ex_js[] = "var edCanvas = document.getElementById('jxcontent');";
-
-		$canvas = ($this->canvas != 0) ? 'edCanvas' . $this->canvas : 'edCanvas';
-
 		$this->html .= "<textarea name='" . $this->content_id . "' class='" . $this->content_id . "' id='jx" . $this->content_id . "' $this->css>" . $this->stripForForm($this->content, $this->process) . "</textarea>\n";
-		$this->html .= "<script type='text/javascript'>var $canvas = document.getElementById('jx" . $this->content_id . "');</script>\n";
+
+		if ($this->no_buttons == false)
+		{
+			$OBJ->template->add_js('alexking.quicktags.js');
+			$OBJ->template->add_js('modEdit.js');
+
+			$canvas = ($this->canvas != 0) ? 'edCanvas' . $this->canvas : 'edCanvas';
+
+			$this->html .= "<script type='text/javascript'>var $canvas = document.getElementById('jx" . $this->content_id . "');</script>\n";
+		}
 	}
 
 

@@ -289,7 +289,8 @@ class Upload
             //$file_path = $this->options['upload_dir'].$file->name;
 			// get 'mime' - the easy way
 			$mime = explode('.', $file->name);
-			$mimed = strtolower(array_pop($mime));
+			//$mimed = strtolower(array_pop($mime));
+            $mimed = array_pop($mime);
             $file_path = (in_array($mimed, $default['images'])) ? $this->options['upload_dir'] . $file->name : 
 				str_replace('/gimgs', '', $this->options['upload_dir'] . $file->name);
             $append_file = !$this->options['discard_aborted_uploads'] &&
@@ -397,7 +398,7 @@ class Upload
             {
                 //if upload is in list of uploadable files
                 $type_test = end(explode('.', $upload['name'][$index]));
-                if (in_array($type_test, $types))
+                if (in_array(strtolower($type_test), $types))
                 {
                     $info[] = $this->handle_file_upload(
                         $upload['tmp_name'][$index],
@@ -420,7 +421,7 @@ class Upload
         {
             //if upload is in list of uploadable files
             $type_test = end(explode('.', $upload['name']));
-            if (in_array($type_test, $types))
+            if (in_array(strtolower($type_test), $types))
             {
                 // param_name is a single object identifier like "file",
                 // $_FILES is a one-dimensional array:
