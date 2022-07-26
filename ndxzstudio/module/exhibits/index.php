@@ -43,6 +43,7 @@ class Exhibits extends Router
 	
 	public function page_index()
 	{
+		$OBJ =& get_instance();
 		global $go, $default;
 		
 		$go['page'] = getURI('page', 0, 'digit', 5);
@@ -234,7 +235,7 @@ var baseurl = '" . BASEURL . "';";
 			$F =& load_class($class, true, 'lib');
 			$F->rs = $rs;
 			
-			// get our output
+			// get our output 
 			$bbody .= $F->getExhibitImages($go['id']);
 			
 			$bbody .= "</div>\n";
@@ -2200,22 +2201,20 @@ var ide = '$go[id]';";
 				$OBJ =& get_instance();
 				global $go, $default;
 
-				// need exhibits objects_prefs if they exist
-				$rs = $OBJ->db->fetchRecord("SELECT obj_settings FROM ".PX."objects_prefs WHERE obj_id = 1");
+				// make a hook to exhibit defaults
+				$OBJ->hook->do_action_array('exhibit_defaults');
 
-				if ($rs)
-				{
-					$settings = json_decode($rs['obj_settings'], true);
-				}
-
-				$defaults_array = array('template','format','hidden','images','thumbs','thumbs_shape','placement','titling','break','color');
+				$defaults_array = array('template','format','hidden','images', 'thumbs','thumbs_shape','placement','titling','break','color');
 
 				foreach ($defaults_array as $check)
 				{
-					if (isset($settings[$check]))
+					if (is_array($OBJ->vars->extra))
 					{
-						// update with new default value
-						$clean[$check] = $settings[$check];
+						if (array_key_exists($check, $OBJ->vars->extra))
+						{
+							// update with new default value
+							$clean[$check] = $OBJ->vars->extra[$check];
+						}
 					}
 				}
 

@@ -249,6 +249,7 @@ class System extends Router
 	
 	public function page_preferences()
 	{
+		$OBJ =& get_instance();
 		global $go, $default;
 
 		$this->template->location_override = $this->lang->word('user');
@@ -527,89 +528,6 @@ class System extends Router
 		// end div
 		$body .= "</div>";
 
-
-		// exhibits settings section columns
-		load_module_helper('settings', 'system');
-
-		// need exhibits objects_prefs if they exist
-		$rs = $OBJ->db->fetchRecord("SELECT obj_settings FROM ".PX."objects_prefs WHERE obj_id = 1");
-
-		if ($rs)
-		{
-			$settings = json_decode($rs['obj_settings'], true);
-		}
-
-		$body .= "<div style='margin-bottom: 18px;'>";
-
-		$body .= "<h3 style='margin-bottom: 18px;'>Exhibit Defaults</h3>";
-		$body .= "<div class='c3'>\n";
-		$body .= "<div class='col'>\n";
-		//template
-        $body .= "<label>" . $OBJ->lang->word('template') . "</label>\n";
-		$body .= set_templates($settings['template'], 'template', '');
-
-        //hidden
-        $body .= label($OBJ->lang->word('hide exhibit from index'));
-		$body .= setOnOff($settings['hidden'], "hidden]");
-
-        //color
-        $body .= label($OBJ->lang->word('background color'));
-        $body .= "<input type='color' name='color' class='color_picker' value='" . $settings['color'] . "' />".br();
-
-        $OBJ->template->ex_css[] = "input[type=\"color\"] {
-            -webkit-appearance: none;
-          appearance: none;
-            border: none;
-            width: 34px;
-            height: 34px;
-          background: transparent;
-          border: none;
-        }
-        input[type=\"color\"]::-webkit-color-swatch-wrapper {
-            padding: 0;
-        }
-        input[type=\"color\"]::-webkit-color-swatch {
-            border: none;
-          border-radius: 50%;
-          border: 1px solid gray;
-        }";
-		$body .= "</div>";
-
-		$body .= "<div class='col'>\n";
-		// exhibit format
-        $body .= "<label>" . $OBJ->lang->word('exhibition format') . "</label>\n";
-		$body .= setPresent(DIRNAME . '/ndxzsite/plugin/', $settings['format']);
-
-        // images
-        $body .= label($OBJ->lang->word('image max'));
-		$body .= setImageSizes($settings['images'], "class='listed' id='images'");
-
-        // thumbs
-        $body .= label($OBJ->lang->word('thumb max'));
-		$body .= setThumbSize($settings['thumbs'], "class='listed' id='thumbs'");
-
-        // thumbs shape
-        $body .= label($OBJ->lang->word('thumbs shape'));
-		$body .= setImageShape($settings['thumbs_shape'], "class='listed' id='thumbs_shape'");
-		$body .= "</div>";
-
-		$body .= "<div class='col'>\n";
-		//placement
-        $body .= label($OBJ->lang->word('files placement'));
-		$body .= setPlacement($settings['placement'], "placement");
-
-        //titling
-        $body .= label($OBJ->lang->word('titling'));
-		$body .= setOnOff($settings['titling'], "titling");
-
-        //break
-        $body .= label($OBJ->lang->word('counter'));
-		$body .= setBreak($settings['break']);
-		$body .= "</div>";
-
-		$body .= "</div>";
-		$body .= "</div>";
-		// end this section
 
 		$body .= "<div class='buttons'>";		
 		$body .= button('upd_settings', 'submit', "class='general_submit'", $this->lang->word('update'));		
@@ -4683,20 +4601,6 @@ var ide = '$go[id]';";
 		$clean['site_vars'] = serialize($_POST['site']);
 		$clean['caching'] = $processor->process('caching', array('digit'));
 
-		// these are for exhibit defaults - put into json format
-		$json['template'] 	= $processor->process('template', array('notags'));
-		$json['hidden'] 	= $processor->process('hidden', array('digit'));
-		$json['color'] 		= $processor->process('color', array('notags'));
-		$json['format'] 	= $processor->process('format', array('notags'));
-		$json['images'] 	= $processor->process('images', array('digit'));
-		$json['thumbs'] 	= $processor->process('thumbs', array('digit'));
-		$json['thumbs_shape'] = $processor->process('thumbs_shape', array('digit'));
-		$json['placement'] 	= $processor->process('placement', array('digit'));
-		$json['titling'] 	= $processor->process('titline', array('digit'));
-		$json['break'] 		= $processor->process('break', array('digit'));
-
-		$settings['obj_settings'] = json_encode($json, true);
-
 		if ($processor->check_errors())
 		{
 			// get our error messages
@@ -4707,7 +4611,6 @@ var ide = '$go[id]';";
 		}
 		else
 		{
-			$this->db->updateArray(PX.'objects_prefs', $settings, "obj_id='1'");
 			$this->db->updateArray(PX.'settings', $clean, "adm_id='1'");
 
 			// send an update notice
@@ -5201,6 +5104,7 @@ var ide = '$go[id]';";
 	
 	public function resize_images($size=9999, $type='image')
 	{
+		$OBJ =& get_instance();
 		global $go, $default;
 		
 		// query for all images
@@ -6959,6 +6863,7 @@ var ide = '$go[id]';";
 	
 	public function sbmt_upd_files()
 	{
+		$OBJ =& get_instance();
 		$OBJ->template->errors = TRUE;
 		global $go, $default;
 
