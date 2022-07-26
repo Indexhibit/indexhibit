@@ -2,7 +2,7 @@
 /.htaccess
 
 # Ignore user uploaded images and files
-#files
+files
 
 # Ignore user config, cache
 ndxzsite/cache
