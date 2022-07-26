@@ -68,3 +68,5 @@ $default['filesource'] = array('exhibit', 'all', 'section', 'subsection', 'tag',
 $default['operands'] = array(0 => 'default', 1 => 'permalinked', 2 => 'overlay', 3 => 'unlinked');
 
 $default['parse'] = 'parse_default';
+
+$default['image_library'] = (extension_loaded('imagick')) ? 'media_imagick' : 'media_gd';

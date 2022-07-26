@@ -438,6 +438,8 @@ var baseurl = '" . BASEURL . "';";
 			$this->template->js[] = 'jquery.colorpick.js';
 			$this->template->css[] = 'jquery.colorpick.css';
 
+			$bgcolor = str_replace('#', '', $bgcolor);
+
 			// background color - this is a mess
 			$body .= "<div style='margin-bottom: 12px;'>\n";
 			$body .= "<label>".$this->lang->word('background color')."</label>\n";
@@ -1027,9 +1029,9 @@ var ide = '$go[id]';";
 
 		load_module_helper('files', $go['a']);
 
-		$body = "<div id='pvw' style='background: #fff20d;'>\n";
+		$body = "<div id='pvw'>\n";
 
-		$body .= "<div style='padding: 18px 18px 9px 18px;'>\n";
+		$body .= "<div>\n";
 		$body .= "<label style='display: block; margin-bottom: 6px;'>" . $this->lang->word('preview') . "</label>\n";
 
 		$body .= href('&larr; ' . $this->lang->word('edit'), "?a=$go[a]&amp;q=edit&amp;id=$go[id]", "id='edit'");
@@ -1797,7 +1799,7 @@ var ide = '$go[id]';";
 		{
 			if ($image['size'] < $IMG->upload_max_size)
 			{
-				$test = explode('.', strtolower($image['name']));
+				$test = explode('.', $image['name']);
 				$thetype = array_pop($test);
 				
 				$URL->title = implode('_', $test);
@@ -2193,6 +2195,30 @@ var ide = '$go[id]';";
 
 			if ($_POST['st'] == 'exhibit')
 			{
+				// exhibit default plugin goes here
+				// use of exhibit defaults plugin here
+				$OBJ =& get_instance();
+				global $go, $default;
+
+				// need exhibits objects_prefs if they exist
+				$rs = $OBJ->db->fetchRecord("SELECT obj_settings FROM ".PX."objects_prefs WHERE obj_id = 1");
+
+				if ($rs)
+				{
+					$settings = json_decode($rs['obj_settings'], true);
+				}
+
+				$defaults_array = array('template','format','hidden','images','thumbs','thumbs_shape','placement','titling','break','color');
+
+				foreach ($defaults_array as $check)
+				{
+					if (isset($settings[$check]))
+					{
+						// update with new default value
+						$clean[$check] = $settings[$check];
+					}
+				}
+
 				$clean['title'] = $_POST['t'];
 				// how to validate this?
 				$clean['section_id'] = $_POST['s'];

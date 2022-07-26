@@ -415,7 +415,7 @@ a.inserter { background: url(../img/files-use.gif) no-repeat; padding-left: 15px
 .comment-flagged { background: #fff20d; }
 
 /* preview page */
-#pvw { position: absolute; z-index: 10001; top: 0; right: 15px; width: 250px; }
+#pvw { position: absolute; z-index: 10001; top: 0; right: 0; width: 265px; background: rgba(255,255,255,0.7); padding: 18px; }
 #pvw div { text-align: left; } 
 /*
 #pvw a#edit { padding: 12px 6px 6px 6px; background: #fff20d; }

@@ -429,7 +429,7 @@ class Page
 	public function append_page()
 	{
 		$OBJ =& get_instance();
-		
+
 		$s = '';
 
 		if (isset($OBJ->page->exhibit['append_page']))
