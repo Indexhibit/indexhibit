@@ -55,7 +55,7 @@ function convertDate($date='', $offset='', $format='')
 }
 
 
-function strffftime(string $format, $timestamp = null, ?string $locale = null): string
+function strffftime(string $format, $timestamp = null, string $locale = null): string
 {
 	if (null === $timestamp) {
 		$timestamp = new \DateTime;
