@@ -63,7 +63,7 @@ $default['section_types'] = array(0 => 'default', 1 => 'chronological', 3 => 'ta
 $default['system_admin'] = array('theme', 'formats', 'plugins', 'spacer', 'settings', 'sections', 'assets', 'tag', 'spacer', 'statistics', 'spacer', 'users');
 
 // files sources
-$default['filesource'] = array('exhibit', 'all', 'section', 'subsection', 'tag', 'sections');
+$default['filesource'] = array('exhibit', 'all', 'section', 'subsection', 'tag');
 
 $default['operands'] = array(0 => 'default', 1 => 'permalinked', 2 => 'overlay', 3 => 'unlinked');
 
