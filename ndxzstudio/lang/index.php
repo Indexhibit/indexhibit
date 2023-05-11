@@ -9,6 +9,7 @@
 * @version 1.0
 * @author Vaska 
 */
+#[AllowDynamicProperties]
 class Lang
 {
 	public $words 	= array();

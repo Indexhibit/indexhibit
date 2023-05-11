@@ -8,6 +8,7 @@
 * @version 1.0
 * @author Vaska 
 */
+#[AllowDynamicProperties]
 class Parse_default
 {
 	public $plugins;

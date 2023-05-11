@@ -6,6 +6,7 @@
 * @version 1.0
 * @author Vaska 
 */
+#[AllowDynamicProperties]
 class Options
 {
 	public $custom_output = array();

@@ -14,7 +14,7 @@ Order: 11
 Options Builder: make_option
 End
 */
-
+#[AllowDynamicProperties]
 class indexhibit_style
 {
 	var $options = array();

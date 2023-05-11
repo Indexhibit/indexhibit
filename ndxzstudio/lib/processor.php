@@ -7,6 +7,7 @@
 * @version 1.0
 * @author Vaska 
 */
+#[AllowDynamicProperties]
 class Processor 
 {	
 	public $error = array();

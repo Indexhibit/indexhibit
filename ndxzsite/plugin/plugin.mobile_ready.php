@@ -13,7 +13,7 @@ Function: mobile_ready:enable
 Order: 12
 End
 */
-
+#[AllowDynamicProperties]
 class Mobile_ready
 {
 	public function __construct()

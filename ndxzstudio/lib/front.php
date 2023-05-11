@@ -10,6 +10,7 @@
 * @version 1.0
 * @author Vaska 
 */
+#[AllowDynamicProperties]
 class Front
 {
 	public $result = array();

@@ -14,7 +14,7 @@ Order: 11
 Options Builder: make_option
 End
 */
-
+#[AllowDynamicProperties]
 class add_meta_keyword_description
 {
 	public function __construct()

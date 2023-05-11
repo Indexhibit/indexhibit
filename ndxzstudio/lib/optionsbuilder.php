@@ -1,6 +1,6 @@
 <?php
 
-
+#[AllowDynamicProperties]
 class OptionsBuilder
 {
 	public $options	= array();

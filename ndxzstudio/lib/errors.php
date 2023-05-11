@@ -6,6 +6,7 @@
 * @version 1.0
 * @author Vaska 
 */
+#[AllowDynamicProperties]
 class Errors
 {
 	public function __construct()

@@ -30,6 +30,7 @@
  * @version   1.4
  * @link      http://github.com/eoghanobrien/php-simple-mail
  */
+#[AllowDynamicProperties]
 class Mail
 {
     /**

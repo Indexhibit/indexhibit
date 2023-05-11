@@ -13,7 +13,7 @@
 * @version 1.0
 * @author Vaska 
 */
-
+#[AllowDynamicProperties]
 class FilesourceSubSection
 {
 	public $rs = array();

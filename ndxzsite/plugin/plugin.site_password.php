@@ -15,7 +15,7 @@ Order: 1
 Options Builder: make_option
 End
 */
-
+#[AllowDynamicProperties]
 class site_password
 {
 	var $password;

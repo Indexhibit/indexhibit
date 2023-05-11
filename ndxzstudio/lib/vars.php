@@ -9,6 +9,7 @@
 * @version 1.0
 * @author Vaska 
 */
+#[AllowDynamicProperties]
 class Vars 
 {
 	public $site			= array();

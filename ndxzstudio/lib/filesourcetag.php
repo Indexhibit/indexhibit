@@ -8,7 +8,7 @@
 * @version 1.0
 * @author Vaska 
 */
-
+#[AllowDynamicProperties]
 class FilesourceTag 
 {
 	public $rs = array();

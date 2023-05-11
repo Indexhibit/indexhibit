@@ -11,7 +11,7 @@ Params: format,images,placement,titling
 Source: exhibit
 Objects: exhibits
 */
-
+#[AllowDynamicProperties]
 class Exhibit
 {
 	public function __construct()

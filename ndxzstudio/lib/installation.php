@@ -5,6 +5,7 @@
 // don't make them classes?
 // the should simply be protected instructions...
 
+#[AllowDynamicProperties]
 class Installation
 {
 	public $indexhibit_version;

@@ -10,6 +10,7 @@
 * @version 1.1
 * @author Vaska 
 */
+#[AllowDynamicProperties]
 class Page
 {
 	public $result 		= array();

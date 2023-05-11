@@ -10,6 +10,7 @@
 * @version 1.0
 * @author Vaska 
 */
+#[AllowDynamicProperties]
 class Rest
 {
 	public $target		= 'http://api.indexhibit.org/';

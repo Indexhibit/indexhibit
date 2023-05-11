@@ -8,6 +8,7 @@
 * @version 1.0
 * @author Vaska 
 */
+#[AllowDynamicProperties]
 class Tag 
 {
 	public $tags	= array();

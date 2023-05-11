@@ -21,7 +21,7 @@ Objects: exhibits
 * @version 1.2
 * @author Vaska 
 */
-
+#[AllowDynamicProperties]
 class Exhibit
 {
 	// PADDING AND TEXT WIDTH ADJUSTMENTS UP HERE!!!

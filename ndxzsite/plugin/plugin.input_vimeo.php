@@ -17,7 +17,7 @@ Hook: system_uploader_link
 Function: input_vimeo:input_link
 End
 */
-
+#[AllowDynamicProperties]
 class input_vimeo
 {
 	public function __construct()

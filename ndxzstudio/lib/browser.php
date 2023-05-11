@@ -34,7 +34,7 @@
  * http://apptools.com/phptools/browser/
  *
  */
-
+#[AllowDynamicProperties]
 class Browser
 {
     private $_agent = '';

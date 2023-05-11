@@ -7,6 +7,7 @@
 * @author Vaska 
 * @author PHP Architect 04-2006
 */
+#[AllowDynamicProperties]
 class Hook
 {
 	public $action_table 	= array();

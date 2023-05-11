@@ -9,7 +9,7 @@
  * Licensed under the MIT license:
  * http://creativecommons.org/licenses/MIT/
  */
-
+#[AllowDynamicProperties]
 class Upload
 {
     protected $options;

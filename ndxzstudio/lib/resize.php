@@ -8,6 +8,7 @@
 * @version 1.0
 * @author Vaska 
 */
+#[AllowDynamicProperties]
 class Resize
 {
 	public $resize = array();

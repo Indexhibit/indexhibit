@@ -7,7 +7,7 @@
 * @author Paul Schrieber
 * @author Vaska
 */
-
+#[AllowDynamicProperties]
 class Db
 {
 	var $theQuery;

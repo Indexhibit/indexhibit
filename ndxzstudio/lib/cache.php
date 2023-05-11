@@ -1,5 +1,6 @@
 <?php if (!defined('SITE')) exit('No direct script access allowed');
 
+#[AllowDynamicProperties]
 class Cache
 {
 	public $uri;

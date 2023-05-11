@@ -1,6 +1,6 @@
 <?php if (!defined('SITE')) exit('No direct script access allowed');
 
-
+#[AllowDynamicProperties]
 class System extends Router
 {
 	public $submits		= array();

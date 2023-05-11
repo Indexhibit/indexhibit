@@ -1,5 +1,6 @@
 <?php if (!defined('SITE')) exit('No direct script access allowed');
 
+#[AllowDynamicProperties]
 class Jxs_slideshow
 {	
 	public function output()

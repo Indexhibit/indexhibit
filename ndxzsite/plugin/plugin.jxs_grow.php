@@ -1,5 +1,6 @@
 <?php
 
+#[AllowDynamicProperties]
 class Jxs_grow
 {
 	public function __construct()

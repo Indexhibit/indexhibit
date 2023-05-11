@@ -13,7 +13,7 @@
 * @version 1.0
 * @author Vaska 
 */
-
+#[AllowDynamicProperties]
 class FilesourceFolder implements Filesource 
 {
 	var $rs = array();

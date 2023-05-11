@@ -14,7 +14,7 @@ Order: 11
 Options Builder: make_option
 End
 */
-
+#[AllowDynamicProperties]
 class Change_maxsize
 {
 	public function __construct()

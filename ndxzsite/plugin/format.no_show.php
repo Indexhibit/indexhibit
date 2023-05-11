@@ -19,7 +19,7 @@ Source: exhibit
 * @version 2.0
 * @author Vaska 
 */
-
+#[AllowDynamicProperties]
 class Exhibit
 {
 	public function __construct()

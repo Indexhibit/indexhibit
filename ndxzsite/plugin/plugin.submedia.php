@@ -1,5 +1,6 @@
 <?php
 
+#[AllowDynamicProperties]
 class Submedia
 {
 	public function __construct()

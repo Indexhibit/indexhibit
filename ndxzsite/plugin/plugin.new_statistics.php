@@ -13,7 +13,7 @@ Function: new_statistics:counter
 Order: 22
 End
 */
-
+#[AllowDynamicProperties]
 class New_statistics
 {
 	var $uri;

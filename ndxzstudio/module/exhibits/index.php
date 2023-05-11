@@ -1,6 +1,6 @@
 <?php if (!defined('SITE')) exit('No direct script access allowed');
 
-
+#[AllowDynamicProperties]
 class Exhibits extends Router
 {
 	public $publishing = false;

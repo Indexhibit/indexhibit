@@ -13,6 +13,7 @@ if (function_exists("date_default_timezone_set") && function_exists("date_defaul
 	@date_default_timezone_set(@date_default_timezone_get());
 }
 
+#[AllowDynamicProperties]
 class Installation
 {
 	var $html;

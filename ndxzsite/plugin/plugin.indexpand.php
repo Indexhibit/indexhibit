@@ -14,7 +14,7 @@ Options Builder: default_settings
 Function: indexpand:setup
 End
 */
-
+#[AllowDynamicProperties]
 class Indexpand
 {
 	public function __construct()

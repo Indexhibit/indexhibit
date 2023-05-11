@@ -1,5 +1,6 @@
 <?php
 
+#[AllowDynamicProperties]
 class Jxs_ndxzbox
 {
 	var $rs = array();

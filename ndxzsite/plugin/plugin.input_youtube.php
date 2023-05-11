@@ -18,7 +18,7 @@ Hook: system_uploader_link
 Function: input_youtube:input_link
 End
 */
-
+#[AllowDynamicProperties]
 class input_youtube
 {
 	public function __construct()

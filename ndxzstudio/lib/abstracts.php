@@ -6,6 +6,7 @@
 * @version 1.0
 * @author Vaska 
 */
+#[AllowDynamicProperties]
 class Abstracts
 {
 	public $abstract = null;

@@ -13,7 +13,7 @@ Options Builder: default_settings
 Source: exhibit
 Objects: exhibits
 */
-
+#[AllowDynamicProperties]
 class Exhibit
 {
 	// PADDING AND TEXT WIDTH ADJUSTMENTS UP HERE!!!
