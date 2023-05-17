@@ -92,6 +92,7 @@ class Lang
 			'it-it' => array('it_IT.UTF-8', 'it_IT', 'it', 'ita', 'italian', 'it_IT.ISO_8859-1', 'Italiano'),
 			'cs-cz' => array('cs_CZ.UTF-8', 'cs_CZ', 'cze', 'cs', 'csy', 'ces', 'czech', 'cs_CZ.ISO_8859-2', 'Czech'),
 			'se-se' => array('se_SE.UTF-8', 'se_SE', 'se', 'swe', 'swedish', 'se_SE.ISO_8859-1', 'Svenska'),
+			'gl-es' => array('gl_ES.UTF-8', 'gl_ES', 'gl', 'glg', 'galicien', 'gl_ES.ISO_8859-1', 'Galician'),
 			'no-no' => array('no_NO.UTF-8', 'no_NO', 'no', 'nor', 'norwegian', 'no_NO.ISO_8859-1', 'Norsk')
 		);
 	}
