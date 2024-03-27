@@ -12,8 +12,6 @@ class upgrade_216
 	{
 		$OBJ =& get_instance();
 		
-		// forcing a change to the users table for user ID = 1 - just in case
-		$OBJ->db->updateArray(PX.'users', array('user_admin' => '1'), "ID = '1'");
 		$OBJ->db->updateArray(PX.'settings', array('version' => '2.1.6'), "adm_id = '1'");
 	}
 }
